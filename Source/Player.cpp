@@ -9,6 +9,7 @@ Player::Player()
 	model = new Model("Data/Model/Mr.Incredible/Mr.Incredible.mdl");
 	//モデルが大きいからスケーリング
 	scale.x = scale.y = scale.z = 0.01f;
+	int Renshu = {};
 }
 //デストラクタ
 Player::~Player()
