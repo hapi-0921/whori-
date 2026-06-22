@@ -13,22 +13,16 @@ Stage::Stage()
 	wall[BACK_R].angle.y = -DirectX::XM_PI * 0.25f;
 	wall[BACK_L].angle.y = DirectX::XM_PI * 0.25f;
 
+	wall[UP].angle.x = -DirectX::XM_PI * 0.5f;
+	wall[DOWN].angle.x = DirectX::XM_PI * 0.5f;
+
 	wall[FRONT_R].position = { -300,0,0 };
 	wall[FRONT_L].position = { 0,0,0 };
 	wall[BACK_R].position= {-300,0,-300};
 	wall[BACK_L].position = { 0,0,-300 };
 
-	wall[FRONT_R].normal = { -1, 0, 0 };
-	wall[FRONT_L].normal = { 1, 0, 0 };
-	wall[BACK_R].normal = { 0, 0, -1 };
-	wall[BACK_L].normal = { 0, 0, 1 };
-
-
-	wallCenter[FRONT_L] = { -75,  0, -75 };
-	wallCenter[FRONT_R] = { -225, 0, -75 };
-
-	wallCenter[BACK_L] = { -75,  0, -225 };
-	wallCenter[BACK_R] = { -225, 0, -225 };
+	wall[UP].position= {0,300,0};
+	wall[DOWN].position = { 0,0,0 };
 }
 Stage::~Stage()
 {
@@ -39,7 +33,7 @@ Stage::~Stage()
 //更新処理
 void Stage::Update(float elapsedTime)
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		DirectX::XMMATRIX S = DirectX::XMMatrixScaling(wall[i].scale.x, wall[i].scale.y, wall[i].scale.z);
 		DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(wall[i].angle.x, wall[i].angle.y, wall[i].angle.z);
@@ -57,7 +51,7 @@ void Stage::FrontWall()
 
 
 	distances.clear();
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		wall[i].isFrontWall = false;
 	}
@@ -74,9 +68,9 @@ void Stage::FrontWall()
 	DirectX::XMVECTOR cameraDir =DirectX::XMVector3Normalize(
 			DirectX::XMVectorSubtract(cameraPos,roomCenter));
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 6; i++)
 	{
-		DirectX::XMVECTOR center = DirectX::XMLoadFloat3(&wallCenter[i]);
+		DirectX::XMVECTOR center = DirectX::XMLoadFloat3(&wall[i].position);
 
 		// 部屋中心 → 壁中心
 		DirectX::XMVECTOR wallDir =DirectX::XMVector3Normalize(
@@ -101,7 +95,7 @@ void Stage::FrontWall()
 	if (fabs(distances[1].distance - distances[2].distance) < EPS)
 	{
 		// 1枚消す
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			wall[distances[i].index].isFrontWall = false;
 		}
@@ -110,7 +104,7 @@ void Stage::FrontWall()
 	else
 	{
 		// 2枚消す
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			wall[distances[i].index].isFrontWall = false;
 		}
@@ -125,7 +119,7 @@ void Stage::Render(const RenderContext& rc, ModelRenderer* renderer)
 	//renderer->Render(rc, transform, model, ShaderId::Lambert);
 
 	//壁の描画
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		if (!wall[i].isFrontWall) 
 		{
