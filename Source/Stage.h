@@ -58,11 +58,11 @@ private:
 private:
 	Model* model = nullptr;
 	Model* wall_mdl = nullptr;
-	Wall wall[4];
+	Wall wall[6];
 	CameraController* camera = nullptr;
 	std::vector<WallDistance> distances;
 
-
+	float stageSize = 300;
 
 public:
 	void SetCamera(CameraController* camera)

@@ -8,20 +8,22 @@ Stage::Stage()
 	//ステージ読み込み
 	model = new Model("Data/Model/classroom/class_set/classroom_demoscene.mdl");
 	wall_mdl = new Model("Data/Model/cube/wall.mdl");
+
 	wall[FRONT_R].angle.y = DirectX::XM_PI * 0.25f;
 	wall[FRONT_L].angle.y = -DirectX::XM_PI * 0.25f;
 	wall[BACK_R].angle.y = -DirectX::XM_PI * 0.25f;
 	wall[BACK_L].angle.y = DirectX::XM_PI * 0.25f;
 
-	wall[UP].angle.x = -DirectX::XM_PI * 0.5f;
-	wall[DOWN].angle.x = DirectX::XM_PI * 0.5f;
+	wall[UP].angle.z = DirectX::XM_PI * 0.5f;
+	wall[UP].angle.y = DirectX::XM_PI * 0.25f;
+	wall[DOWN].angle.z = DirectX::XM_PI * 0.5f;
+	wall[DOWN].angle.y = DirectX::XM_PI * 0.25f;
 
-	wall[FRONT_R].position = { -300,0,0 };
+	wall[FRONT_R].position = { -stageSize,0,0 };
 	wall[FRONT_L].position = { 0,0,0 };
-	wall[BACK_R].position= {-300,0,-300};
-	wall[BACK_L].position = { 0,0,-300 };
-
-	wall[UP].position= {0,300,0};
+	wall[BACK_R].position= {-stageSize,0,-stageSize };
+	wall[BACK_L].position = { 0,0,-stageSize };
+	wall[UP].position= {0,0,0};
 	wall[DOWN].position = { 0,0,0 };
 }
 Stage::~Stage()
@@ -68,7 +70,7 @@ void Stage::FrontWall()
 	DirectX::XMVECTOR cameraDir =DirectX::XMVector3Normalize(
 			DirectX::XMVectorSubtract(cameraPos,roomCenter));
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		DirectX::XMVECTOR center = DirectX::XMLoadFloat3(&wall[i].position);
 
@@ -95,7 +97,7 @@ void Stage::FrontWall()
 	if (fabs(distances[1].distance - distances[2].distance) < EPS)
 	{
 		// 1枚消す
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			wall[distances[i].index].isFrontWall = false;
 		}
@@ -104,7 +106,7 @@ void Stage::FrontWall()
 	else
 	{
 		// 2枚消す
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			wall[distances[i].index].isFrontWall = false;
 		}
@@ -116,7 +118,7 @@ void Stage::FrontWall()
 void Stage::Render(const RenderContext& rc, ModelRenderer* renderer)
 {
 	//ステージ描画
-	//renderer->Render(rc, transform, model, ShaderId::Lambert);
+	renderer->Render(rc, transform, model, ShaderId::Lambert);
 
 	//壁の描画
 	for (int i = 0; i < 6; i++)
@@ -140,7 +142,7 @@ void Stage::DrawDebugGUI()
 	if (ImGui::Begin("stage", nullptr, ImGuiWindowFlags_None)) {
 		//折り畳みメニュー
 		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				//位置
 				ImGui::InputFloat3("Position", &wall[i].position.x);
