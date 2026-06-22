@@ -33,13 +33,8 @@ private:
 			0,0,0,1
 		};
 
-		DirectX::XMFLOAT3 distance = {};
-
-		DirectX::XMFLOAT3 normal;
 
 		bool isFrontWall = false;
-		int frontNum = 0;//1-4‚Ì‡‚Å‹ß‚¢
-		float debugDot = 0.0f;
 	};
 
 	enum wallPos
@@ -47,7 +42,10 @@ private:
 		FRONT_R,
 		FRONT_L,
 		BACK_R,
-		BACK_L
+		BACK_L,
+	
+		UP,
+		DOWN,
 	};
 
 	//•Ç‚ğ“ñ–‡“§–¾‰»iˆê–‡‚¾‚¯‚ğ’Ç‰ÁÀ‘•j
@@ -64,7 +62,7 @@ private:
 	CameraController* camera = nullptr;
 	std::vector<WallDistance> distances;
 
-	DirectX::XMFLOAT3 wallCenter[4];
+
 
 public:
 	void SetCamera(CameraController* camera)
