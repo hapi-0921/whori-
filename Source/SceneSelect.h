@@ -1,15 +1,14 @@
 #pragma once
-#include"Stage.h"
-#include"Player.h"
-#include"CameraController.h"
+
+#include "System/Sprite.h"
 #include "Scene.h"
 
-// ゲームシーン
-class SceneGame : public Scene
+// セレクトシーン
+class SceneSelect : public Scene
 {
 public:
-	//SceneGame() {};
-	~SceneGame() override {}
+	SceneSelect() {}
+	~SceneSelect() override {}
 
 	// 初期化
 	void Initialize() override;
@@ -25,8 +24,7 @@ public:
 
 	// GUI描画
 	void DrawGUI() override;
+
 private:
-	Stage* stage = nullptr;
-	Player* player = nullptr;
-	CameraController* cameraController = nullptr;
+	Sprite* sprite = nullptr;
 };
