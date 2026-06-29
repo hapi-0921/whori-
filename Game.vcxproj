@@ -125,6 +125,7 @@
     <ClInclude Include="Source\Framework.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\SceneGame.h" />
+    <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\System\Audio.h" />
     <ClInclude Include="Source\System\AudioResource.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
+    <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\System\Audio.cpp" />
     <ClCompile Include="Source\System\AudioResource.cpp" />
