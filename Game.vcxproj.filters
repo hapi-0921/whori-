@@ -135,7 +135,16 @@
     <ClInclude Include="Source\Stage.h">
       <Filter>Source\h</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneTitle.h">
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneSelect.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneLoading.h">
       <Filter>Source\h</Filter>
     </ClInclude>
   </ItemGroup>
@@ -233,7 +242,13 @@
     <ClCompile Include="Source\Stage.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneTitle.cpp">
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneSelect.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneLoading.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
   </ItemGroup>
