@@ -1,6 +1,12 @@
 #pragma once
 #include<DirectXMath.h>
 
+
+//フリーのtransform更新関数
+void freeUpdateTransform(DirectX::XMFLOAT3 scale, DirectX::XMFLOAT3 angle, DirectX::XMFLOAT3 position,
+	DirectX::XMFLOAT4X4& transform);
+
+
 //キャラクター（player・enemy用）
 class ModelCommon// 基底クラス
 {

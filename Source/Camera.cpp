@@ -40,7 +40,7 @@ void Camera::SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& fo
 	this->up.x = view._12;
 	this->up.y = view._22;
 	this->up.z = view._32;
-
+	
 	this->front.x = view._13;
 	this->front.y = view._23;
 	this->front.z = view._33;

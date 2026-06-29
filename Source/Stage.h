@@ -12,6 +12,8 @@ public:
 
 	//更新処理
 	void Update(float elapsedTime);
+	//カメラが部屋の中にいるかどうか
+	bool IsCameraInRoom();
 	//描画処理
 	void Render(const RenderContext& rc, ModelRenderer* renderer);
 
@@ -34,16 +36,18 @@ private:
 		};
 
 
-		bool isFrontWall = false;
+		bool isFrontWallX = false;
+		bool isFrontWallY = false;
+
+		bool isCameraOutWall = false;
 	};
 
 	enum wallPos
 	{
-		FRONT_R,
-		FRONT_L,
-		BACK_R,
-		BACK_L,
-	
+		FRONT,
+		LEFT,
+		RIGHT,
+		BACK,
 		UP,
 		DOWN,
 	};
@@ -56,17 +60,32 @@ private:
 	};
 
 private:
-	Model* model = nullptr;
-	Model* wall_mdl = nullptr;
-	Wall wall[6];
+	Model* mdlStage = nullptr;//ステージ本体
+	Model* mdlWall = nullptr;//壁モデル
+	Model* mdlCenterWall = nullptr;//中央の壁モデル
+
 	CameraController* camera = nullptr;
 	std::vector<WallDistance> distances;
 
-	float stageSize = 300;
+	float stageSizeX = 300;
+	float stageSizeY = 350;
 
 public:
+	Wall wall[6];
+	Wall centerWall;
+
+	Model* GetWall() { return mdlWall; }
+	Model* GetCenterWall() { return mdlCenterWall; }
+
 	void SetCamera(CameraController* camera)
 	{
 		this->camera = camera;
 	}
+
+	static Stage& Instance()
+	{
+		static Stage stage;
+		return stage;
+	}
+
 };
