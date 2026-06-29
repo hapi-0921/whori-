@@ -2,9 +2,10 @@
 #include"Stage.h"
 #include"Player.h"
 #include"CameraController.h"
+#include"Scene.h"
 
 // ƒQ[ƒ€ƒV[ƒ“
-class SceneGame
+class SceneGame : public Scene 
 {
 public:
 	SceneGame() {};
