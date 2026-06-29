@@ -6,7 +6,7 @@
 void SceneGame::Initialize()
 {
 	//ステージ初期化
-	stage = new Stage();
+	//stage = new Stage();
 	//プレイヤー初期化
 	player = new Player();
 
@@ -27,8 +27,8 @@ void SceneGame::Initialize()
 
 	cameraController = new CameraController();
 
-	stage = new Stage();
-	stage->SetCamera(cameraController);
+	Stage& stage = Stage::Instance();
+	stage.SetCamera(cameraController);
 }
 
 // 終了化
@@ -44,11 +44,6 @@ void SceneGame::Finalize()
 		delete player;
 		player = nullptr;
 	}
-	if (stage != nullptr)
-	{
-		delete stage;
-		stage = nullptr;
-	}
 }
 
 // 更新処理
@@ -56,7 +51,8 @@ void SceneGame::Update(float elapsedTime)
 {
 	cameraController->Update(elapsedTime);
 	
-	stage->Update(elapsedTime);
+	Stage& stage = Stage::Instance();
+	stage.Update(elapsedTime);
 	player->Update(elapsedTime);
 }
 
@@ -80,7 +76,8 @@ void SceneGame::Render()
 
 	// 3Dモデル描画
 	{
-		stage->Render(rc, modelRenderer);
+		Stage& stage = Stage::Instance();
+		stage.Render(rc, modelRenderer);
 		player->Render(rc, modelRenderer);
 	}
 
@@ -93,6 +90,7 @@ void SceneGame::Render()
 	{
 
 	}
+	cameraController->Render(rc);
 }
 
 // GUI描画
@@ -101,5 +99,7 @@ void SceneGame::DrawGUI()
 	// プレイヤーデバッグ描画
 	player->DrawDebugGUI();
 	cameraController->DrawDebugGUI();
-	stage->DrawDebugGUI();
+
+	Stage& stage = Stage::Instance();
+	stage.DrawDebugGUI();
 }

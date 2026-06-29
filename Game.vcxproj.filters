@@ -147,6 +147,9 @@
     <ClInclude Include="Source\SceneLoading.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui-docking\imgui.cpp">
@@ -249,6 +252,9 @@
       <Filter>Source\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneLoading.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
   </ItemGroup>

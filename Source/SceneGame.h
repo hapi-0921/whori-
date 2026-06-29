@@ -2,32 +2,33 @@
 #include"Stage.h"
 #include"Player.h"
 #include"CameraController.h"
-#include "Scene.h"
+#include"Scene.h"
 
 
 // ゲームシーン
-class SceneGame : public Scene
+class SceneGame : public Scene 
 {
 public:
-	//SceneGame() {};
-	~SceneGame() override {}
+	SceneGame() {};
+	~SceneGame() {};
 
 	// 初期化
-	void Initialize() override;
+	void Initialize();
 
 	// 終了化
-	void Finalize() override;
+	void Finalize();
 
 	// 更新処理
-	void Update(float elapsedTime) override;
+	void Update(float elapsedTime);
 
 	// 描画処理
-	void Render() override;
+	void Render();
 
 	// GUI描画
-	void DrawGUI() override;
+	void DrawGUI();
 private:
-	Stage* stage = nullptr;
+
 	Player* player = nullptr;
 	CameraController* cameraController = nullptr;
+	ShapeRenderer* shapeRenderer = nullptr;
 };

@@ -6,56 +6,87 @@
 Stage::Stage()
 {
 	//ステージ読み込み
-	model = new Model("Data/Model/classroom/class_set/classroom_demoscene.mdl");
-	wall_mdl = new Model("Data/Model/cube/wall.mdl");
+	mdlStage = new Model("Data/Model/classroom/class_set/classroom_demoscene.mdl");
+	mdlWall = new Model("Data/Model/cube/wall.mdl");
+	mdlCenterWall = new Model("Data/Model/cube/wall.mdl");
 
-	wall[FRONT_R].angle.y = DirectX::XM_PI * 0.25f;
-	wall[FRONT_L].angle.y = -DirectX::XM_PI * 0.25f;
-	wall[BACK_R].angle.y = -DirectX::XM_PI * 0.25f;
-	wall[BACK_L].angle.y = DirectX::XM_PI * 0.25f;
+	centerWall.angle.y = DirectX::XM_PI * 0.25f;
+	centerWall.scale.y = 5.0f;
+	centerWall.scale.z = 5.0f;
 
+
+	wall[FRONT].angle.y = DirectX::XM_PI * 0.5f;
+	wall[LEFT].angle.y = 0;
+	wall[RIGHT].angle.y = 0;
+	wall[BACK].angle.y = DirectX::XM_PI * 0.5f;
 	wall[UP].angle.z = DirectX::XM_PI * 0.5f;
-	wall[UP].angle.y = DirectX::XM_PI * 0.25f;
 	wall[DOWN].angle.z = DirectX::XM_PI * 0.5f;
-	wall[DOWN].angle.y = DirectX::XM_PI * 0.25f;
 
-	wall[FRONT_R].position = { -stageSize,0,0 };
-	wall[FRONT_L].position = { 0,0,0 };
-	wall[BACK_R].position= {-stageSize,0,-stageSize };
-	wall[BACK_L].position = { 0,0,-stageSize };
-	wall[UP].position= {0,0,0};
+	wall[FRONT].position = { 0,stageSizeY*0.5f,stageSizeX };
+	wall[LEFT].position = { -stageSizeX,stageSizeY * 0.5f,0 };
+	wall[RIGHT].position= { stageSizeX,stageSizeY * 0.5f,0 };
+	wall[BACK].position = { 0, stageSizeY * 0.5f ,-stageSizeX };
+	wall[UP].position= {0,stageSizeY,0};
 	wall[DOWN].position = { 0,0,0 };
 }
 Stage::~Stage()
 {
-	//ステージモデルを破棄
-	delete model;
-	delete wall_mdl;
+	delete mdlStage;
+	delete mdlWall;
+	delete mdlCenterWall;
 }
 //更新処理
 void Stage::Update(float elapsedTime)
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++)//実際の壁
 	{
-		DirectX::XMMATRIX S = DirectX::XMMatrixScaling(wall[i].scale.x, wall[i].scale.y, wall[i].scale.z);
-		DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(wall[i].angle.x, wall[i].angle.y, wall[i].angle.z);
-		DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(wall[i].position.x, wall[i].position.y, wall[i].position.z);
-		DirectX::XMMATRIX W = S * R * T;
-		DirectX::XMStoreFloat4x4(&wall[i].transform, W);
+		freeUpdateTransform(wall[i].scale, wall[i].angle, wall[i].position, wall[i].transform);
 	}
+
+	//レイ用の壁
+	centerWall.angle.z = camera->GetCameraAngle().x/*+DirectX::XM_PI * 0.5f*/;
+	centerWall.angle.y = camera->GetCameraAngle().y+DirectX::XM_PI * 0.5f;
+	freeUpdateTransform(centerWall.scale, centerWall.angle, centerWall.position, centerWall.transform);
+
+
 	FrontWall();
 
 }
 
+bool Stage::IsCameraInRoom()
+{
+	DirectX::XMFLOAT3 cameraPos = camera->GetCameraTarget();
+	for (int i = 0; i < 6; i++)
+	{
+		if (cameraPos.y <= wall[i].position.y)
+		{
+			//if (cameraPos <= wall[i].position)
+			{
+
+			}
+		}
+		
+
+	}
+
+	return false;
+}
+
 void Stage::FrontWall()
 {
+	//if (IsCameraInRoom)		return;
 	if (camera == nullptr)	return;
 
 
 	distances.clear();
-	for (int i = 0; i < 6; i++)
+
+	for (int i = 0; i < 4; i++)
 	{
-		wall[i].isFrontWall = false;
+		wall[i].isFrontWallX = false;
+	}
+	for (int i = 4; i < 6; i++)
+	{
+		wall[i].isFrontWallY = false;
 	}
 
 	// 部屋の中心
@@ -70,62 +101,104 @@ void Stage::FrontWall()
 	DirectX::XMVECTOR cameraDir =DirectX::XMVector3Normalize(
 			DirectX::XMVectorSubtract(cameraPos,roomCenter));
 
-	for (int i = 0; i < 4; i++)
+	//上下壁
 	{
-		DirectX::XMVECTOR center = DirectX::XMLoadFloat3(&wall[i].position);
+		for (int i = 4; i < 6; i++)
+		{
+			DirectX::XMVECTOR center = DirectX::XMLoadFloat3(&wall[i].position);
 
-		// 部屋中心 → 壁中心
-		DirectX::XMVECTOR wallDir =DirectX::XMVector3Normalize(
-			DirectX::XMVectorSubtract(center,roomCenter));
+			// 部屋中心 → 壁中心
+			DirectX::XMVECTOR wallDir = DirectX::XMVector3Normalize(
+				DirectX::XMVectorSubtract(center, roomCenter));
 
 
-		float dot =DirectX::XMVectorGetX(
-				DirectX::XMVector3Dot(cameraDir,wallDir));
+			float dot = DirectX::XMVectorGetX(
+				DirectX::XMVector3Dot(cameraDir, wallDir));
 
-		distances.push_back({ i, dot });
+			distances.push_back({ i, dot });
+		}
+
+		std::sort(distances.begin(), distances.end(),
+			[](const WallDistance& a, const WallDistance& b)
+			{
+				return a.distance > b.distance;
+			}
+		);
+
+		wall[distances[0].index].isFrontWallY = true;
 	}
 
-	std::sort(distances.begin(),distances.end(),
-		[](const WallDistance& a,const WallDistance& b)
-		{
-			return a.distance > b.distance;
-		}
-	);
-
-	const float EPS = 0.3f;
-
-	if (fabs(distances[1].distance - distances[2].distance) < EPS)
+	//横壁
 	{
-		// 1枚消す
 		for (int i = 0; i < 4; i++)
 		{
-			wall[distances[i].index].isFrontWall = false;
+			DirectX::XMVECTOR center = DirectX::XMLoadFloat3(&wall[i].position);
+
+			// 部屋中心 → 壁中心
+			DirectX::XMVECTOR wallDir = DirectX::XMVector3Normalize(
+				DirectX::XMVectorSubtract(center, roomCenter));
+
+
+			float dot = DirectX::XMVectorGetX(
+				DirectX::XMVector3Dot(cameraDir, wallDir));
+
+			distances.push_back({ i, dot });
 		}
-		wall[distances[0].index].isFrontWall = true;
-	}
-	else
-	{
-		// 2枚消す
-		for (int i = 0; i < 4; i++)
+
+		std::sort(distances.begin(), distances.end(),
+			[](const WallDistance& a, const WallDistance& b)
+			{
+				return a.distance > b.distance;
+			}
+		);
+
+		const float EPS = 0.3f;
+
+		if (fabs(distances[1].distance - distances[2].distance) < EPS)
 		{
-			wall[distances[i].index].isFrontWall = false;
+			// 1枚消す
+			for (int i = 0; i < 4; i++)
+			{
+				wall[distances[i].index].isFrontWallX = false;
+			}
+			wall[distances[0].index].isFrontWallX = true;
 		}
-		wall[distances[0].index].isFrontWall = true;
-		wall[distances[1].index].isFrontWall = true;
+		else
+		{
+			// 2枚消す
+			for (int i = 0; i < 4; i++)
+			{
+				wall[distances[i].index].isFrontWallX = false;
+			}
+			wall[distances[0].index].isFrontWallX = true;
+			wall[distances[1].index].isFrontWallX = true;
+		}
 	}
 }
 
+
+
 void Stage::Render(const RenderContext& rc, ModelRenderer* renderer)
 {
+	//return;
 	//ステージ描画
-	renderer->Render(rc, transform, model, ShaderId::Lambert);
+	//renderer->Render(rc, transform, mdlStage, ShaderId::Lambert);
+
+	//renderer->Render(rc, centerWall.transform, mdlCenterWall, ShaderId::Lambert);
 
 	//壁の描画
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		if (!wall[i].isFrontWall) 
+		if (!wall[i].isFrontWallX)
 		{
-			renderer->Render(rc, wall[i].transform, wall_mdl, ShaderId::Lambert);
+			renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
+		}
+	}
+	for (int i = 4; i < 6; i++)
+	{
+		if (!wall[i].isFrontWallY)
+		{
+			renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
 		}
 	}
 }
@@ -160,11 +233,6 @@ void Stage::DrawDebugGUI()
 
 			}
 		}
-		ImGui::Text("0 : %d", wall[0].isFrontWall);
-		ImGui::Text("1 : %d", wall[1].isFrontWall);
-		ImGui::Text("2 : %d", wall[2].isFrontWall);
-		ImGui::Text("3 : %d", wall[3].isFrontWall);
-
 		DirectX::XMFLOAT3 eye = camera->GetCameraEye();
 
 		ImGui::Text("eye.x = %.1f", eye.x);
