@@ -4,6 +4,7 @@
 #include"CameraController.h"
 #include "Scene.h"
 
+
 // ƒQ[ƒ€ƒV[ƒ“
 class SceneGame : public Scene
 {
