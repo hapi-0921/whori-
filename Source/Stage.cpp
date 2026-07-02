@@ -190,14 +190,14 @@ void Stage::Render(const RenderContext& rc, ModelRenderer* renderer)
 		{
 			if (!wall[i].isFrontWallX)
 			{
-				//renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
+				renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
 			}
 		}
 		for (int i = 4; i < 6; i++)//y•Ç
 		{
 			if (!wall[i].isFrontWallY)
 			{
-				//renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
+				renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
 			}
 		}
 	}

@@ -74,8 +74,8 @@ void SceneGame::Render()
 
 	// 3Dƒ‚ƒfƒ‹•`‰æ
 	{
-		Stage& stage = Stage::Instance();
-		stage.Render(rc, modelRenderer);
+		//Stage& stage = Stage::Instance();
+		//stage.Render(rc, modelRenderer);
 
 		targetManager->Render(rc, modelRenderer);
 
