@@ -2,6 +2,7 @@
 
 #include "System/Sprite.h"
 #include "Scene.h"
+#include"CameraController.h"
 
 // セレクトシーン
 class SceneSelect : public Scene
@@ -27,4 +28,11 @@ public:
 
 private:
 	Sprite* sprite = nullptr;
+	CameraController* cameraController = nullptr;
+	ShapeRenderer* shapeRenderer = nullptr;
+
+	// セレクト画面でのステージ用のスケール調整変数
+	DirectX::XMFLOAT3 StageSelectScale = { 0.1f, 0.1f, 0.1f };
+
+
 };
