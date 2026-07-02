@@ -5,7 +5,7 @@
 // 初期化
 void SceneGame::Initialize()
 {
-	sprite = new Sprite("Data/Sprite/cursor.png"); // 背景のスプライト
+	sprite = new Sprite("Data/Sprite/cursor.png"); // デバッグspr
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -24,6 +24,9 @@ void SceneGame::Initialize()
 
 	cameraController = new CameraController();
 	targetManager = new TargetManager();
+
+	uiController = new UIController();
+	uiController->Initialize();
 
 	Stage& stage = Stage::Instance();
 	stage.SetCamera(cameraController);
@@ -48,6 +51,11 @@ void SceneGame::Finalize()
 		delete sprite;
 		sprite = nullptr;
 	}
+	if (uiController != nullptr)
+	{
+		delete uiController;
+		uiController = nullptr;
+	}
 
 }
 
@@ -60,6 +68,7 @@ void SceneGame::Update(float elapsedTime)
 	stage.Update(elapsedTime);
 
 	targetManager->Update(elapsedTime);
+	uiController->Update(elapsedTime);
 
 }
 
@@ -97,14 +106,19 @@ void SceneGame::Render()
 
 	// 2Dスプライト描画
 	{
+		uiController->Render(rc);
+	}
+	// 2Dデバッグ描画
+	{
 		float screenWidth = static_cast<float>(graphics.GetScreenWidth());
 		float screenHeight = static_cast<float>(graphics.GetScreenHeight());
 		sprite->Render(rc,
-			screenWidth*0.5f-50, screenHeight*0.5f-50, 0,
-			100, 100,0,
+			screenWidth * 0.5f - 50, screenHeight * 0.5f - 50, 0,
+			100, 100, 0,
 			1, 1, 1, 1);
 
 	}
+
 	cameraController->Render(rc);
 }
 
@@ -114,6 +128,7 @@ void SceneGame::DrawGUI()
 	// プレイヤーデバッグ描画
 	cameraController->DrawDebugGUI();
 	targetManager->DrawDebugGUI();
+	uiController->DrawDebugGUI();
 
 	Stage& stage = Stage::Instance();
 	stage.DrawDebugGUI();

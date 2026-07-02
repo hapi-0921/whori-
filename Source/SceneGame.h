@@ -4,6 +4,7 @@
 #include"Scene.h"
 #include"targetManager.h"
 #include "System/Sprite.h"
+#include"UIController.h"
 
 
 // ÉQÅ[ÉÄÉVÅ[Éì
@@ -30,6 +31,7 @@ public:
 private:
 	Sprite* sprite = nullptr;
 
+	UIController* uiController = nullptr;
 	TargetManager* targetManager = nullptr;
 	CameraController* cameraController = nullptr;
 	ShapeRenderer* shapeRenderer = nullptr;

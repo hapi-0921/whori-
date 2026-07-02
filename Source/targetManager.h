@@ -27,15 +27,25 @@ private:
 			0,0,0,1
 		};
 
-		float distance;
-		bool isFocus = false;
-	};
 
+		float distance;
+		bool isFocus = false;//フォーカスされているか
+		bool isRender = false;//描画するか
+	};
+	
+	float maxDistance = 500.0f;
 	DirectX::XMFLOAT3 rayEnd;
 	DirectX::XMFLOAT3 rayStart;
 
 private:
+
 	Model* modelTargets = nullptr;
 	Target targets;
 	//std::vector<Target*> keepTargets;//保存用
+
+
+public:
+	bool GetIsRender() { return targets.isRender; }
+	//bool GetIsRender(int i/*配列要素数*/) { return target; }
+
 };

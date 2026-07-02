@@ -275,7 +275,7 @@ void CameraController::DrawDebugGUI()
 
 	//ウィンドウの位置
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
-	ImGui::SetNextWindowPos(ImVec2(pos.x + 1000, pos.y + 10), ImGuiCond_Once);
+	ImGui::SetNextWindowPos(ImVec2(pos.x , pos.y + 300), ImGuiCond_Once);
 	//ウィンドウサイズ
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 

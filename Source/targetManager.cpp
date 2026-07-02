@@ -1,4 +1,4 @@
-#include"targetManager.h"
+﻿#include"targetManager.h"
 
 #include"ModelCommon.h"
 #include<imgui.h>
@@ -22,26 +22,53 @@ TargetManager::~TargetManager()
 
 void TargetManager::Update(float elapsedTime)
 {
+	
+	//フォーカス判定
 	TargetFocus();
+
+	//transformの更新
 	freeUpdateTransform(targets.scale, targets.angle, targets.position, targets.transform);
 
 }
 
 void TargetManager::TargetFocus()
 {
-	Camera& camera = Camera::Instance();
-	rayStart = camera.GetEye();
-	rayEnd = rayStart;
-	rayEnd.x += camera.GetFront().x * 2000.0f;
-	rayEnd.y += camera.GetFront().y * 2000.0f;
-	rayEnd.z += camera.GetFront().z * 2000.0f;
+	//カメラ➝もの
 
-	DirectX::XMFLOAT3 hit, normal;
+	auto Ray = [this]() -> bool 
+	{
+		Camera& camera = Camera::Instance();
+		DirectX::XMFLOAT3 rayStart = camera.GetEye();
+		DirectX::XMFLOAT3 rayEnd = rayStart;
 
-	if (Collision::RayCast(rayStart, rayEnd,
-		targets.transform, modelTargets, hit, normal))
+		DirectX::XMFLOAT3 front = camera.GetFront();
+		rayEnd.x += front.x * 2000.0f;
+		rayEnd.y += front.y * 2000.0f;
+		rayEnd.z += front.z * 2000.0f;
+
+		DirectX::XMFLOAT3 hit, normal;
+
+		return (Collision::RayCast(rayStart, rayEnd,
+			targets.transform, modelTargets, hit, normal));
+	};
+	auto Distance = [this]() -> bool 
+	{
+		DirectX::XMFLOAT3 t = targets.position;
+		DirectX::XMFLOAT3 e = Camera::Instance().GetEye();
+
+		float dx = t.x - e.x;
+		float dy = t.y - e.y;
+		float dz = t.z - e.z;
+
+		targets.distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+		return(maxDistance > targets.distance);
+	};
+
+	if (Ray() && Distance())
 	{
 		targets.isFocus = true;
+		targets.isRender = true;
 		return;
 	}
 
@@ -51,8 +78,12 @@ void TargetManager::TargetFocus()
 
 void TargetManager::Render(const RenderContext& rc, ModelRenderer* renderer)
 {
-	renderer->Render(rc, targets.transform, modelTargets, ShaderId::Lambert);
+	if (!targets.isRender)
+	{
+		renderer->Render(rc, targets.transform, modelTargets, ShaderId::Lambert);
+	}
 }
+
 void TargetManager::DrawDebugGUI()
 {
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
@@ -62,14 +93,14 @@ void TargetManager::DrawDebugGUI()
 
 	if (ImGui::Begin("targets", nullptr, ImGuiWindowFlags_None))
 	{
-		//�܂���
+		//折り畳み
 		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			ImGui::InputFloat3("rayStart", &rayStart.x);
 			ImGui::InputFloat3("rayEnd", &rayEnd.x);
+			ImGui::InputFloat("targets.distance", &targets.distance);
 
 			ImGui::Checkbox("targets.isFocus", &targets.isFocus);
-
 		}
 	}
 	ImGui::End();
