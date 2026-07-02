@@ -6,6 +6,7 @@
 #include "RenderState.h"
 #include "ShapeRenderer.h"
 #include "ModelRenderer.h"
+#include "PrimitiveRenderer.h"
 
 // グラフィックス
 class Graphics
@@ -52,6 +53,9 @@ public:
 	// レンダーステート取得
 	RenderState* GetRenderState() { return renderState.get(); }
 
+	// プリミティブレンダラ取得
+	PrimitiveRenderer* GetPrimitiveRenderer() const { return primitiveRenderer.get(); }
+
 	// シェイプレンダラ取得
 	ShapeRenderer* GetShapeRenderer() const { return shapeRenderer.get(); }
 
@@ -71,6 +75,7 @@ private:
 	float	screenHeight = 0;
 
 	std::unique_ptr<RenderState>					renderState;
+	std::unique_ptr<PrimitiveRenderer>				primitiveRenderer;
 	std::unique_ptr<ShapeRenderer>					shapeRenderer;
 	std::unique_ptr<ModelRenderer>					modelRenderer;
 };

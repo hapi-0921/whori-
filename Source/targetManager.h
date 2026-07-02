@@ -12,6 +12,8 @@ public:
 	void Render(const RenderContext& rc, ModelRenderer* renderer);
 	void DrawDebugGUI();
 
+	void TargetFocus();
+
 private:
 	struct Target
 	{
@@ -26,11 +28,14 @@ private:
 		};
 
 		float distance;
+		bool isFocus = false;
 	};
+
+	DirectX::XMFLOAT3 rayEnd;
+	DirectX::XMFLOAT3 rayStart;
 
 private:
 	Model* modelTargets = nullptr;
-
 	Target targets;
-	std::vector<Target*> keepTargets;//•Û‘¶—p
+	//std::vector<Target*> keepTargets;//•Û‘¶—p
 };

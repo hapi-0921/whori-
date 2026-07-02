@@ -5,7 +5,8 @@
 // 初期化
 void SceneGame::Initialize()
 {
- 
+	sprite = new Sprite("Data/Sprite/cursor.png"); // 背景のスプライト
+
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
 	Camera& camera = Camera::Instance();
@@ -23,7 +24,7 @@ void SceneGame::Initialize()
 
 	cameraController = new CameraController();
 	targetManager = new TargetManager();
-	
+
 	Stage& stage = Stage::Instance();
 	stage.SetCamera(cameraController);
 }
@@ -40,24 +41,32 @@ void SceneGame::Finalize()
 		targetManager = nullptr;
 	}
 
- }
+
+	//2D
+	if (sprite != nullptr)
+	{
+		delete sprite;
+		sprite = nullptr;
+	}
+
+}
 
 // 更新処理
 void SceneGame::Update(float elapsedTime)
 {
 	cameraController->Update(elapsedTime);
-	
+
 	Stage& stage = Stage::Instance();
 	stage.Update(elapsedTime);
 
 	targetManager->Update(elapsedTime);
 
- }
+}
 
 // 描画処理
 void SceneGame::Render()
 {
-	Graphics& graphics = Graphics::Instance(); 
+	Graphics& graphics = Graphics::Instance();
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
 	ShapeRenderer* shapeRenderer = graphics.GetShapeRenderer();
 	ModelRenderer* modelRenderer = graphics.GetModelRenderer();
@@ -79,7 +88,7 @@ void SceneGame::Render()
 
 		targetManager->Render(rc, modelRenderer);
 
- 	}
+	}
 
 	// 3Dデバッグ描画
 	{
@@ -88,6 +97,12 @@ void SceneGame::Render()
 
 	// 2Dスプライト描画
 	{
+		float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+		float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+		sprite->Render(rc,
+			screenWidth*0.5f-50, screenHeight*0.5f-50, 0,
+			100, 100,0,
+			1, 1, 1, 1);
 
 	}
 	cameraController->Render(rc);
@@ -97,7 +112,7 @@ void SceneGame::Render()
 void SceneGame::DrawGUI()
 {
 	// プレイヤーデバッグ描画
- 	cameraController->DrawDebugGUI();
+	cameraController->DrawDebugGUI();
 	targetManager->DrawDebugGUI();
 
 	Stage& stage = Stage::Instance();

@@ -150,6 +150,9 @@
     <ClInclude Include="Source\targetManager.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PrimitiveRenderer.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui-docking\imgui.cpp">
@@ -255,6 +258,9 @@
       <Filter>Source\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Source\targetManager.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PrimitiveRenderer.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
   </ItemGroup>

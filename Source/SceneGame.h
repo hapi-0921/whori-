@@ -3,10 +3,11 @@
 #include"CameraController.h"
 #include"Scene.h"
 #include"targetManager.h"
+#include "System/Sprite.h"
 
 
 // ÉQÅ[ÉÄÉVÅ[Éì
-class SceneGame : public Scene 
+class SceneGame : public Scene
 {
 public:
 	SceneGame() {};
@@ -27,6 +28,8 @@ public:
 	// GUIï`âÊ
 	void DrawGUI();
 private:
+	Sprite* sprite = nullptr;
+
 	TargetManager* targetManager = nullptr;
 	CameraController* cameraController = nullptr;
 	ShapeRenderer* shapeRenderer = nullptr;
