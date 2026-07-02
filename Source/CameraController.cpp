@@ -107,7 +107,7 @@ bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 		return false;
 	}
 
-	// ================ 視線方向成分を除去================
+	// ================ ================
 	XMVECTOR delta = XMLoadFloat3(&centerHit) - XMLoadFloat3(&realHit);
 
 	//
@@ -138,7 +138,7 @@ void CameraController::Update(float elapsedTime)
 	{
 		float dx = static_cast<float>(
 			mouse.GetPositionX() - mouse.GetOldPositionX());
-  
+
 		float dy = static_cast<float>(
 			mouse.GetPositionY() - mouse.GetOldPositionY());
 
@@ -170,8 +170,8 @@ void CameraController::Update(float elapsedTime)
 	DirectX::XMStoreFloat3(&right, Transform.r[0]);
 
 	DirectX::XMVECTOR Front = Transform.r[2];
-	DirectX::XMFLOAT3 front;				 
-	DirectX::XMStoreFloat3(&front, Front);	 
+	DirectX::XMFLOAT3 front;
+	DirectX::XMStoreFloat3(&front, Front);
 
 
 	//＊制作用
@@ -197,7 +197,7 @@ void CameraController::Update(float elapsedTime)
 	if (wheel != 0.0f)
 	{
 		// ================ ズームイン ================
-		if (wheel > 0.0f)  
+		if (wheel > 0.0f)
 		{
 			XMFLOAT3 hitDelta;
 			if (cursorRay(hitDelta))
@@ -211,8 +211,8 @@ void CameraController::Update(float elapsedTime)
 				{
 					XMVECTOR dir = XMVector3Normalize(deltaV);
 
-					float strength = wheel * 0.3f;           
-					float maxMove = distToHit * 0.42f;        
+					float strength = wheel * 0.3f;
+					float maxMove = distToHit * 0.42f;
 
 					float moveAmount = std::min(strength * distToHit, maxMove);
 
@@ -223,7 +223,7 @@ void CameraController::Update(float elapsedTime)
 			}
 		}
 		// ================ ズームアウト ===============
-		else              
+		else
 		{
 			XMVECTOR targetV = XMLoadFloat3(&target);
 			XMVECTOR center = XMVectorZero();
@@ -249,13 +249,13 @@ void CameraController::Update(float elapsedTime)
 	}
 
 	// カメラ更新
-	float safeRange = std::max(range, 0.0001f);  
+	float safeRange = std::max(range, 0.0001f);
 
 	eye.x = target.x - front.x * safeRange;
 	eye.y = target.y - front.y * safeRange;
 	eye.z = target.z - front.z * safeRange;
 
-	Camera::Instance().SetLookAt(eye, target, XMFLOAT3(0, 1, 0)); 
+	Camera::Instance().SetLookAt(eye, target, XMFLOAT3(0, 1, 0));
 }
 
 void CameraController::Render(const RenderContext& rc)

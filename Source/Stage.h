@@ -4,24 +4,8 @@
 #include"CameraController.h"
 
 //ステージ
-class Stage:public ModelCommon
+class Stage :public ModelCommon
 {
-public:
-	Stage();
-	~Stage()override;
-
-	//更新処理
-	void Update(float elapsedTime);
-	//カメラが部屋の中にいるかどうか
-	bool IsCameraInRoom();
-	//描画処理
-	void Render(const RenderContext& rc, ModelRenderer* renderer);
-
-	void FrontWall();
-
-	//デバッグ用GUI描画
-	void DrawDebugGUI();
-
 private:
 	struct Wall
 	{
@@ -59,13 +43,30 @@ private:
 		float distance;
 	};
 
+public:
+	Stage();
+	~Stage()override;
+
+	//更新処理
+	void Update(float elapsedTime);
+
+	//描画処理
+	void Render(const RenderContext& rc, ModelRenderer* renderer);
+
+	void FrontWall();
+
+	//デバッグ用GUI描画
+	void DrawDebugGUI();
+
+
 private:
 	Model* mdlStage = nullptr;//ステージ本体
 	Model* mdlWall = nullptr;//壁モデル
 	Model* mdlCenterWall = nullptr;//中央の壁モデル
 
 	CameraController* camera = nullptr;
-	std::vector<WallDistance> distances;
+	std::vector<WallDistance> distancesX;
+	std::vector<WallDistance> distancesY;
 
 	float stageSizeX = 300;
 	float stageSizeY = 350;
