@@ -1,8 +1,8 @@
 #pragma once
 #include"Stage.h"
-#include"Player.h"
 #include"CameraController.h"
 #include"Scene.h"
+#include"targetManager.h"
 
 
 // ƒQ[ƒ€ƒV[ƒ“
@@ -27,8 +27,7 @@ public:
 	// GUI•`‰æ
 	void DrawGUI();
 private:
-
-	Player* player = nullptr;
+	TargetManager* targetManager = nullptr;
 	CameraController* cameraController = nullptr;
 	ShapeRenderer* shapeRenderer = nullptr;
 };
