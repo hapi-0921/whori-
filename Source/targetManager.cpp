@@ -12,12 +12,19 @@
 
 TargetManager::TargetManager()
 {
-	modelTargets = new Model("Data/Model/target/clock.mdl");
-}
+	targets[CLOCK].model= new Model("Data/Model/target/clock.mdl");
+	targets[RADIO].model= new Model("Data/Model/target/radio.mdl");
 
+	targets[CLOCK].position = { 0,0,0 };
+	targets[RADIO].position = { 100,0,0 };
+
+}
 TargetManager::~TargetManager()
 {
-	delete modelTargets;
+	for (auto& t : targets)
+	{
+		delete t.model;
+	}
 }
 
 void TargetManager::Update(float elapsedTime)
@@ -27,60 +34,151 @@ void TargetManager::Update(float elapsedTime)
 	TargetFocus();
 
 	//transformの更新
-	freeUpdateTransform(targets.scale, targets.angle, targets.position, targets.transform);
-
+	for(auto& t : targets)
+	{
+		freeUpdateTransform(t.scale, t.angle, t.position, t.transform);
+	}
 }
 
 void TargetManager::TargetFocus()
 {
+	//カメラ➝ステージ
+
+
+	//カメラ➝対象物以外の物
+
+
 	//カメラ➝もの
-
-	auto Ray = [this]() -> bool 
+	for (auto& t : targets)
 	{
-		Camera& camera = Camera::Instance();
-		DirectX::XMFLOAT3 rayStart = camera.GetEye();
-		DirectX::XMFLOAT3 rayEnd = rayStart;
+		auto Ray = [this, &t]() -> bool
+			{
+				Camera& camera = Camera::Instance();
+				DirectX::XMFLOAT3 rayStart = camera.GetEye();
 
-		DirectX::XMFLOAT3 front = camera.GetFront();
-		rayEnd.x += front.x * 2000.0f;
-		rayEnd.y += front.y * 2000.0f;
-		rayEnd.z += front.z * 2000.0f;
+				DirectX::XMFLOAT3 rayEnd = rayStart;
+				DirectX::XMFLOAT3 front = camera.GetFront();
+				rayEnd.x += front.x * 2000.0f;
+				rayEnd.y += front.y * 2000.0f;
+				rayEnd.z += front.z * 2000.0f;
 
-		DirectX::XMFLOAT3 hit, normal;
+				DirectX::XMFLOAT3 hit, normal;
 
-		return (Collision::RayCast(rayStart, rayEnd,
-			targets.transform, modelTargets, hit, normal));
-	};
-	auto Distance = [this]() -> bool 
-	{
-		DirectX::XMFLOAT3 t = targets.position;
-		DirectX::XMFLOAT3 e = Camera::Instance().GetEye();
+				return (Collision::RayCast(rayStart, rayEnd,
+					t.transform, t.model, hit, normal));
+			};
+		auto Distance = [this, &t]() -> bool
+			{
+				DirectX::XMFLOAT3 tPos = t.position;
+				DirectX::XMFLOAT3 e = Camera::Instance().GetEye();
 
-		float dx = t.x - e.x;
-		float dy = t.y - e.y;
-		float dz = t.z - e.z;
+				float dx = tPos.x - e.x;
+				float dy = tPos.y - e.y;
+				float dz = tPos.z - e.z;
 
-		targets.distance = sqrt(dx * dx + dy * dy + dz * dz);
+				t.distance = sqrt(dx * dx + dy * dy + dz * dz);
 
-		return(maxDistance > targets.distance);
-	};
+				return(maxDistance > t.distance);
+			};
+		t.preRender = t.isRender;
 
-	if (Ray() && Distance())
-	{
-		targets.isFocus = true;
-		targets.isRender = true;
-		return;
+		//獲得
+		if (Ray() && Distance())
+		{
+			t.isFocus = true;//瞬間のみtrue（=>何回もなる）
+			t.isRender = true;//チェーンが外れない限りfalseにならない
+		}
+		else
+		{
+			t.isFocus = false;
+		}
+
+		//獲得した瞬間
+		if(t.preRender !=t.isRender)
+		{
+			chainCount++;
+			keepTargets.push_back(&t);
+		}
+
 	}
 
-	targets.isFocus = false;
 }
-
+//void TargetManager::TargetFocus()
+//{
+//	Camera& cam = Camera::Instance();
+//	DirectX::XMFLOAT3 rayOrigin = cam.GetEye();
+//	DirectX::XMFLOAT3 rayDir = cam.GetFront();   // 正規化されている前提
+//
+//	for (auto& t : targets)
+//	{
+//		DirectX::XMFLOAT3 toTarget = {
+//			t.transform.position.x - rayOrigin.x,
+//			t.transform.position.y - rayOrigin.y,
+//			t.transform.position.z - rayOrigin.z
+//		};
+//
+//		float targetDistance = sqrtf(toTarget.x * toTarget.x + toTarget.y * toTarget.y + toTarget.z * toTarget.z);
+//		if (targetDistance > maxDistance)
+//		{
+//			t.isFocus = false;
+//			continue;
+//		}
+//
+//		DirectX::XMFLOAT3 rayEnd = rayOrigin;
+//		rayEnd.x += rayDir.x * targetDistance * 1.1f;  // 少し余裕を持たせる
+//		rayEnd.y += rayDir.y * targetDistance * 1.1f;
+//		rayEnd.z += rayDir.z * targetDistance * 1.1f;
+//
+//		DirectX::XMFLOAT3 hitPoint, hitNormal;
+//		float closestDistance = FLT_MAX;
+//		bool blocked = false;
+//
+//		// =========== ステージとの判定 ============
+//		if (stageModel)
+//		{
+//			if (Collision::RayCast(rayOrigin, rayEnd, stageTransform, stageModel, hitPoint, hitNormal))
+//			{
+//				float d = Distance(rayOrigin, hitPoint);
+//				if (d < closestDistance)
+//				{
+//					closestDistance = d;
+//					blocked = true;
+//				}
+//			}
+//		}
+//
+//		// ===========対象物との判定===========
+//		for (const auto& other : targets)
+//		{
+//			if (&other == &t) continue;  // 自分自身は除外
+//
+//			if (Collision::RayCast(rayOrigin, rayEnd, other.transform, other.model, hitPoint, hitNormal))
+//			{
+//				float d = Distance(rayOrigin, hitPoint);
+//				if (d < closestDistance)
+//				{
+//					closestDistance = d;
+//					blocked = true;
+//				}
+//			}
+//		}
+//
+//		// ============対象物自身との判定 ==============
+//		bool hitSelf = Collision::RayCast(rayOrigin, rayEnd, t.transform, t.model, hitPoint, hitNormal);
+//
+//		t.isFocus = hitSelf && !blocked;
+//		t.distance = targetDistance;
+//	}
+//}
 
 void TargetManager::Render(const RenderContext& rc, ModelRenderer* renderer)
 {
-	if (!targets.isRender)
+	for(auto & t : targets)
 	{
-		renderer->Render(rc, targets.transform, modelTargets, ShaderId::Lambert);
+		if(!t.isRender)
+		{
+			renderer->Render(rc, t.transform, t.model, ShaderId::Lambert);
+		}
 	}
 }
 
@@ -94,14 +192,17 @@ void TargetManager::DrawDebugGUI()
 	if (ImGui::Begin("targets", nullptr, ImGuiWindowFlags_None))
 	{
 		//折り畳み
-		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+		for (auto& t : targets)
 		{
-			ImGui::InputFloat3("rayStart", &rayStart.x);
-			ImGui::InputFloat3("rayEnd", &rayEnd.x);
-			ImGui::InputFloat("targets.distance", &targets.distance);
-
-			ImGui::Checkbox("targets.isFocus", &targets.isFocus);
+			if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				ImGui::InputFloat("t.distance", &t.distance);
+				ImGui::Checkbox("t.isFocus", &t.isFocus);
+			}
 		}
+		ImGui::Text("keepTargets.size() = %zu", keepTargets.size());
+		ImGui::InputInt("t.chainCount", &chainCount);
+
 	}
 	ImGui::End();
 }

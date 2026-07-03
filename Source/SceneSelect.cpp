@@ -34,6 +34,17 @@ void SceneSelect::Initialize()
 
 	cameraController = new CameraController();
 
+	//stageTransform
+	{
+		//ここでステージのサイズ変える
+		selectStage.position = { 0, 0, 0 };
+		selectStage.angle = { 0, 0, 0 };
+		selectStage.scale = { 0.5f, 0.5f, 0.5f };
+
+		//ここでカメラとの距離を変える
+		cameraController->range = 1500.0f;
+	}
+
 }
 
 // 終了化
@@ -67,6 +78,8 @@ void SceneSelect::Update(float elapsedTime)
 
 	// スケールとか位置とかその他もろもろ調整したいけど、//
 	// Stage.cppから変えないといけないので要相談 //
+	//			↓　　　　　　　　↓
+	//セレクト画面のステージのサイズはinitializeで変更可能
 
 
 	// 左クリックを押したらローディングシーンへ切り替え
@@ -114,7 +127,7 @@ void SceneSelect::Render()
 	{
 		// ステージ１を描画
 		Stage& stage1 = Stage::Instance();
-		stage1.Render(rc, modelRenderer);
+		stage1.Render(rc, modelRenderer, &selectStage);
 	}
 
 	cameraController->Render(rc);

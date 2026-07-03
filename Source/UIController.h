@@ -1,4 +1,5 @@
 #pragma once
+
 #include<DirectXMath.h>
 #include"System/ModelRenderer.h"
 
@@ -29,19 +30,27 @@ private:
 		float angle;
 		float r, g, b, a;
 	};
+
 	float screenWidth ;
 	float screenHeight;
 
-	TargetManager targetManager;
-	bool isCard = false;
+	TargetManager* targetManager = nullptr;	
+	bool isCard[TargetManager::TARGET_MAX] = { false };
 
 private://しりとり連鎖
 	Sprite* sprChain = nullptr;
 	sprData chainData;
 
+	float renSpan = 90;//連鎖表示の間隔
+	//int rupeMax = 5;
+
 private://targetカード
 	Sprite* sprCard = nullptr;
 	sprData cardData;
 
-
+public:
+	void SetTargetManager(TargetManager* manager)
+	{
+		targetManager = manager;
+	}
 };

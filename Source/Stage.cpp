@@ -7,7 +7,8 @@
 Stage::Stage()
 {
 	//ステージ読み込み
-	mdlStage = new Model("Data/Model/classroom/class_set/classroom_demoscene.mdl");
+	mdlStage = new Model("Data/Model/stage/matimati.mdl");
+	//mdlStage = new Model("Data/Model/classroom/class_set/classroom_demoscene.mdl");
 	mdlWall = new Model("Data/Model/wall/wall.mdl");
 	mdlCenterWall = new Model("Data/Model/wall/wall.mdl");
 
@@ -29,6 +30,7 @@ Stage::Stage()
 	wall[BACK].position = { 0, stageSizeY * 0.5f ,-stageSizeX };
 	wall[UP].position = { 0,stageSizeY,0 };
 	wall[DOWN].position = { 0,0,0 };
+
 }
 Stage::~Stage()
 {
@@ -179,10 +181,11 @@ void Stage::FrontWall()
 	}
 
 }
-void Stage::Render(const RenderContext& rc, ModelRenderer* renderer)
+void Stage::Render(const RenderContext& rc, ModelRenderer* renderer,StageTransform* stage)
 {
 	//ステージ描画
-	//renderer->Render(rc, transform, mdlStage, ShaderId::Lambert);
+	freeUpdateTransform(stage->scale, stage->angle, stage->position, stage->transform);
+	renderer->Render(rc, stage->transform, mdlStage, ShaderId::Lambert);
 
 	{//ズーム用判定壁
 		//renderer->Render(rc, centerWall.transform, mdlCenterWall, ShaderId::Lambert);
@@ -190,14 +193,14 @@ void Stage::Render(const RenderContext& rc, ModelRenderer* renderer)
 		{
 			if (!wall[i].isFrontWallX)
 			{
-				renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
+				//renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
 			}
 		}
 		for (int i = 4; i < 6; i++)//y壁
 		{
 			if (!wall[i].isFrontWallY)
 			{
-				renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
+				//renderer->Render(rc, wall[i].transform, mdlWall, ShaderId::Lambert);
 			}
 		}
 	}

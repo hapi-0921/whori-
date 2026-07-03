@@ -17,6 +17,8 @@ public:
 private:
 	struct Target
 	{
+		Model* model = nullptr;
+
 		DirectX::XMFLOAT3 position = { 0,0,0 };
 		DirectX::XMFLOAT3 angle = { 0,0,0 };
 		DirectX::XMFLOAT3 scale = { 1,1,1 };
@@ -27,25 +29,35 @@ private:
 			0,0,0,1
 		};
 
-
-		float distance;
-		bool isFocus = false;//フォーカスされているか
-		bool isRender = false;//描画するか
+		float distance = 0.0f;
+		bool isFocus = false;
+		bool isRender = false;
+		bool preRender = false;
 	};
 	
 	float maxDistance = 500.0f;
 	DirectX::XMFLOAT3 rayEnd;
 	DirectX::XMFLOAT3 rayStart;
 
-private:
-
-	Model* modelTargets = nullptr;
-	Target targets;
-	//std::vector<Target*> keepTargets;//保存用
-
+	int chainCount = 0;//何連鎖中か
 
 public:
-	bool GetIsRender() { return targets.isRender; }
-	//bool GetIsRender(int i/*配列要素数*/) { return target; }
 
+	enum targetType
+	{
+		CLOCK,
+		RADIO,
+		TARGET_MAX
+	};
+
+private:
+	Target targets[TARGET_MAX];//全ての対象物
+	std::vector<Target*> keepTargets;//獲得したもの保存
+
+public:
+	bool GetIsRender(int index) { return targets[index].isRender; }
+	int GetChainCount() { return chainCount-1; }
+
+	Target GetKeepTarget(int index) { return *keepTargets[index]; }
+	int GetKeepTargetSize() { return static_cast<int>(keepTargets.size()); }
 };

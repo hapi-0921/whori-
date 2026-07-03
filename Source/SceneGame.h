@@ -35,4 +35,6 @@ private:
 	TargetManager* targetManager = nullptr;
 	CameraController* cameraController = nullptr;
 	ShapeRenderer* shapeRenderer = nullptr;
+
+	Stage::StageTransform gameStage;
 };

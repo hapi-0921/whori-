@@ -19,10 +19,9 @@ public:
 	void DrawDebugGUI();
 
 private:
-
 	//‹——£§ŒÀ
 	float minRange = 0.0f;
-	float maxRange = 1500.0f;
+	float maxRange = 3000.0f;
 
 	DirectX::XMFLOAT3 target = { 0,0,0 };//’‹“_
 	DirectX::XMFLOAT3 angle = { 0,-DirectX::XM_PI * 0.25f,0 };//‰ñ“]Šp“x
@@ -45,6 +44,9 @@ private:
 
 
 public:
+
+	float GetMaxRanget() { return maxRange; }
+
 	DirectX::XMFLOAT3 GetCameraTarget() { return target; }
 	DirectX::XMFLOAT3 GetCameraAngle() { return angle; }
 	DirectX::XMFLOAT3 GetCameraEye() { return eye; }

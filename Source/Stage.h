@@ -6,6 +6,21 @@
 //ステージ
 class Stage :public ModelCommon
 {
+public:
+	struct StageTransform
+	{
+		DirectX::XMFLOAT3 position = { 0,0,0 };
+		DirectX::XMFLOAT3 angle = { 0,0,0 };
+		DirectX::XMFLOAT3 scale = { 1,1,1 };
+		DirectX::XMFLOAT4X4 transform = {
+			1,0,0,0,
+			0,1,0,0,
+			0,0,1,0,
+			0,0,0,1
+		};
+	};
+
+
 private:
 	struct Wall
 	{
@@ -51,7 +66,7 @@ public:
 	void Update(float elapsedTime);
 
 	//描画処理
-	void Render(const RenderContext& rc, ModelRenderer* renderer);
+	void Stage::Render(const RenderContext& rc, ModelRenderer* renderer, StageTransform* transform);
 
 	void FrontWall();
 

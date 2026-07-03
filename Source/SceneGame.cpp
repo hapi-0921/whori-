@@ -27,9 +27,18 @@ void SceneGame::Initialize()
 
 	uiController = new UIController();
 	uiController->Initialize();
+	uiController->SetTargetManager(targetManager);
 
 	Stage& stage = Stage::Instance();
 	stage.SetCamera(cameraController);
+
+	{//stageTransform
+		gameStage.position = { 0, 0, 0 };
+		gameStage.angle = { 0, 0, 0 };
+		gameStage.scale = { 1, 1, 1 };
+
+		cameraController->range = cameraController->GetMaxRanget();
+	}
 }
 
 // I—¹‰»
@@ -92,8 +101,8 @@ void SceneGame::Render()
 
 	// 3Dƒ‚ƒfƒ‹•`‰æ
 	{
-		//Stage& stage = Stage::Instance();
-		//stage.Render(rc, modelRenderer);
+		Stage& stage = Stage::Instance();
+		stage.Render(rc, modelRenderer, &gameStage);
 
 		targetManager->Render(rc, modelRenderer);
 

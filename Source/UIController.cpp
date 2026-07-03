@@ -32,17 +32,25 @@ void UIController::Initialize()
 		chainData.sh = 420;
 	}
 	{
-		cardData.sx = chainData.sw;
+		cardData.dw = cardData.dh = 70;//size
+		cardData.sx = chainData.sw;//texPos
 		cardData.sy = 0;
-		cardData.sw = cardData.sh =190;
-		cardData.dx = screenWidth * 0.5f-(cardData.sw*0.5f);
+		cardData.sw = cardData.sh =190;//texSize
+		cardData.dx = screenWidth * 0.5f-(cardData.sw*0.5f);//pos
 		cardData.dy = screenHeight * 0.5f-(cardData.sh*0.5f);
 
 	}
 }
 void UIController::Update(float elapsedTime	)
 {
-	isCard = targetManager.GetIsRender();
+
+	if (targetManager != nullptr)
+	{
+		for(int i = 0; i < TargetManager::TARGET_MAX; ++i)
+		{
+			isCard[i] = targetManager->GetIsRender(i);
+		}
+	}
 }
 void UIController::Render(const RenderContext& rc)
 {
@@ -53,11 +61,22 @@ void UIController::Render(const RenderContext& rc)
 			chainData.sw, chainData.sh, 0, 1, 1, 1, 1);
 	}
 	{//targetカード表示
-		if (isCard) {
-			sprCard->Render(rc,
-				cardData.dx, cardData.dy, 0,
-				cardData.sw, cardData.sh, cardData.sx, cardData.sy,
-				cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
+		for (int i = -1; i < targetManager->GetKeepTargetSize()+1; ++i)
+		{
+			if (isCard[i])
+			{
+				//中心描画
+				//sprCard->Render(rc,
+				//	cardData.dx, cardData.dy, 0,
+				//	cardData.sw, cardData.sh, cardData.sx, cardData.sy,
+				//	cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
+
+				//チェーンに入れてく
+				sprCard->Render(rc,
+					chainData.dx, chainData.dy + (renSpan * (targetManager->GetChainCount()*i)), 0,
+					cardData.dw, cardData.dh, cardData.sx, cardData.sy,
+					cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
+			}
 		}
 	}
 }
@@ -69,13 +88,16 @@ void UIController::DrawDebugGUI()
 
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
-	if (ImGui::Begin("targets", nullptr, ImGuiWindowFlags_None))
+	if (ImGui::Begin("camera", nullptr, ImGuiWindowFlags_None))
 	{
 		//折り畳み
-		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+		if (ImGui::CollapsingHeader("UIrender", ImGuiTreeNodeFlags_DefaultOpen))
 		{
 
-			ImGui::Checkbox("isCard", &isCard);
+			for (int i = 0; i < TargetManager::TARGET_MAX; ++i)
+			{
+				ImGui::Checkbox("isCard ", &isCard[i]);
+			}
 		}
 	}
 	ImGui::End();
