@@ -8,6 +8,7 @@
 #include "System/ImGuiRenderer.h"
 #include "SceneGame.h"
 #include "SceneSelect.h"
+#include "SceneLoading.h"
 #include "SceneManager.h"
 
 // 垂直同期間隔設定
@@ -32,7 +33,8 @@ Framework::Framework(HWND hWnd)
 
 	// シーン初期化
 	//sceneGame.Initialize();
-	SceneManager::Instance().ChangeScene(new SceneSelect);
+	SceneManager::Instance().ChangeScene2(new SceneSelect);
+
 }
 
 // デストラクタ

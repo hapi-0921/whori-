@@ -45,6 +45,7 @@ void SceneSelect::Initialize()
 		cameraController->range = 0.0f;
 	}
 
+	SceneManager::Instance().is_fadeIn = false;
 }
 
 // 終了化
@@ -75,9 +76,9 @@ void SceneSelect::Update(float elapsedTime)
 
 	selectStage.angle.y += 0.005f;
 
-	// 左クリックを押したらローディングシーンへ切り替え
-	const MouseButton mouseButton =
-		Mouse::BTN_LEFT;
+	// 左クリックを押したらフェードインスタート
+	const MouseButton mouseButton =	Mouse::BTN_LEFT;
+
 	if (mouse.GetButtonDown() & mouseButton)
 	{
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));

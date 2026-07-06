@@ -32,7 +32,8 @@ void SceneGame::Initialize()
 	Stage& stage = Stage::Instance();
 	stage.SetCamera(cameraController);
 
-	{//stageTransform
+	{
+		//stageTransform
 		gameStage.position = { 0, 0, 0 };
 		gameStage.angle = { 0, 0, 0 };
 		gameStage.scale = { 1, 1, 1 };

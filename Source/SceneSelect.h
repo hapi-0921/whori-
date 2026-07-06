@@ -29,6 +29,8 @@ public:
 
 private:
 	Sprite* sprite = nullptr;
+	
+
 	CameraController* cameraController = nullptr;
 	ShapeRenderer* shapeRenderer = nullptr;
 

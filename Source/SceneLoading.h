@@ -33,7 +33,13 @@ private:
 	float angle = 0.0f;
 	Scene* nextScene = nullptr;
 	std::thread* thread = nullptr;
+	float LoadTimer = 4000;
+	Sprite* sprFadeRect = nullptr;
+
+	// 3Dモデル
+	Model* mdlApple = nullptr;
 
 	// ローディングスレッド
 	static void LoadingThread(SceneLoading* scene);
 };
+

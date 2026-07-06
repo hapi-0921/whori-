@@ -8,6 +8,7 @@ void SceneLoading::Initialize()
 {
 	// スプライト初期化
 	sprite = new Sprite("Data/Sprite/LoadingIcon.png");
+	sprFadeRect = new Sprite("Data/Sprite/FadeRect.png");
 
 	// スレッド開始
 	thread = new std::thread(LoadingThread, this);
@@ -30,6 +31,11 @@ void SceneLoading::Finalize()
 		delete sprite;
 		sprite = nullptr;
 	}
+	if (sprFadeRect != nullptr)
+	{
+		delete sprFadeRect;
+		sprFadeRect = nullptr;
+	}
 }
 
 // 更新処理
@@ -39,10 +45,14 @@ void SceneLoading::Update(float elapsedTime)
 	angle += speed * elapsedTime;
 
 	// 次のシーンの準備か完了したらシーンを切り替える
-	if (nextScene->IsReady())
+	if (nextScene != nullptr)
 	{
-		SceneManager::Instance().ChangeScene(nextScene);
-		nextScene = nullptr;
+		if (nextScene->IsReady())
+		{
+			//SceneManager::Instance().ChangeScene(nextScene);
+			SceneManager::Instance().ChangeScene2(nextScene);
+			nextScene = nullptr;
+		}
 	}
 }
 
@@ -68,6 +78,11 @@ void SceneLoading::Render()
 		float positionX = screenWidth - spriteWidth;
 		float positionY = screenHeight - spriteHeight;
 
+		sprFadeRect->Render(rc,
+			0, 0, 0, screenWidth, screenHeight,
+			0,
+			1, 1, 1, 1);
+
 		sprite->Render(rc,
 			positionX, positionY, 0, spriteWidth, spriteHeight,
 			angle,
@@ -89,6 +104,9 @@ void SceneLoading::LoadingThread(SceneLoading* scene)
 
 	// 次のシーンの初期化を行う
 	scene->nextScene->Initialize();
+
+	// ロード時間を伸ばす
+	Sleep(4000);
 
 	// スレッドが終わる前にCOM関連の終了化
 	CoUninitialize();
