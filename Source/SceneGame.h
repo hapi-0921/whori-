@@ -37,4 +37,13 @@ private:
 	ShapeRenderer* shapeRenderer = nullptr;
 
 	Stage::StageTransform gameStage;
+
+	bool nowGame = false;
+
+public:
+
+	void SetNowGame(bool nowGame)
+	{
+		this->nowGame = nowGame;
+	}
 };

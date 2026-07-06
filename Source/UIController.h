@@ -35,7 +35,6 @@ private:
 	float screenHeight;
 
 	TargetManager* targetManager = nullptr;	
-	bool isCard[TargetManager::TARGET_MAX] = { false };
 
 private://‚µ‚è‚Æ‚è˜A½
 	Sprite* sprChain = nullptr;

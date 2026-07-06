@@ -1,0 +1,19 @@
+{
+  "firstStartN": "お",
+
+  "targets": 
+  [
+    {
+      "file": "Data/Model/target/clock.mdl",
+      "name": "お皿",
+      "startN": "お",
+      "endN": "ら"
+    },
+    {
+      "file": "Data/Model/target/radio.mdl",
+      "name": "ラジオ",
+      "startN": "ら",
+      "endN": "お"
+    }
+  ]
+}

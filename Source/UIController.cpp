@@ -44,16 +44,11 @@ void UIController::Initialize()
 void UIController::Update(float elapsedTime	)
 {
 
-	if (targetManager != nullptr)
-	{
-		for(int i = 0; i < TargetManager::TARGET_MAX; ++i)
-		{
-			isCard[i] = targetManager->GetIsRender(i);
-		}
-	}
 }
 void UIController::Render(const RenderContext& rc)
 {
+	if (targetManager == nullptr) return;
+
 	{//しりとり表示
 		sprChain->Render(rc,
 			chainData.dx, chainData.dy, 0,
@@ -61,22 +56,25 @@ void UIController::Render(const RenderContext& rc)
 			chainData.sw, chainData.sh, 0, 1, 1, 1, 1);
 	}
 	{//targetカード表示
-		for (int i = -1; i < targetManager->GetKeepTargetSize()+1; ++i)
-		{
-			if (isCard[i])
-			{
-				//中心描画
-				//sprCard->Render(rc,
-				//	cardData.dx, cardData.dy, 0,
-				//	cardData.sw, cardData.sh, cardData.sx, cardData.sy,
-				//	cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
 
-				//チェーンに入れてく
+		for (int i = 0; i < targetManager->GetTargetSize(); ++i)
+		{
+			//中心描画
+			if (targetManager->GetisFocus(i))
+			{
 				sprCard->Render(rc,
-					chainData.dx, chainData.dy + (renSpan * (targetManager->GetChainCount()*i)), 0,
-					cardData.dw, cardData.dh, cardData.sx, cardData.sy,
+					cardData.dx, cardData.dy, 0,
+					cardData.sw, cardData.sh, cardData.sx, cardData.sy,
 					cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
 			}
+		}
+		for (int i = 0; i < targetManager->GetKeepTargetSize(); ++i) 
+		{
+				//チェーンに入れてく
+				sprCard->Render(rc,
+					chainData.dx, chainData.dy + (renSpan * i), 0,
+					cardData.dw, cardData.dh, cardData.sx, cardData.sy,
+					cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
 		}
 	}
 }
@@ -94,10 +92,10 @@ void UIController::DrawDebugGUI()
 		if (ImGui::CollapsingHeader("UIrender", ImGuiTreeNodeFlags_DefaultOpen))
 		{
 
-			for (int i = 0; i < TargetManager::TARGET_MAX; ++i)
-			{
-				ImGui::Checkbox("isCard ", &isCard[i]);
-			}
+			//for (int i = 0; i < targetManager->GetTargetSize(); ++i)
+			//{
+			//	ImGui::Checkbox("isCard ", &isCard[i]);
+			//}
 		}
 	}
 	ImGui::End();

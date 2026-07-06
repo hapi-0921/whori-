@@ -126,22 +126,7 @@
     <ClInclude Include="Source\Framework.h">
       <Filter>Source\h</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneGame.h">
-      <Filter>Source\h</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Stage.h">
-      <Filter>Source\h</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Source\h</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Source\h</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneSelect.h">
-      <Filter>Source\h</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneLoading.h">
       <Filter>Source\h</Filter>
     </ClInclude>
     <ClInclude Include="Source\Collision.h">
@@ -156,6 +141,22 @@
     <ClInclude Include="Source\UIController.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneGame.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneLoading.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneSelect.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui-docking\imgui.cpp">
@@ -242,19 +243,7 @@
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneGame.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Stage.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneSelect.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneLoading.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Source\Collision.cpp">
@@ -267,6 +256,18 @@
       <Filter>Source\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Source\UIController.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneSelect.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneGame.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneLoading.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
   </ItemGroup>

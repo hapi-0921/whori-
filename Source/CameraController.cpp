@@ -18,6 +18,16 @@
 
 using namespace DirectX;
 
+void CameraController::CameraReset()
+{
+	target = DEFAULT_TARGET;
+	angle = DEFAULT_ANGLE;
+	range = maxRange;
+
+
+
+}
+
 bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 {
 	float screenWidth = Graphics::Instance().GetScreenWidth();
