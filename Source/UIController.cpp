@@ -6,6 +6,8 @@ UIController::UIController()
 {
 	sprCard = new Sprite("Data/Sprite/UI.png");
 	sprChain = new Sprite("Data/Sprite/UI.png"); 
+	sprCard = new Sprite("Data/Sprite/chain/UI.png");
+	sprChain = new Sprite("Data/Sprite/chain/UI.png"); 
 }
 UIController::~UIController()
 {
@@ -59,6 +61,7 @@ void UIController::Render(const RenderContext& rc)
 
 		for (int i = 0; i < targetManager->GetTargetSize(); ++i)
 		{
+			Sprite* sp = targetManager->GetTargetSpri(i);
 			//中心描画
 			if (targetManager->GetisFocus(i))
 			{
@@ -66,15 +69,26 @@ void UIController::Render(const RenderContext& rc)
 					cardData.dx, cardData.dy, 0,
 					cardData.sw, cardData.sh, cardData.sx, cardData.sy,
 					cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
+
+				sp->Render(rc,
+					cardData.dx, cardData.dy, 0,
+					cardData.sw, cardData.sw, cardData.sx, cardData.sy,
+					75,75, 0, 1, 1, 1, 1);
 			}
 		}
 		for (int i = 0; i < targetManager->GetKeepTargetSize(); ++i) 
 		{
+			Sprite* sp = targetManager->GetTargetSpri(i);
 				//チェーンに入れてく
 				sprCard->Render(rc,
 					chainData.dx, chainData.dy + (renSpan * i), 0,
 					cardData.dw, cardData.dh, cardData.sx, cardData.sy,
 					cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
+
+				sp->Render(rc,
+					chainData.dx, chainData.dy + (renSpan * i), 0,
+					cardData.dw, cardData.dh,0,0,
+					75, 75, 0, 1, 1, 1, 1);
 		}
 	}
 }

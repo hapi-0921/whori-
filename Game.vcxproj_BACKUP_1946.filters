@@ -156,10 +156,13 @@
     <ClInclude Include="Source\SceneSelect.h">
       <Filter>Source\h</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameManager.h" />
+<<<<<<< HEAD
     <ClInclude Include="Source\GameManager.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="Source\GameManager.h" />
+>>>>>>> 1d5a9eec478e4aa0c4967255f4b680ad10fa4c97
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui-docking\imgui.cpp">

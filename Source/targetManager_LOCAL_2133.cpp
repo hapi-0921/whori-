@@ -36,7 +36,6 @@ std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::str
         {
             TargetManager::TargetData data;
 
-            data.modelPath = t.value("file", "");
             data.modelPath = t.value("model", "");
             data.spritePath = t.value("sprite", "");
             data.name = t.value("name", "");

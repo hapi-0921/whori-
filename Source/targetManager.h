@@ -1,5 +1,7 @@
 #pragma once
 #include<DirectXMath.h>
+#include "System/Sprite.h"
+
 #include"System/ModelRenderer.h"
 #include <json.hpp>
 using json = nlohmann::json;
@@ -15,14 +17,13 @@ public:
 	void DrawDebugGUI();
 
 	void TargetFocus();//“–‚½‚Á‚Ä‚é‚©
-	void checkShiritori();//‚µ‚è‚Æ‚è
-
 
 
 
 	struct TargetData
 	{
 		std::string modelPath;
+		std::string spritePath;
 		std::string name;
 		std::string startN;
 		std::string endN;
@@ -35,6 +36,7 @@ private:
 	struct Target
 	{
 		Model* model = nullptr;
+		Sprite* sprite = nullptr;
 
 		DirectX::XMFLOAT3 position = { 0,0,0 };
 		DirectX::XMFLOAT3 angle = { 0,0,0 };
@@ -91,5 +93,7 @@ public:
 
 
 
+	Sprite* GetTargetSpri(int index)  { return targets[index].sprite; }
+	Sprite* GetgetTargetSpri(int index)  { return getTargets[index]->sprite; }
 
 };

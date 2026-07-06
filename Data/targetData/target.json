@@ -5,12 +5,16 @@
   [
     {
       "file": "Data/Model/target/clock.mdl",
+      "model": "Data/Model/target/clock.mdl",
+      "sprite":"Data/Sprite/chain/dish.png",
       "name": "お皿",
       "startN": "お",
       "endN": "ら"
     },
     {
       "file": "Data/Model/target/radio.mdl",
+      "model": "Data/Model/target/radio.mdl",
+      "sprite":"Data/Sprite/chain/radio.png",      
       "name": "ラジオ",
       "startN": "ら",
       "endN": "お"

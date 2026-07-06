@@ -156,7 +156,6 @@
     <ClInclude Include="Source\SceneSelect.h">
       <Filter>Source\h</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GameManager.h">
       <Filter>Source\h</Filter>
     </ClInclude>

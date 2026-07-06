@@ -45,6 +45,7 @@ private://しりとり連鎖
 
 private://targetカード
 	Sprite* sprCard = nullptr;
+
 	sprData cardData;
 
 public:

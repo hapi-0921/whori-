@@ -37,8 +37,6 @@ std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::str
             TargetManager::TargetData data;
 
             data.modelPath = t.value("file", "");
-            data.modelPath = t.value("model", "");
-            data.spritePath = t.value("sprite", "");
             data.name = t.value("name", "");
             data.startN = t.value("startN", "");
             data.endN = t.value("endN", "");
@@ -65,7 +63,6 @@ TargetManager::TargetManager()
     for (size_t i = 0; i < data.size(); ++i)
     {
         targets[i].model = new Model(data[i].modelPath.c_str());
-        targets[i].sprite = new Sprite(data[i].spritePath.c_str());
         targets[i].name = data[i].name;
 
         targets[i].startN = data[i].startN;
@@ -81,10 +78,6 @@ TargetManager::~TargetManager()
 	for (auto& t : targets)
 	{
 		delete t.model;
-	}
-	for (auto& t : targets)
-	{
-		delete t.sprite;
 	}
     targets.clear();
 }

@@ -1,4 +1,6 @@
 file　　➝ パス
+model　　➝ モデルが入ってるパス
+sprite  ➝ UIで表示するスプライトが入ってるパス
 name　　➝ 画面に出す名前
 
 startN　➝ 最初の文字
