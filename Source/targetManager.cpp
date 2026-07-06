@@ -1,181 +1,235 @@
 ﻿#include"targetManager.h"
 
+#include"System/Input.h"
+
 #include"ModelCommon.h"
+#include"GameManager.h"
+
 #include<imgui.h>
+#include"Stage.h"
 #include"Camera.h"
 #include <DirectXCollision.h>
 #include "Collision.h"
 #include "System/ShapeRenderer.h"
 #include "System/Graphics.h"
 #include"primitiveRenderer.h"
+#include<fstream>
+#include <iostream>
 
+
+#include"SceneGame.h"
+
+std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::string& path)
+{
+    std::ifstream file(path);
+    json j;
+    file >> j;
+
+    if (j.contains("firstStartN")) {
+        firstName = j["firstStartN"].get<std::string>();
+    }
+
+    std::vector<TargetManager::TargetData> result;
+    if (j.contains("targets") && j["targets"].is_array())
+    {
+        for (auto& t : j["targets"])
+        {
+            TargetManager::TargetData data;
+
+            data.modelPath = t.value("file", "");
+            data.modelPath = t.value("model", "");
+            data.spritePath = t.value("sprite", "");
+            data.name = t.value("name", "");
+            data.startN = t.value("startN", "");
+            data.endN = t.value("endN", "");
+
+            if (data.modelPath.empty() || data.name.empty()) {
+                std::cout << "Warning: Invalid target data skipped." << std::endl;
+                continue;
+            }
+
+            result.push_back(data);
+        }
+    }
+
+    std::cout << "Loaded " << result.size() << " targets from JSON." << std::endl;
+    return result;
+}
 
 TargetManager::TargetManager()
 {
-	targets[CLOCK].model= new Model("Data/Model/target/clock.mdl");
-	targets[RADIO].model= new Model("Data/Model/target/radio.mdl");
+    auto data = LoadTargets("Data/targetData/target.json");
 
-	targets[CLOCK].position = { 0,0,0 };
-	targets[RADIO].position = { 100,0,0 };
+    targets.resize(data.size());
 
+    for (size_t i = 0; i < data.size(); ++i)
+    {
+        targets[i].model = new Model(data[i].modelPath.c_str());
+        targets[i].sprite = new Sprite(data[i].spritePath.c_str());
+        targets[i].name = data[i].name;
+
+        targets[i].startN = data[i].startN;
+        targets[i].endN = data[i].endN;
+
+        targets[i].position = { 0.0f, 300.0f, 0.0f };
+    }
+    endName = firstName;
 }
+
 TargetManager::~TargetManager()
 {
 	for (auto& t : targets)
 	{
 		delete t.model;
 	}
+	for (auto& t : targets)
+	{
+		delete t.sprite;
+	}
+    targets.clear();
+}
+
+
+//フォーカス判定
+void TargetManager::TargetFocus()
+{
+
+    Stage& stage = Stage::Instance();
+    Camera& camera = Camera::Instance();
+
+    // 共通レイ
+    DirectX::XMFLOAT3 rayStart = camera.GetEye();
+    DirectX::XMFLOAT3 front = camera.GetFront();
+
+    DirectX::XMFLOAT3 rayEnd = rayStart;
+    rayEnd.x += front.x * 2000.0f;
+    rayEnd.y += front.y * 2000.0f;
+    rayEnd.z += front.z * 2000.0f;
+
+
+    //--------- ステージとの判定 -----------
+    bool isStageRayHit = false;
+    DirectX::XMFLOAT3 stageHitPos = { 0, 0, 0 };
+    DirectX::XMFLOAT3 normal;
+    float stgdistance = FLT_MAX;
+
+    if (Collision::RayCast(rayStart, rayEnd,
+        stage.GetTransform().transform,
+        stage.GetStage(),
+        stageHitPos, normal))
+    {
+        isStageRayHit = true;
+
+        float dx = stageHitPos.x - rayStart.x;
+        float dy = stageHitPos.y - rayStart.y;
+        float dz = stageHitPos.z - rayStart.z;
+        stgdistance = sqrtf(dx * dx + dy * dy + dz * dz);
+    }
+
+    //--- 各ターゲットとの判定 （描画中のみ）---
+    for (auto& t : targets)
+    {
+        t.preFocus = t.isFocus;        // 前の状態保存
+
+        if (t.isChainRender)
+        {
+            t.isFocus = false;
+            t.isRayHit = false;
+            continue;
+        }
+
+        //--------------------未獲得のみ--------------------
+        // ターゲットとのレイ
+        t.isRayHit = Collision::RayCast(rayStart, rayEnd, t.transform, t.model, t.hitPos, normal);
+
+        if (!t.isRayHit)
+        {
+            t.isFocus = false;
+            continue;
+        }
+
+        float dx = t.hitPos.x - rayStart.x;
+        float dy = t.hitPos.y - rayStart.y;
+        float dz = t.hitPos.z - rayStart.z;
+        t.distance = sqrtf(dx * dx + dy * dy + dz * dz);
+
+        // 障害物チェック
+        if (isStageRayHit && t.distance > stgdistance)
+        {
+            // ステージが手前
+            t.isFocus = false;
+        }
+        else if (maxDistance > t.distance)
+        {
+            //ゲット
+            t.isFocus = true;
+            //t.isChainRender = true;
+        }
+        else
+        {
+            t.isFocus = false;
+        }
+
+        Mouse& mouse = Input::Instance().GetMouse();
+
+        // 獲得した瞬間
+        if (t.isFocus)
+        {
+            if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
+            {
+                if (t.startN == endName)
+                {
+                    std::cout << "しりとり成功！ ";
+
+                    chainCount++;
+                    getTargets.push_back(&t);
+                    t.isChainRender = true;
+
+                    endName = t.endN;
+
+
+                }
+                else
+                {
+                    std::cout << "しりとり失敗... ";
+
+                    getTargets.clear();
+                    chainCount = 0;
+                    endName = firstName;
+                    t.isFocus = false;
+                    t.isChainRender = false;
+
+                    if (t.endN == "ん")
+                    {
+
+                    }
+                }
+                GameManager::Instance().needCameraReset = true;
+            }
+        }
+
+    }
 }
 
 void TargetManager::Update(float elapsedTime)
 {
-	
+
 	//フォーカス判定
 	TargetFocus();
 
 	//transformの更新
-	for(auto& t : targets)
+	for (auto& t : targets)
 	{
 		freeUpdateTransform(t.scale, t.angle, t.position, t.transform);
 	}
 }
 
-void TargetManager::TargetFocus()
-{
-	//カメラ➝ステージ
-
-
-	//カメラ➝対象物以外の物
-
-
-	//カメラ➝もの
-	for (auto& t : targets)
-	{
-		auto Ray = [this, &t]() -> bool
-			{
-				Camera& camera = Camera::Instance();
-				DirectX::XMFLOAT3 rayStart = camera.GetEye();
-
-				DirectX::XMFLOAT3 rayEnd = rayStart;
-				DirectX::XMFLOAT3 front = camera.GetFront();
-				rayEnd.x += front.x * 2000.0f;
-				rayEnd.y += front.y * 2000.0f;
-				rayEnd.z += front.z * 2000.0f;
-
-				DirectX::XMFLOAT3 hit, normal;
-
-				return (Collision::RayCast(rayStart, rayEnd,
-					t.transform, t.model, hit, normal));
-			};
-		auto Distance = [this, &t]() -> bool
-			{
-				DirectX::XMFLOAT3 tPos = t.position;
-				DirectX::XMFLOAT3 e = Camera::Instance().GetEye();
-
-				float dx = tPos.x - e.x;
-				float dy = tPos.y - e.y;
-				float dz = tPos.z - e.z;
-
-				t.distance = sqrt(dx * dx + dy * dy + dz * dz);
-
-				return(maxDistance > t.distance);
-			};
-		t.preRender = t.isRender;
-
-		//獲得
-		if (Ray() && Distance())
-		{
-			t.isFocus = true;//瞬間のみtrue（=>何回もなる）
-			t.isRender = true;//チェーンが外れない限りfalseにならない
-		}
-		else
-		{
-			t.isFocus = false;
-		}
-
-		//獲得した瞬間
-		if(t.preRender !=t.isRender)
-		{
-			chainCount++;
-			keepTargets.push_back(&t);
-		}
-
-	}
-
-}
-//void TargetManager::TargetFocus()
-//{
-//	Camera& cam = Camera::Instance();
-//	DirectX::XMFLOAT3 rayOrigin = cam.GetEye();
-//	DirectX::XMFLOAT3 rayDir = cam.GetFront();   // 正規化されている前提
-//
-//	for (auto& t : targets)
-//	{
-//		DirectX::XMFLOAT3 toTarget = {
-//			t.transform.position.x - rayOrigin.x,
-//			t.transform.position.y - rayOrigin.y,
-//			t.transform.position.z - rayOrigin.z
-//		};
-//
-//		float targetDistance = sqrtf(toTarget.x * toTarget.x + toTarget.y * toTarget.y + toTarget.z * toTarget.z);
-//		if (targetDistance > maxDistance)
-//		{
-//			t.isFocus = false;
-//			continue;
-//		}
-//
-//		DirectX::XMFLOAT3 rayEnd = rayOrigin;
-//		rayEnd.x += rayDir.x * targetDistance * 1.1f;  // 少し余裕を持たせる
-//		rayEnd.y += rayDir.y * targetDistance * 1.1f;
-//		rayEnd.z += rayDir.z * targetDistance * 1.1f;
-//
-//		DirectX::XMFLOAT3 hitPoint, hitNormal;
-//		float closestDistance = FLT_MAX;
-//		bool blocked = false;
-//
-//		// =========== ステージとの判定 ============
-//		if (stageModel)
-//		{
-//			if (Collision::RayCast(rayOrigin, rayEnd, stageTransform, stageModel, hitPoint, hitNormal))
-//			{
-//				float d = Distance(rayOrigin, hitPoint);
-//				if (d < closestDistance)
-//				{
-//					closestDistance = d;
-//					blocked = true;
-//				}
-//			}
-//		}
-//
-//		// ===========対象物との判定===========
-//		for (const auto& other : targets)
-//		{
-//			if (&other == &t) continue;  // 自分自身は除外
-//
-//			if (Collision::RayCast(rayOrigin, rayEnd, other.transform, other.model, hitPoint, hitNormal))
-//			{
-//				float d = Distance(rayOrigin, hitPoint);
-//				if (d < closestDistance)
-//				{
-//					closestDistance = d;
-//					blocked = true;
-//				}
-//			}
-//		}
-//
-//		// ============対象物自身との判定 ==============
-//		bool hitSelf = Collision::RayCast(rayOrigin, rayEnd, t.transform, t.model, hitPoint, hitNormal);
-//
-//		t.isFocus = hitSelf && !blocked;
-//		t.distance = targetDistance;
-//	}
-//}
 
 void TargetManager::Render(const RenderContext& rc, ModelRenderer* renderer)
 {
-	for(auto & t : targets)
+	for (auto& t : targets)
 	{
-		if(!t.isRender)
+		if (!t.isChainRender)
 		{
 			renderer->Render(rc, t.transform, t.model, ShaderId::Lambert);
 		}
@@ -200,10 +254,9 @@ void TargetManager::DrawDebugGUI()
 				ImGui::Checkbox("t.isFocus", &t.isFocus);
 			}
 		}
-		ImGui::Text("keepTargets.size() = %zu", keepTargets.size());
+		ImGui::Text("getTargets.size() = %zu", getTargets.size());
 		ImGui::InputInt("t.chainCount", &chainCount);
 
 	}
 	ImGui::End();
 }
-

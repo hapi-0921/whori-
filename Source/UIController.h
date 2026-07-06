@@ -35,7 +35,6 @@ private:
 	float screenHeight;
 
 	TargetManager* targetManager = nullptr;	
-	bool isCard[TargetManager::TARGET_MAX] = { false };
 
 private://しりとり連鎖
 	Sprite* sprChain = nullptr;
@@ -46,6 +45,7 @@ private://しりとり連鎖
 
 private://targetカード
 	Sprite* sprCard = nullptr;
+
 	sprData cardData;
 
 public:

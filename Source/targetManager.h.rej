@@ -1,0 +1,9 @@
+diff a/Source/targetManager.h b/Source/targetManager.h	(rejected hunks)
+@@ -17,7 +17,6 @@
+ 	void DrawDebugGUI();
+ 
+ 	void TargetFocus();//�������Ă邩
+-
+ 
+ 
+ 

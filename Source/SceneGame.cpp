@@ -1,5 +1,6 @@
 #include "System/Graphics.h"
 #include "SceneGame.h"
+#include "GameManager.h"
 #include"Camera.h"
 
 // 初期化
@@ -37,9 +38,12 @@ void SceneGame::Initialize()
 		gameStage.position = { 0, 0, 0 };
 		gameStage.angle = { 0, 0, 0 };
 		gameStage.scale = { 1, 1, 1 };
+		stage.SetTransform(&gameStage);
 
 		cameraController->range = cameraController->GetMaxRanget();
 	}
+
+	GameManager::Instance().SetPlaying(true);
 }
 
 // 終了化
@@ -67,12 +71,27 @@ void SceneGame::Finalize()
 		uiController = nullptr;
 	}
 
+	GameManager::Instance().SetPlaying(false);
 }
 
 // 更新処理
 void SceneGame::Update(float elapsedTime)
 {
-	cameraController->Update(elapsedTime);
+	if (GameManager::Instance().needCameraReset)
+	{
+		cameraController->CameraReset();
+		GameManager::Instance().needCameraReset = false;
+	}
+
+	//GameManager::Instance().SetPlaying(false);でプレイ中かどうか入れる
+	if (GameManager::Instance().IsPlaying()) 
+	{
+		//タイマーを動かす
+
+
+
+		cameraController->Update(elapsedTime);
+	}
 
 	Stage& stage = Stage::Instance();
 	stage.Update(elapsedTime);
