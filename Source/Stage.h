@@ -86,12 +86,26 @@ private:
 	float stageSizeX = 300;
 	float stageSizeY = 350;
 
+	StageTransform* transform = nullptr;
+
 public:
 	Wall wall[6];
 	Wall centerWall;
 
+	Model* GetStage() { return mdlStage; }
 	Model* GetWall() { return mdlWall; }
 	Model* GetCenterWall() { return mdlCenterWall; }
+
+
+	void SetTransform(StageTransform* t)
+	{
+		transform = t;
+	}
+
+	const StageTransform& GetTransform() const
+	{
+		return *transform;
+	}
 
 	void SetCamera(CameraController* camera)
 	{

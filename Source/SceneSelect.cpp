@@ -39,10 +39,10 @@ void SceneSelect::Initialize()
 		//ここでステージのサイズ変える
 		selectStage.position = { 0, 0, 0 };
 		selectStage.angle = { 0, 0, 0 };
-		selectStage.scale = { 0.5f, 0.5f, 0.5f };
+		selectStage.scale = { 0.005f, 0.005f, 0.005f };
 
 		//ここでカメラとの距離を変える
-		cameraController->range = 1500.0f;
+		cameraController->range = 0.0f;
 	}
 
 }
@@ -73,14 +73,7 @@ void SceneSelect::Update(float elapsedTime)
 	stage.SetCamera(cameraController);
 	stage.Update(elapsedTime);
 
-	cameraController->Update(elapsedTime);
-
-
-	// スケールとか位置とかその他もろもろ調整したいけど、//
-	// Stage.cppから変えないといけないので要相談 //
-	//			↓　　　　　　　　↓
-	//セレクト画面のステージのサイズはinitializeで変更可能
-
+	selectStage.angle.y += 0.005f;
 
 	// 左クリックを押したらローディングシーンへ切り替え
 	const MouseButton mouseButton =

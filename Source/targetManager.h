@@ -1,6 +1,10 @@
 #pragma once
 #include<DirectXMath.h>
+#include "System/Sprite.h"
+
 #include"System/ModelRenderer.h"
+#include <json.hpp>
+using json = nlohmann::json;
 
 class TargetManager
 {
@@ -12,12 +16,27 @@ public:
 	void Render(const RenderContext& rc, ModelRenderer* renderer);
 	void DrawDebugGUI();
 
-	void TargetFocus();
+	void TargetFocus();//当たってるか
 
+
+
+	struct TargetData
+	{
+		std::string modelPath;
+		std::string spritePath;
+		std::string name;
+		std::string startN;
+		std::string endN;
+	};
+
+
+	std::vector<TargetManager::TargetData> LoadTargets(const std::string& path);
 private:
+
 	struct Target
 	{
 		Model* model = nullptr;
+		Sprite* sprite = nullptr;
 
 		DirectX::XMFLOAT3 position = { 0,0,0 };
 		DirectX::XMFLOAT3 angle = { 0,0,0 };
@@ -29,35 +48,52 @@ private:
 			0,0,0,1
 		};
 
+		std::string name;
+		std::string startN;
+		std::string endN;
+
+
 		float distance = 0.0f;
-		bool isFocus = false;
-		bool isRender = false;
-		bool preRender = false;
+		DirectX::XMFLOAT3 hitPos = { 0.0f, 0.0f, 0.0f };
+
+		bool isRayHit = false;//レイが当たったか（判定中）
+
+		bool isFocus = false;//フォーカスが完了してるか
+		bool preFocus = false;//前のisFocus情報
+
+		bool isChainRender = false;//チェーンに表示するか
+
 	};
-	
+
+
+
 	float maxDistance = 500.0f;
 	DirectX::XMFLOAT3 rayEnd;
 	DirectX::XMFLOAT3 rayStart;
 
 	int chainCount = 0;//何連鎖中か
 
-public:
+	std::string firstName = "";//最初の文字
+	std::string endName = "";//前の文字
 
-	enum targetType
-	{
-		CLOCK,
-		RADIO,
-		TARGET_MAX
-	};
+
 
 private:
-	Target targets[TARGET_MAX];//全ての対象物
-	std::vector<Target*> keepTargets;//獲得したもの保存
+	std::vector<Target> targets;//全ての対象物
+	std::vector<Target*> getTargets;//獲得したもの保存
 
 public:
-	bool GetIsRender(int index) { return targets[index].isRender; }
-	int GetChainCount() { return chainCount-1; }
+	bool GetisFocus(int index) { return targets[index].isFocus; }
+	int GetChainCount() { return chainCount - 1; }
 
-	Target GetKeepTarget(int index) { return *keepTargets[index]; }
-	int GetKeepTargetSize() { return static_cast<int>(keepTargets.size()); }
+	Target GetKeepTarget(int index) { return *getTargets[index]; }
+	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }
+
+	int GetTargetSize() const { return static_cast<int>(targets.size()); }
+
+
+
+	Sprite* GetTargetSpri(int index)  { return targets[index].sprite; }
+	Sprite* GetgetTargetSpri(int index)  { return getTargets[index]->sprite; }
+
 };

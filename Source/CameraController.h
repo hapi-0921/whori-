@@ -18,14 +18,20 @@ public:
 	//デバッグ用GUI描画
 	void DrawDebugGUI();
 
+	void CameraReset();
+
+	const DirectX::XMFLOAT3 DEFAULT_TARGET = { 0.0f, 0.0f, 0.0f };
+	const DirectX::XMFLOAT3 DEFAULT_ANGLE = { 0.0f, -DirectX::XM_PI * 0.25f, 0.0f };
+
 private:
 	//距離制限
 	float minRange = 0.0f;
-	float maxRange = 3000.0f;
+	float maxRange = 1500.0f;
 
-	DirectX::XMFLOAT3 target = { 0,0,0 };//注視点
-	DirectX::XMFLOAT3 angle = { 0,-DirectX::XM_PI * 0.25f,0 };//回転角度
-	DirectX::XMFLOAT3 eye;
+
+	//DirectX::XMFLOAT3 target = { 0,0,0 };//注視点
+	//DirectX::XMFLOAT3 angle = { 0,-DirectX::XM_PI * 0.25f,0 };//回転角度
+	//DirectX::XMFLOAT3 eye;
 
 	float rollSpeed = DirectX::XMConvertToRadians(90);//回転速度
 	float zoomSpeed = 10;
@@ -44,6 +50,9 @@ private:
 
 
 public:
+	DirectX::XMFLOAT3 target = DEFAULT_TARGET;//注視点
+	DirectX::XMFLOAT3 angle = DEFAULT_ANGLE;//回転角度
+	DirectX::XMFLOAT3 eye;
 
 	float GetMaxRanget() { return maxRange; }
 
@@ -52,7 +61,5 @@ public:
 	DirectX::XMFLOAT3 GetCameraEye() { return eye; }
 
 	float range = maxRange;//距離
-	bool zoom = false;
-	float t = 0;
 
 };
