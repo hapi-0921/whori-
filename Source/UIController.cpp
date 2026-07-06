@@ -51,6 +51,16 @@ void UIController::Render(const RenderContext& rc)
 {
 	if (targetManager == nullptr) return;
 
+	for (int i = 0; i < targetManager->GetTargetSize(); ++i)
+	{
+		Sprite* sp = targetManager->GetTargetSpri(i);
+
+		sp->Render(rc,
+			screenWidth*0.5f, screenHeight*0.5f, 0,
+			75,75, 0,0,
+			75, 75, 0, 1, 1, 1, 1);
+	}
+
 	{//‚µ‚è‚Æ‚è•\Ž¦
 		sprChain->Render(rc,
 			chainData.dx, chainData.dy, 0,
