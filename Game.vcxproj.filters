@@ -160,6 +160,9 @@
     <ClInclude Include="Source\GameManager.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneResult.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\imgui-docking\imgui.cpp">
@@ -271,6 +274,9 @@
       <Filter>Source\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneResult.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
   </ItemGroup>

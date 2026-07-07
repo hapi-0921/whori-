@@ -1,5 +1,9 @@
 #include "System/Graphics.h"
+#include "System/Input.h"
 #include "SceneGame.h"
+#include "SceneResult.h"
+#include "SceneLoading.h"
+#include "SceneManager.h"
 #include "GameManager.h"
 #include"Camera.h"
 
@@ -98,6 +102,17 @@ void SceneGame::Update(float elapsedTime)
 
 	targetManager->Update(elapsedTime);
 	uiController->Update(elapsedTime);
+
+
+	// 画面遷移 //
+	GamePad& gamePad = Input::Instance().GetGamePad();
+	// Zキーを押したらフェードインスタート
+	const GamePadButton ZKey = GamePad::BTN_A;
+
+	if (gamePad.GetButtonDown() & ZKey)
+	{
+		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
+	}
 
 }
 
