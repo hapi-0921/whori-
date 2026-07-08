@@ -143,7 +143,6 @@ void SceneLoading::DrawGUI()
 {
 	ImGui::Begin("Loading Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
-}
 	ImGui::Text("Loading Scene Debug");
 	ImGui::Separator();
 
