@@ -90,6 +90,7 @@ public:
 	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }
 
 	int GetTargetSize() const { return static_cast<int>(targets.size()); }
+	std::vector<Target> GetTargets() const { return targets; }
 
 
 

@@ -71,7 +71,7 @@ TargetManager::TargetManager()
         targets[i].startN = data[i].startN;
         targets[i].endN = data[i].endN;
 
-        targets[i].position = { 0.0f, 300.0f, 0.0f };
+        //targets[i].position = { 0.0f, 300.0f, 0.0f };
     }
     endName = firstName;
 }

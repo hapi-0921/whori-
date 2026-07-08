@@ -24,7 +24,8 @@ void SceneGame::Initialize()
 	);
 
 	cameraController = new CameraController();
-	targetManager = new TargetManager();
+	//targetManager = new TargetManager();
+	targetManager = GameManager::Instance().GetTargetManager();
 
 	uiController = new UIController();
 	uiController->Initialize();
@@ -52,11 +53,16 @@ void SceneGame::Finalize()
 		delete cameraController;
 		cameraController = nullptr;
 	}
-	if (targetManager != nullptr) {
-		delete targetManager;
-		targetManager = nullptr;
-	}
+	//if (targetManager != nullptr) {
+	//	delete targetManager;
+	//	targetManager = nullptr;
+	//}
 
+	// delete しない！ 所有権はGameManagerにある
+	targetManager = nullptr;
+
+	// アプリケーション終了時やタイトルに戻るとき
+	GameManager::Instance().ReleaseTargetManager();
 
 	//2D
 	if (sprite != nullptr)

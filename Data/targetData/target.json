@@ -1,23 +1,337 @@
 {
   "firstStartN": "お",
 
-  "targets": 
-  [
-    {
-      "file": "Data/Model/target/clock.mdl",
-      "model": "Data/Model/target/clock.mdl",
-      "sprite":"Data/Sprite/chain/dish.png",
-      "name": "お皿",
-      "startN": "お",
-      "endN": "ら"
-    },
-    {
-      "file": "Data/Model/target/radio.mdl",
-      "model": "Data/Model/target/radio.mdl",
-      "sprite":"Data/Sprite/chain/radio.png",      
-      "name": "ラジオ",
-      "startN": "ら",
-      "endN": "お"
-    }
-  ]
+    "targets": [
+
+        {
+            "model": "Data/Model/target/clock.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "お皿",
+            "startN": "お",
+            "endN": "ら"
+        },
+        {
+            "model": "Data/Model/target/radio.mdl",
+            "sprite": "Data/Sprite/chain/radio.png",
+            "name": "ラジオ",
+            "startN": "ら",
+            "endN": "お"
+        },
+        {
+            "model": "Data/Model/target/Apple.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "りんご",
+            "startN": "り",
+            "endN": "こ"
+        },
+
+        {
+            "model": "Data/Model/target/Avocado.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "あぼかど",
+            "startN": "あ",
+            "endN": "と"
+        },
+        {
+            "model": "Data/Model/target/Bacon_Burned.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "べーこん",
+            "startN": "へ",
+            "endN": "ん"
+        },
+        {
+            "model": "Data/Model/target/Banana.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ばなな",
+            "startN": "は",
+            "endN": "な"
+        },
+        {
+            "model": "Data/Model/target/Bread.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ぱん",
+            "startN": "は",
+            "endN": "ん"
+        },
+        {
+            "model": "Data/Model/target/Broccoli.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ブロッコリー",
+            "startN": "ふ",
+            "endN": "り"
+        },
+        {
+            "model": "Data/Model/target/Burger.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "はんばーがー",
+            "startN": "は",
+            "endN": "か"
+        },
+        {
+            "model": "Data/Model/target/cabbage.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "きゃべつ",
+            "startN": "き",
+            "endN": "つ"
+        },
+        {
+            "model": "Data/Model/target/cake.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "けーき",
+            "startN": "け",
+            "endN": "き"
+        },
+        {
+            "model": "Data/Model/target/Carrot.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "にんじん",
+            "startN": "に",
+            "endN": "ん"
+        },
+        {
+            "model": "Data/Model/target/cauliflower.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "かりふらわー",
+            "startN": "か",
+            "endN": "わ"
+        },
+        {
+            "model": "Data/Model/target/cherries.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "さくらんぼ",
+            "startN": "さ",
+            "endN": "ほ"
+        },
+        {
+            "model": "Data/Model/target/ChocolateBar.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ちょこれーと",
+            "startN": "ち",
+            "endN": "と"
+        },
+        {
+            "model": "Data/Model/target/Coconut_Half.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ここなっつ",
+            "startN": "こ",
+            "endN": "つ"
+        },
+        {
+            "model": "Data/Model/target/cookie.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "くっきー",
+            "startN": "く",
+            "endN": "き"
+        },
+        {
+            "model": "Data/Model/target/corn.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "とうもろこし",
+            "startN": "と",
+            "endN": "し"
+        },
+        {
+            "model": "Data/Model/target/Cupcake.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "かっぷけーき",
+            "startN": "か",
+            "endN": "き"
+        },
+        {
+            "model": "Data/Model/target/Donut1.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "どーなつ",
+            "startN": "と",
+            "endN": "つ"
+        },
+        {
+            "model": "Data/Model/target/Egg_Whole_White.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "たまご",
+            "startN": "た",
+            "endN": "こ"
+        },
+        {
+            "model": "Data/Model/target/Eggplant.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "なすび",
+            "startN": "な",
+            "endN": "ひ"
+        },
+        {
+            "model": "Data/Model/target/egg.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "めだまやき",
+            "startN": "め",
+            "endN": "き"
+        },
+        {
+            "model": "Data/Model/target/Fries.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ぽてと",
+            "startN": "ほ",
+            "endN": "と"
+        },
+        {
+            "model": "Data/Model/target/Hotdog.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ほっとどっぐ",
+            "startN": "ほ",
+            "endN": "く"
+        },
+        {
+            "model": "Data/Model/target/IceCream_2.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "あいす",
+            "startN": "あ",
+            "endN": "す"
+        },
+        {
+            "model": "Data/Model/target/lemon.001.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "れもん",
+            "startN": "れ",
+            "endN": "ん"
+        },
+        {
+            "model": "Data/Model/target/Mushroom.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "まっしゅるーむ",
+            "startN": "ま",
+            "endN": "む"
+        },
+        {
+            "model": "Data/Model/target/onion.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "たまねぎ",
+            "startN": "た",
+            "endN": "き"
+        },
+        {
+            "model": "Data/Model/target/Orange.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "みかん",
+            "startN": "み",
+            "endN": "ん"
+        },
+        {
+            "model": "Data/Model/target/Pancake.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ぱんけーき",
+            "startN": "は",
+            "endN": "き"
+        },
+        {
+            "model": "Data/Model/target/pear.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "なし",
+            "startN": "な",
+            "endN": "し"
+        },
+        {
+            "model": "Data/Model/target/Pepper_Red.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ぱぷりか",
+            "startN": "は",
+            "endN": "か"
+        },
+        {
+            "model": "Data/Model/target/Pizza.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "ぴざ",
+            "startN": "ひ",
+            "endN": "さ"
+        },
+        {
+            "model": "Data/Model/target/Pumpkin.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "かぼちゃ",
+            "startN": "か",
+            "endN": "や"
+        },
+        {
+            "model": "Data/Model/target/strawberry.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "いちご",
+            "startN": "い",
+            "endN": "こ"
+        },
+        {
+            "model": "Data/Model/target/Sushi_Nigiri2.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "すし",
+            "startN": "す",
+            "endN": "し"
+        },
+        {
+            "model": "Data/Model/target/Tomato.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "とまと",
+            "startN": "と",
+            "endN": "と"
+        },
+        {
+            "model": "Data/Model/target/Tumip.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "かぶ",
+            "startN": "か",
+            "endN": "ふ"
+        },
+        {
+            "model": "Data/Model/target/waffle.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "わっふる",
+            "startN": "わ",
+            "endN": "る"
+        },
+        {
+            "model": "Data/Model/target/siitake.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "しいたけ",
+            "startN": "し",
+            "endN": "け"
+        },
+        {
+            "model": "Data/Model/target/Watermelon_0101.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "すいか",
+            "startN": "す",
+            "endN": "か"
+        },
+        {
+            "model": "Data/Model/target/Cow_Cube.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "うし",
+            "startN": "う",
+            "endN": "し"
+        },
+        {
+            "model": "Data/Model/target/Cow_Cube.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "",
+            "startN": "",
+            "endN": ""
+        },
+        {
+            "model": "Data/Model/target/Cow_Cube.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "",
+            "startN": "",
+            "endN": ""
+        },
+        {
+            "model": "Data/Model/target/Cow_Cube.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "",
+            "startN": "",
+            "endN": ""
+        },
+        {
+            "model": "Data/Model/target/Cow_Cube.mdl",
+            "sprite": "Data/Sprite/chain/dish.png",
+            "name": "",
+            "startN": "",
+            "endN": ""
+        }
+    ]
 }
