@@ -7,6 +7,8 @@
 #include "SceneLoading.h"
 #include "Stage.h"
 #include"Camera.h"
+#include "GameManager.h"  
+
 
 // ‰Šú‰»
 void SceneSelect::Initialize()
@@ -81,6 +83,8 @@ void SceneSelect::Update(float elapsedTime)
 
 	if (mouse.GetButtonDown() & mouseButton)
 	{
+		GameManager::Instance().CreateTargetManager();
+
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 	}
 }
