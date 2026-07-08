@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include <thread>
 
+#include "targetManager.h"
+
 // ローディングシーン
 class SceneLoading : public Scene
 {
@@ -27,8 +29,23 @@ public:
 	void DrawGUI() override;
 
 
+	struct LoadingTarget  
+	{
+		Model* model = nullptr;
+		DirectX::XMFLOAT3 position = { 0,0,0 };
+		DirectX::XMFLOAT3 angle = { 0,0,0 };
+		DirectX::XMFLOAT3 scale = { 1,1,1 };
+		DirectX::XMFLOAT4X4 transform = {
+			1,0,0,0,
+			0,1,0,0,
+			0,0,1,0,
+			0,0,0,1
+		};
+	};
 
 private:
+
+
 	Sprite* sprite = nullptr;
 	float angle = 0.0f;
 	Scene* nextScene = nullptr;
@@ -38,6 +55,10 @@ private:
 
 	// 3Dモデル
 	Model* mdlApple = nullptr;
+
+	TargetManager* targetManager = nullptr;
+	std::vector<LoadingTarget> loadingTargets;
+
 
 	// ローディングスレッド
 	static void LoadingThread(SceneLoading* scene);

@@ -278,6 +278,8 @@
     </ClCompile>
     <ClCompile Include="Source\SceneResult.cpp">
       <Filter>Source\cpp</Filter>
+    <ClCompile Include="Source\GameManager.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
