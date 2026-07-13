@@ -8,6 +8,8 @@ Stage::Stage()
 {
 	//ステージ読み込み
 	mdlStage = new Model("Data/Model/stage/matimati.mdl");
+	mdlStage2 = new Model("Data/Model/stage/simasima.mdl");
+
 	//mdlStage = new Model("Data/Model/stage/classroom/class_set/classroom_demoscene.mdl");
 	mdlWall = new Model("Data/Model/wall/wall.mdl");
 	mdlCenterWall = new Model("Data/Model/wall/wall.mdl");
@@ -35,6 +37,7 @@ Stage::Stage()
 Stage::~Stage()
 {
 	delete mdlStage;
+	delete mdlStage2;
 	delete mdlWall;
 	delete mdlCenterWall;
 }

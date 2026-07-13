@@ -29,6 +29,8 @@ public:
 
 private:
 	Sprite* sprite = nullptr;
+	Sprite* sprArrowRight = nullptr;
+	Sprite* sprArrowLeft = nullptr;
 	
 
 	CameraController* cameraController = nullptr;
@@ -39,4 +41,24 @@ private:
 
 	Stage::StageTransform selectStage;
 
+	// マウスカーソルの位置
+	float CursorX = {};
+	float CursorY = {};
+
+	// ステージの状態
+	int stageState = {};
+	
+	// ステージ
+	enum stageType
+	{
+		stage1 = 0,
+		stage2 = 1
+	};
+
+	// 描画関数以外でも使いたいのでヘッダーに移動させる
+	Graphics& graphics = Graphics::Instance();
+	float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+	float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+	float ArrowSize = 128; // 矢印UIのサイズ
+	float ArrowH = screenHeight * 0.5f - ArrowSize * 0.5; // 矢印UIの描画位置（Y軸）
 };

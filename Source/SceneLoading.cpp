@@ -15,9 +15,10 @@ void SceneLoading::Initialize()
 	sprite = new Sprite("Data/Sprite/LoadingIcon.png");
 	sprFadeRect = new Sprite("Data/Sprite/FadeRect.png");
 
-
 	// スレッド開始
 	thread = new std::thread(LoadingThread, this);
+
+	ItemNum = rand() % 40; // アイテムの配列番号
 }
 
 // 終了化
@@ -57,7 +58,7 @@ void SceneLoading::Update(float elapsedTime)
 
 	for (auto& lt : loadingTargets)
 	{
-		lt.angle.y += 40.0f * elapsedTime;           // 回転
+		lt.angle.y += 0.5f * elapsedTime;           // 回転
 
 		// Transform更新
 		freeUpdateTransform(lt.scale, lt.angle, lt.position, lt.transform);
@@ -126,12 +127,13 @@ void SceneLoading::Render()
 		// 3D描画
 		if (targetManager)
 		{
-			auto& targets = targetManager->GetTargets();
-			for (auto& t : targets)
-			{
-				if (t.model)
+			//auto& targets = targetManager->GetTargets();
+			auto& lt = loadingTargets[1];
 				{
-					modelRenderer->Render(rc, t.transform, t.model, ShaderId::Lambert);
+			//auto& target = targets;
+				if (lt.model)
+				{
+					modelRenderer->Render(rc, lt.transform, lt.model, ShaderId::Lambert);
 				}
 			}
 		}
@@ -192,7 +194,6 @@ void SceneLoading::LoadingThread(SceneLoading* scene)
 
 
 
-	GameManager::Instance().CreateTargetManager();
 	scene->targetManager = GameManager::Instance().GetTargetManager();
 
 	if (scene->targetManager)
@@ -204,11 +205,11 @@ void SceneLoading::LoadingThread(SceneLoading* scene)
 		{
 			LoadingTarget lt;
 			lt.model = src[i].model;
-			lt.position = { (i - 0.5f) * 120.0f, 50.0f, 0.0f };  // 横に並べる
-			lt.scale = { 1.0f, 1.0f, 1.0f };                  // ちょうど良い大きさ
+			lt.position = {};  // 横に並べる
+			lt.scale = { 0.1f, 0.1f, 0.1f };                  // ちょうど良い大きさ
 			lt.angle = { 0.0f, 0.0f, 0.0f };
 
-			XMStoreFloat4x4(&lt.transform, DirectX::XMMatrixIdentity());
+			freeUpdateTransform(lt.scale, lt.angle, lt.position, lt.transform);
 			scene->loadingTargets.push_back(lt);
 		}
 	}

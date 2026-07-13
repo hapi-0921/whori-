@@ -53,6 +53,8 @@ private:
 	float LoadTimer = 4000;
 	Sprite* sprFadeRect = nullptr;
 
+	int ItemNum = {};
+
 	// 3Dƒ‚ƒfƒ‹
 	Model* mdlApple = nullptr;
 

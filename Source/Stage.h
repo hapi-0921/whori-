@@ -76,6 +76,7 @@ public:
 
 private:
 	Model* mdlStage = nullptr;//ステージ本体
+	Model* mdlStage2 = nullptr;//ステージ2本体
 	Model* mdlWall = nullptr;//壁モデル
 	Model* mdlCenterWall = nullptr;//中央の壁モデル
 
