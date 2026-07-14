@@ -34,6 +34,7 @@ public:
 
 	// ƒŠƒ\[ƒXæ“¾
 	const ModelResource* GetResource() const { return resource.get(); }
+	 ModelResource* GetResource()  { return resource.get(); }
 
 private:
 	std::shared_ptr<ModelResource>	resource;

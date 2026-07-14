@@ -6,11 +6,11 @@
 #include "SceneManager.h"
 #include "GameManager.h"
 #include"Camera.h"
+#include "targetManager.h"
 
 // 初期化
 void SceneGame::Initialize()
 {
-	sprite = new Sprite("Data/Sprite/cursor.png"); // デバッグspr
 
 	//カメラ初期設定
 	Graphics& graphics = Graphics::Instance();
@@ -21,10 +21,10 @@ void SceneGame::Initialize()
 		DirectX::XMFLOAT3(0, 1, 0)
 	);
 	camera.SetPerspectiveFov(
-		DirectX::XMConvertToRadians(45),
-		graphics.GetScreenWidth() / graphics.GetScreenHeight(),
-		0.1f,
-		2000.0f
+		DirectX::XMConvertToRadians(45),//fovY
+		graphics.GetScreenWidth() / graphics.GetScreenHeight(),//aspect
+		0.1f,//nearZ
+		3000.0f//farZ
 	);
 
 	cameraController = new CameraController();
@@ -34,10 +34,13 @@ void SceneGame::Initialize()
 	uiController = new UIController();
 	uiController->Initialize();
 	uiController->SetTargetManager(targetManager);
+	//targetManager->SetUIController(uiController);
 
+	targetManager->moveCusol = false;
+	
 	Stage& stage = Stage::Instance();
 	stage.SetCamera(cameraController);
-
+	cameraController->SetTargetManager(targetManager);
 	{
 		//stageTransform
 		gameStage.position = { 0, 0, 0 };
@@ -70,11 +73,6 @@ void SceneGame::Finalize()
 	GameManager::Instance().ReleaseTargetManager();
 
 	//2D
-	if (sprite != nullptr)
-	{
-		delete sprite;
-		sprite = nullptr;
-	}
 	if (uiController != nullptr)
 	{
 		delete uiController;
@@ -93,8 +91,15 @@ void SceneGame::Update(float elapsedTime)
 		GameManager::Instance().needCameraReset = false;
 	}
 
+
+	Stage& stage = Stage::Instance();
+	stage.Update(elapsedTime);
+
+	targetManager->Update(elapsedTime);
+	uiController->Update(elapsedTime);
+
 	//GameManager::Instance().SetPlaying(false);でプレイ中かどうか入れる
-	if (GameManager::Instance().IsPlaying()) 
+	if (GameManager::Instance().IsPlaying())
 	{
 		//タイマーを動かす
 
@@ -102,12 +107,6 @@ void SceneGame::Update(float elapsedTime)
 
 		cameraController->Update(elapsedTime);
 	}
-
-	Stage& stage = Stage::Instance();
-	stage.Update(elapsedTime);
-
-	targetManager->Update(elapsedTime);
-	uiController->Update(elapsedTime);
 
 
 	// 画面遷移 //
@@ -156,16 +155,10 @@ void SceneGame::Render()
 
 	// 2Dスプライト描画
 	{
-		uiController->Render(rc);
+		uiController->Render(rc, modelRenderer);
 	}
 	// 2Dデバッグ描画
 	{
-		float screenWidth = static_cast<float>(graphics.GetScreenWidth());
-		float screenHeight = static_cast<float>(graphics.GetScreenHeight());
-		sprite->Render(rc,
-			screenWidth * 0.5f - 50, screenHeight * 0.5f - 50, 0,
-			100, 100, 0,
-			1, 1, 1, 1);
 
 	}
 
@@ -175,11 +168,11 @@ void SceneGame::Render()
 // GUI描画
 void SceneGame::DrawGUI()
 {
-	// プレイヤーデバッグ描画
+	Stage& stage = Stage::Instance();
+	stage.DrawDebugGUI();
+
 	cameraController->DrawDebugGUI();
 	targetManager->DrawDebugGUI();
 	uiController->DrawDebugGUI();
 
-	Stage& stage = Stage::Instance();
-	stage.DrawDebugGUI();
 }

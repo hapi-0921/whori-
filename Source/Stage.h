@@ -58,7 +58,12 @@ private:
 		float distance;
 	};
 
+	DirectX::XMFLOAT3 vecDepth{};
+	DirectX::XMFLOAT3 vecCenter{};
+
 public:
+	float minVec = 0;
+
 	Stage();
 	~Stage()override;
 
@@ -68,17 +73,26 @@ public:
 	//描画処理
 	void Stage::Render(const RenderContext& rc, ModelRenderer* renderer, StageTransform* transform);
 
-	void FrontWall();
+	//void FrontWall();
 
 	//デバッグ用GUI描画
 	void DrawDebugGUI();
 
 
+public:
+	int stageNum = 0;//ステージの個数
+
+	int stageType = MACHI;
+	enum StageType
+	{
+		MACHI = 1,
+		SIMA
+	};
+
 private:
-	Model* mdlStage = nullptr;//ステージ本体
-	Model* mdlStage2 = nullptr;//ステージ2本体
-	Model* mdlWall = nullptr;//壁モデル
-	Model* mdlCenterWall = nullptr;//中央の壁モデル
+
+	Model* mdlStage[7] = {};//ステージ本体
+	Model* mdlCenterWall = nullptr;//壁モデル
 
 	CameraController* camera = nullptr;
 	std::vector<WallDistance> distancesX;
@@ -89,12 +103,18 @@ private:
 
 	StageTransform* transform = nullptr;
 
-public:
-	Wall wall[6];
-	Wall centerWall;
 
-	Model* GetStage() { return mdlStage; }
-	Model* GetWall() { return mdlWall; }
+public:
+
+	enum wallType
+	{
+		CENTER,
+		DEPTH
+	};
+	Wall centerWall[2];
+
+	Model* GetStage(int index) { return mdlStage[index]; }
+	//Model* GetWall() { return mdlWall; }
 	Model* GetCenterWall() { return mdlCenterWall; }
 
 
@@ -107,6 +127,7 @@ public:
 	{
 		return *transform;
 	}
+
 
 	void SetCamera(CameraController* camera)
 	{

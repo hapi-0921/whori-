@@ -1,4 +1,5 @@
 #include"Camera.h"
+#include "System/Graphics.h"
 
 //指定方向を向く
 void Camera::SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& focus,
@@ -58,4 +59,30 @@ void Camera::SetPerspectiveFov(float fovY, float aspect, float nearZ, float farZ
 	//画角(fov)、画面比率(aspect)、クリップ距離(near,far)からプロジェクション行列を作成
 	DirectX::XMMATRIX Projection = DirectX::XMMatrixPerspectiveFovLH(fovY, aspect, nearZ, farZ);
 	DirectX::XMStoreFloat4x4(&projection, Projection);
+}
+
+//ワールド?スクリーン
+bool Camera::WorldToScreen(const DirectX::XMFLOAT3& worldPos, DirectX::XMFLOAT2& outScreenPos) const
+{
+	Graphics& graphics = Graphics::Instance();
+	float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+	float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+
+	DirectX::XMMATRIX viewMat = DirectX::XMLoadFloat4x4(&view);        
+	DirectX::XMMATRIX projMat = DirectX::XMLoadFloat4x4(&projection);  
+
+	DirectX::XMMATRIX vp = viewMat * projMat;
+
+	DirectX::XMVECTOR pos = DirectX::XMVectorSet(worldPos.x, worldPos.y, worldPos.z, 1.0f);
+	pos = DirectX::XMVector4Transform(pos, vp);
+
+	float w = DirectX::XMVectorGetW(pos);
+	if (w <= 0.0001f) return false; 
+
+	pos = DirectX::XMVectorDivide(pos, DirectX::XMVectorReplicate(w));
+
+	outScreenPos.x = (DirectX::XMVectorGetX(pos) * 0.5f + 0.5f) * screenWidth;
+	outScreenPos.y = (-DirectX::XMVectorGetY(pos) * 0.5f + 0.5f) * screenHeight;
+
+	return true;
 }

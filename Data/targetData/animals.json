@@ -1,0 +1,600 @@
+{
+  "targets": [
+
+    {
+      "model": "Data/Model/target/animals/Alpaca.mdl",
+      "sprite": "Data/Sprite/chain/animals/Alpaca.png",
+      "name": "あるぱか",
+      "charCount": 4,
+      "startN": "あ",
+      "endN": "か",
+      "position": {
+        "x": -208.388,
+        "y": 16.780,
+        "z": -125.387
+      },
+      "card": "Data/Model/target/card/animals/card/Alpaca.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Bear.mdl",
+      "sprite": "Data/Sprite/chain/animals/Bear.000.png",
+      "name": "ぱんだ",
+      "charCount": 3,
+      "startN": "は",
+      "endN": "た",
+      "position": {
+        "x": 531.103,
+        "y": 102.503,
+        "z": 266.002
+      },
+      "card": "Data/Model/target/card/animals/card/Bear.001.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Camel.mdl",
+      "sprite": "Data/Sprite/chain/animals/Camel.002.png",
+      "name": "らくだ",
+      "charCount": 3,
+      "startN": "ら",
+      "endN": "た",
+      "position": {
+        "x": -139.208,
+        "y": -0.000,
+        "z": 35.856
+      },
+      "card": "Data/Model/target/card/animals/card/Camel.002.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Cat_Base_1.mdl",
+      "sprite": "Data/Sprite/chain/animals/Cat_Base_1.002.png",
+      "name": "ねこ",
+      "charCount": 2,
+      "startN": "ね",
+      "endN": "こ",
+      "position": {
+        "x": 684.052,
+        "y": 493.637,
+        "z": -680.954
+      },
+      "card": "Data/Model/target/card/animals/card/Cat_Base_1.002.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/chamaL.mdl",
+      "sprite": "Data/Sprite/chain/animals/chamaL.003.png",
+      "name": "かめれおん",
+      "charCount": 5,
+      "startN": "か",
+      "endN": "ん",
+      "position": {
+        "x": -191.141,
+        "y": 124.113,
+        "z": 397.210
+      },
+      "card": "Data/Model/target/card/animals/card/chamaL.003.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/ChickenLP.mdl",
+      "sprite": "Data/Sprite/chain/animals/ChickenLP.png",
+      "name": "にわとり",
+      "charCount": 4,
+      "startN": "に",
+      "endN": "り",
+      "position": {
+        "x": 291.354,
+        "y": -3.006,
+        "z": -85.965
+      },
+      "card": "Data/Model/target/card/animals/card/ChickenLP.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Cow.mdl",
+      "sprite": "Data/Sprite/chain/animals/Cow.001.png",
+      "name": "うし",
+      "charCount": 2,
+      "startN": "う",
+      "endN": "し",
+      "position": {
+        "x": 501.686,
+        "y": 383.914,
+        "z": -236.706
+      },
+      "card": "Data/Model/target/card/animals/card/Cow.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Cube.mdl",
+      "sprite": "Data/Sprite/chain/animals/Cube.png",
+      "name": "くも",
+      "charCount": 2,
+      "startN": "く",
+      "endN": "も",
+      "position": {
+        "x": -131.839,
+        "y": 189.458,
+        "z": 759.419
+      },
+      "card": "Data/Model/target/card/animals/card/Cube.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/ahiru.mdl",
+      "sprite": "Data/Sprite/chain/animals/Cube.001.png",
+      "name": "あひる",
+      "charCount": 3,
+      "startN": "あ",
+      "endN": "る",
+      "position": {
+        "x": 334.273,
+        "y": -63.937,
+        "z": -483.869
+      },
+      "card": "Data/Model/target/card/animals/card/Cube.001.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Deer.mdl",
+      "sprite": "Data/Sprite/chain/animals/Deer.png",
+      "name": "しか",
+      "charCount": 2,
+      "startN": "し",
+      "endN": "か",
+      "position": {
+        "x": 253.353,
+        "y": 0.000,
+        "z": -851.508
+      },
+      "card": "Data/Model/target/card/animals/card/Deer.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Dolphin.mdl",
+      "sprite": "Data/Sprite/chain/animals/Dolphin.png",
+      "name": "いるか",
+      "charCount": 3,
+      "startN": "い",
+      "endN": "か",
+      "position": {
+        "x": 246.391,
+        "y": 98.404,
+        "z": -398.948
+      },
+      "card": "Data/Model/target/card/animals/card/Dolphin.mdl"
+
+    },
+    {
+
+      "model": "Data/Model/target/animals/Elephant.mdl",
+      "sprite": "Data/Sprite/chain/animals/Elephant.png",
+      "name": "ぞう",
+      "charCount": 2,
+      "startN": "そ",
+      "endN": "う",
+      "position": {
+        "x": -655.980,
+        "y": 90.006,
+        "z": 208.508
+      },
+      "card": "Data/Model/target/card/animals/card/Elephant.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Fox.mdl",
+      "sprite": "Data/Sprite/chain/animals/Fox.png",
+      "name": "きつね",
+      "charCount": 3,
+      "startN": "き",
+      "endN": "ね",
+      "position": {
+        "x": 686.349,
+        "y": 93.826,
+        "z": 441.811
+      },
+      "card": "Data/Model/target/card/animals/card/Fox.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Frog.mdl",
+      "sprite": "Data/Sprite/chain/animals/Frog.png",
+      "name": "かえる",
+      "charCount": 3,
+      "startN": "か",
+      "endN": "る",
+      "position": {
+        "x": 420.183,
+        "y": 340.397,
+        "z": -647.794
+      },
+      "card": "Data/Model/target/card/animals/card/Frog.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Giraffe.mdl",
+      "sprite": "Data/Sprite/chain/animals/Giraffe.png",
+      "name": "きりん",
+      "charCount": 3,
+      "startN": "き",
+      "endN": "ん",
+      "position": {
+        "x": 592.093,
+        "y": -1.891,
+        "z": -62.028
+      },
+      "card": "Data/Model/target/card/animals/card/Giraffe.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Hamster_fbx.mdl",
+      "sprite": "Data/Sprite/chain/animals/Hamster_fbx.png",
+      "name": "はむすたー",
+      "charCount": 5,
+      "startN": "は",
+      "endN": "た",
+      "position": {
+        "x": 12.601,
+        "y": 191.858,
+        "z": 174.391
+      },
+      "card": "Data/Model/target/card/animals/card/Hamster_fbx.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/HippoEdited.mdl",
+      "sprite": "Data/Sprite/chain/animals/HippoEdited.001.png",
+      "name": "かば",
+      "charCount": 2,
+      "startN": "か",
+      "endN": "は",
+      "position": {
+        "x": 684.737,
+        "y": 486.906,
+        "z": -426.402
+      },
+      "card": "Data/Model/target/card/animals/card/HippoEdited.001.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Horse.mdl",
+      "sprite": "Data/Sprite/chain/animals/Horse.png",
+      "name": "うま",
+      "charCount": 2,
+      "startN": "う",
+      "endN": "ま",
+      "position": {
+        "x": -240.213,
+        "y": 277.982,
+        "z": -774.416
+      },
+      "card": "Data/Model/target/card/animals/card/Horse.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/koala1.mdl",
+      "sprite": "Data/Sprite/chain/animals/koala.png",
+      "name": "こ",
+      "charCount": 3,
+      "startN": "こ",
+      "endN": "ら",
+      "position": {
+        "x": -691.736,
+        "y": 481.103,
+        "z": 441.638
+
+      },
+      "card": "Data/Model/target/card/animals/card/koala.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/kuwagata.mdl",
+      "sprite": "Data/Sprite/chain/animals/kuwagata.png",
+      "name": "くわがた",
+      "charCount": 4,
+      "startN": "く",
+      "endN": "た",
+      "position": {
+        "x": 43.789,
+        "y": 116.551,
+        "z": 896.171
+      },
+      "card": "Data/Model/target/card/animals/card/kuwagata.mdl"
+
+    },
+    {
+      "model": "Data/Model/target/animals/Low.mdl",
+      "sprite": "Data/Sprite/chain/animals/Low.png",
+      "name": "りす",
+      "charCount": 2,
+      "startN": "り",
+      "endN": "す",
+      "position": {
+        "x": -190.734,
+        "y": 275.761,
+        "z": 130.121
+      },
+      "card": "Data/Model/target/card/animals/card/Low.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/MantaRay.mdl",
+      "sprite": "Data/Sprite/chain/animals/MantaRay.png",
+      "name": "えい",
+      "charCount": 2,
+      "startN": "え",
+      "endN": "い",
+      "position": {
+        "x": -680.521,
+        "y": -0.000,
+        "z": -400.360
+      },
+      "card": "Data/Model/target/card/animals/card/MantaRay.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Penguin.mdl",
+      "sprite": "Data/Sprite/chain/animals/Penguin.png",
+      "name": "ぺんぎん",
+      "charCount": 4,
+      "startN": "へ",
+      "endN": "ん",
+      "position": {
+        "x": -236.801,
+        "y": 243.092,
+        "z": -487.836
+      },
+      "card": "Data/Model/target/card/animals/card/Penguin.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Pig.mdl",
+      "sprite": "Data/Sprite/chain/animals/Pig.png",
+      "name": "ぶた",
+      "charCount": 2,
+      "startN": "ふ",
+      "endN": "た",
+      "position": {
+        "x": 429.947,
+        "y": 154.563,
+        "z": 872.543
+      },
+      "card": "Data/Model/target/card/animals/card/Pig.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Zebra.mdl",
+      "sprite": "Data/Sprite/chain/animals/Zebra.png",
+      "name": "しまうま",
+      "charCount": 4,
+      "startN": "し",
+      "endN": "ま",
+      "position": {
+        "x": 44.051,
+        "y": 0.000,
+        "z": 548.734
+      },
+      "card": "Data/Model/target/card/animals/card/Zebra.mdl"
+    },
+
+    {
+      "model": "Data/Model/target/animals/Rabbit.mdl",
+      "sprite": "Data/Sprite/chain/animals/Rabbit.png",
+      "name": "うさぎ",
+      "charCount": 3,
+      "startN": "う",
+      "endN": "き",
+      "position": {
+        "x": 415.854,
+        "y": 323.328,
+        "z": -274.460
+      },
+      "card": "Data/Model/target/card/animals/card/Rabbit.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Rat.mdl",
+      "sprite": "Data/Sprite/chain/animals/Rat.png",
+      "name": "ねずみ",
+      "charCount": 3,
+      "startN": "ね",
+      "endN": "み",
+      "position": {
+        "x": -208.967,
+        "y": 26.596,
+        "z": -357.737
+      },
+      "card": "Data/Model/target/card/animals/card/Rat.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Rhino.mdl",
+      "sprite": "Data/Sprite/chain/animals/Rhino.png",
+      "name": "さい",
+      "charCount": 2,
+      "startN": "さ",
+      "endN": "い",
+      "position": {
+        "x": -756.919,
+        "y": 57.064,
+        "z": -665.148
+      },
+      "card": "Data/Model/target/card/animals/card/Rhino.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/SeahorseFBX.mdl",
+      "sprite": "Data/Sprite/chain/animals/Seahorse FBX.png",
+      "name": "たつのおとしご",
+      "charCount": 7,
+      "startN": "た",
+      "endN": "こ",
+      "position": {
+        "x": -415.660,
+        "y": 225.673,
+        "z": -106.604
+      },
+      "card": "Data/Model/target/card/animals/card/Seahorse FBX.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Shark.mdl",
+      "sprite": "Data/Sprite/chain/animals/Shark.png",
+      "name": "さめ",
+      "charCount": 2,
+      "startN": "さ",
+      "endN": "め",
+      "position": {
+        "x": 810.479,
+        "y": 32.060,
+        "z": 424.758
+      },
+      "card": "Data/Model/target/card/animals/card/Shark.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Sheep.mdl",
+      "sprite": "Data/Sprite/chain/animals/Sheep.png",
+      "name": "ひつじ",
+      "charCount": 3,
+      "startN": "ひ",
+      "endN": "し",
+      "position": {
+        "x": 508.222,
+        "y": -10.060,
+        "z": 829.727
+      },
+      "card": "Data/Model/target/card/animals/card/Sheep.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/ShibaInu.mdl",
+      "sprite": "Data/Sprite/chain/animals/ShibaInu.png",
+      "name": "いぬ",
+      "charCount": 2,
+      "startN": "い",
+      "endN": "ぬ",
+      "position": {
+        "x": -544.677,
+        "y": 114.264,
+        "z": -224.499
+      },
+      "card": "Data/Model/target/card/animals/card/ShibaInu.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Snake.mdl",
+      "sprite": "Data/Sprite/chain/animals/Snake.png",
+      "name": "へび",
+      "charCount": 2,
+      "startN": "へ",
+      "endN": "ひ",
+      "position": {
+        "x": -659.418,
+        "y": 110.199,
+        "z": 662.936
+      },
+      "card": "Data/Model/target/card/animals/card/Snake.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Sphere.mdl",
+      "sprite": "Data/Sprite/chain/animals/Sphere.png",
+      "name": "てんとうむし",
+      "charCount": 6,
+      "startN": "て",
+      "endN": "し",
+      "position": {
+        "x": 87.691,
+        "y": 23.885,
+        "z": 729.659
+      },
+      "card": "Data/Model/target/card/animals/card/Sphere.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Stegosaurus.mdl",
+      "sprite": "Data/Sprite/chain/animals/Stegosaurus.png",
+      "name": "すてごさうるす",
+      "charCount": 7,
+      "startN": "す",
+      "endN": "す",
+      "position": {
+        "x": 376.409,
+        "y": 0.000,
+        "z": 317.493
+      },
+      "card": "Data/Model/target/card/animals/card/Stegosaurus.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Trex.mdl",
+      "sprite": "Data/Sprite/chain/animals/Trex.png",
+      "name": "てぃらのさうるす",
+      "charCount": 8,
+      "startN": "て",
+      "endN": "す",
+      "position": {
+        "x": 43.492,
+        "y": 0.000,
+        "z": -549.852
+      },
+      "card": "Data/Model/target/card/animals/card/Trex.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Triceratops.mdl",
+      "sprite": "Data/Sprite/chain/animals/Triceratops.png",
+      "name": "とりけらとぷす",
+      "charCount": 7,
+      "startN": "と",
+      "endN": "す",
+      "position": {
+        "x": -384.988,
+        "y": 0.000,
+        "z": 568.501
+      },
+      "card": "Data/Model/target/card/animals/card/Triceratops.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Triceratops1.mdl",
+      "sprite": "Data/Sprite/chain/animals/Triceratops1.png",
+      "name": "はち",
+      "charCount": 2,
+      "startN": "は",
+      "endN": "ち",
+      "position": {
+        "x": 20.614,
+        "y": 10.485,
+        "z": -190.036
+      },
+      "card": "Data/Model/target/card/animals/card/Triceratops1.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Whale.mdl",
+      "sprite": "Data/Sprite/chain/animals/Whale.png",
+      "name": "くじら",
+      "charCount": 3,
+      "startN": "く",
+      "endN": "ら",
+      "position": {
+        "x": -715.856,
+        "y": 348.725,
+        "z": -38.389
+      },
+      "card": "Data/Model/target/card/animals/card/Whale.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/Wolf.mdl",
+      "sprite": "Data/Sprite/chain/animals/Wolf.png",
+      "name": "おおかみ",
+      "charCount": 4,
+      "startN": "お",
+      "endN": "み",
+      "position": {
+        "x": -139.342,
+        "y": 0.000,
+        "z": 491.734
+      },
+      "card": "Data/Model/target/card/animals/card/Wolf.mdl"
+    },
+    {
+      "model": "Data/Model/target/animals/tanuki.mdl",
+      "sprite": "Data/Sprite/chain/animals/tanuki.png",
+      "name": "たぬき",
+      "charCount": 3,
+      "startN": "た",
+      "endN": "き",
+      "position": {
+        "x": 96.832,
+        "y": -8.476,
+        "z": 87.816
+      },
+      "card": "Data/Model/target/card/animals/card/tanuki.mdl"
+    }
+  ]
+}

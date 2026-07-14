@@ -17,10 +17,23 @@ public:
 
 	void Initialize();
 	void Update(float elapsedTime);
-	void Render(const RenderContext& rc);
+	void Render(const RenderContext& rc, ModelRenderer* renderer);
 	void DrawDebugGUI();
 
 private:
+	struct Transform
+	{
+		DirectX::XMFLOAT3 position = { 0,0,0 };
+		DirectX::XMFLOAT3 angle = { 0,0,0 };
+		DirectX::XMFLOAT3 scale = { 1,1,1 };
+		DirectX::XMFLOAT4X4 transform = {
+			1,0,0,0,
+			0,1,0,0,
+			0,0,1,0,
+			0,0,0,1
+		};
+	};
+
 	struct sprData
 	{
 		float dx, dy, dz;//pos   左上中心
@@ -36,19 +49,23 @@ private:
 
 	TargetManager* targetManager = nullptr;	
 
-private://しりとり連鎖
 	Sprite* sprChain = nullptr;
+
+	//float delta = 50;
+
+private://しりとり連鎖
 	sprData chainData;
 
 	float renSpan = 90;//連鎖表示の間隔
-	//int rupeMax = 5;
 
-private://targetカード
-	Sprite* sprCard = nullptr;
-
+//targetカード
 	sprData cardData;
 
+	Sprite* sprite = nullptr;
+
+
 public:
+
 	void SetTargetManager(TargetManager* manager)
 	{
 		targetManager = manager;

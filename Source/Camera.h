@@ -21,6 +21,11 @@ public:
 	void SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& focus, const DirectX::XMFLOAT3& up);
 	//パースペクティブ設定
 	void SetPerspectiveFov(float fovY, float aspect, float nearZ, float farZ);
+
+	// Camera.h
+	bool WorldToScreen(const DirectX::XMFLOAT3& worldPos, DirectX::XMFLOAT2& outScreenPos) const;
+
+
 	//ビュー行列取得
 	const DirectX::XMFLOAT4X4& GetView() const {return view;}
 	//プロジェクション行列取得

@@ -66,7 +66,6 @@ void SceneLoading::Update(float elapsedTime)
 	}
 
 
-
 	// 次のシーンの準備か完了したらシーンを切り替える
 	if (nextScene != nullptr)
 	{
@@ -150,10 +149,6 @@ void SceneLoading::DrawGUI()
 
 	ImGui::Text("targetManager: %s", targetManager ? "OK" : "NULL");
 
-	for (const auto& lt : loadingTargets)
-	{
-		ImGui::Text("Scale: %.1f, %.1f, %.1f", lt.scale.x, lt.scale.y, lt.scale.z);
-	}
 
 	if (targetManager)
 	{
@@ -169,7 +164,6 @@ void SceneLoading::DrawGUI()
 			ImGui::PushID(i);
 			if (ImGui::CollapsingHeader(("Target " + std::to_string(i)).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::Text("Name: %s", t.name.c_str());
 				ImGui::Text("Position: %.1f, %.1f, %.1f", t.position.x, t.position.y, t.position.z);
 				ImGui::Text("Angle: %.1f, %.1f, %.1f", t.angle.x, t.angle.y, t.angle.z);
 				ImGui::Checkbox("isChainRender", &t.isChainRender);
@@ -211,6 +205,7 @@ void SceneLoading::LoadingThread(SceneLoading* scene)
 
 			freeUpdateTransform(lt.scale, lt.angle, lt.position, lt.transform);
 			scene->loadingTargets.push_back(lt);
+
 		}
 	}
 
@@ -229,4 +224,5 @@ void SceneLoading::LoadingThread(SceneLoading* scene)
 
 	// 次のシーンの準備完了設定
 	scene->nextScene->SetReandy();
+
 }

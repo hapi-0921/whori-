@@ -2,6 +2,8 @@
 #include<DirectXMath.h>
 #include"ModelCommon.h"
 #include"System/Mouse.h"
+#include "targetManager.h"
+
 //#include"Stage.h"
 
 //カメラコントローラー
@@ -26,20 +28,20 @@ public:
 private:
 	//距離制限
 	float minRange = 0.0f;
-	float maxRange = 1500.0f;
+	float maxRange = 2000.0f;
+	float minVec;
+
+	//回転
+	DirectX::XMFLOAT3 rotateCenter;//回転用注視点
+	bool isRotating = false;
 
 
-	//DirectX::XMFLOAT3 target = { 0,0,0 };//注視点
-	//DirectX::XMFLOAT3 angle = { 0,-DirectX::XM_PI * 0.25f,0 };//回転角度
-	//DirectX::XMFLOAT3 eye;
-
-	float rollSpeed = DirectX::XMConvertToRadians(90);//回転速度
-	float zoomSpeed = 10;
 
 	Model* model = nullptr;
 	DirectX::XMFLOAT3 hitDelta;
 
 	bool hitRay = false;
+
 
 	DirectX::XMFLOAT3 rayStart;
 	DirectX::XMFLOAT3 rayEnd;
@@ -48,8 +50,15 @@ private:
 	DirectX::XMVECTOR zoomEye = XMLoadFloat3(&eye);
 	DirectX::XMVECTOR HitPosition = XMLoadFloat3(&hitDelta);
 
+	TargetManager* targetManager = nullptr;
 
 public:
+	void SetTargetManager(TargetManager* manager)
+	{
+		targetManager = manager;
+	}
+
+
 	DirectX::XMFLOAT3 target = DEFAULT_TARGET;//注視点
 	DirectX::XMFLOAT3 angle = DEFAULT_ANGLE;//回転角度
 	DirectX::XMFLOAT3 eye;

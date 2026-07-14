@@ -35,6 +35,7 @@ public:
 		std::string			name;
 		std::string			textureFilename;
 		DirectX::XMFLOAT4	color = { 0.8f, 0.8f, 0.8f, 1.0f };
+		DirectX::XMFLOAT4     emissionColor = { 0,0,0,0 };
 
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shaderResourceView;
 
@@ -121,6 +122,7 @@ public:
 	const std::vector<Node>& GetNodes() const { return nodes; }
 	const std::vector<Animation>& GetAnimations() const { return animations; }
 	const std::vector<Material>& GetMaterials() const { return materials; }
+	 std::vector<Material>& GetMaterials()  { return materials; }
 
 	// ì«Ç›çûÇ›
 	void Load(ID3D11Device* device, const char* filename);

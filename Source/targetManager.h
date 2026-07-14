@@ -2,6 +2,8 @@
 #include<DirectXMath.h>
 #include "System/Sprite.h"
 
+#include "System/Model.h"
+
 #include"System/ModelRenderer.h"
 #include <json.hpp>
 using json = nlohmann::json;
@@ -16,27 +18,41 @@ public:
 	void Render(const RenderContext& rc, ModelRenderer* renderer);
 	void DrawDebugGUI();
 
-	void TargetFocus();//当たってるか
+	void TargetFocus(float elapsedTime);//当たってるか
 
+
+	bool IsInCursorArea(const DirectX::XMFLOAT2& screenPos, float delta);
 
 
 	struct TargetData
 	{
 		std::string modelPath;
 		std::string spritePath;
-		std::string name;
+		std::string cardPath;
+
 		std::string startN;
 		std::string endN;
+		int charCount = 0;
+
+		DirectX::XMFLOAT3 position = { 0,0,0 };
 	};
 
 
 	std::vector<TargetManager::TargetData> LoadTargets(const std::string& path);
 private:
 
+
 	struct Target
 	{
+		Model* mdlCard = nullptr;
+		std::string cardPath;
+
 		Model* model = nullptr;
 		Sprite* sprite = nullptr;
+		std::string startN;
+		std::string endN;
+		int charCount = 0;
+		DirectX::XMFLOAT3 pos = { 0,0,0 };//文字数用
 
 		DirectX::XMFLOAT3 position = { 0,0,0 };
 		DirectX::XMFLOAT3 angle = { 0,0,0 };
@@ -48,9 +64,6 @@ private:
 			0,0,0,1
 		};
 
-		std::string name;
-		std::string startN;
-		std::string endN;
 
 
 		float distance = 0.0f;
@@ -63,30 +76,78 @@ private:
 
 		bool isChainRender = false;//チェーンに表示するか
 
+		bool carsRen = false;//正面にはる
+
+		DirectX::XMFLOAT3 vec;
 	};
+	Target tfCard;
 
 
+	//フォーカス中の光
+	DirectX::XMFLOAT4 maxColor = { 0.6f,0.6f,0.6f,1.0f };
+	DirectX::XMFLOAT4 minColor = { 0.3f,0.3f,0.3f,1.0f };
+	DirectX::XMFLOAT4 nonColor = {};
+	float timer = 0.2f;
 
 	float maxDistance = 500.0f;
+	int chrCount =0.0f;
 	DirectX::XMFLOAT3 rayEnd;
 	DirectX::XMFLOAT3 rayStart;
 
 	int chainCount = 0;//何連鎖中か
 
-	std::string firstName = "";//最初の文字
+	//std::string firstName = "";//最初の文字
 	std::string endName = "";//前の文字
 
+	float focusTimer = 0.0f;
+	float lightTimer = 0.0f;
+
+	float stageVec;
+	float targetVec;
+
+
+	//カーソル判定（面）
+	//bool TargetManager::IsInCursor(Target& t);
 
 
 private:
+	//UIController* uiController = nullptr;
+
 	std::vector<Target> targets;//全ての対象物
 	std::vector<Target*> getTargets;//獲得したもの保存
 
+	//文字数
+	Target tfCharCount;
+	Model* mdlChrCount = nullptr;
+
+	float cardTimer = 0.0f;
+
+	float spinAngle = 0.0;
+
+	bool charRen = false;
+
+
 public:
+	float cusolPos = 50;
+	//bool IsInCursorArea(const DirectX::XMFLOAT2& screenPos, float delta);
+
+	float distance = 0;
+	bool canZoom = false;
+
+	bool moveCusol = false;//カーソルを動かす
+	
+
+	//float posForRotate;//回転用position
+
+	//*****獲得した最終文字数****
+	int allCharCount = 0;
+	//*****
+
+	bool GetCarsRen(int index) { return targets[index].carsRen; }
 	bool GetisFocus(int index) { return targets[index].isFocus; }
 	int GetChainCount() { return chainCount - 1; }
 
-	Target GetKeepTarget(int index) { return *getTargets[index]; }
+	//Target GetKeepTarget(int index) { return *getTargets[index]; }
 	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }
 
 	int GetTargetSize() const { return static_cast<int>(targets.size()); }
@@ -96,5 +157,11 @@ public:
 
 	Sprite* GetTargetSpri(int index)  { return targets[index].sprite; }
 	Sprite* GetgetTargetSpri(int index)  { return getTargets[index]->sprite; }
+
+
+	//void TargetManager::SetUIController(UIController* pUI)
+	//{
+	//	uiController = pUI;
+	//}
 
 };
