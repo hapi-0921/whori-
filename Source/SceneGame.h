@@ -29,7 +29,6 @@ public:
 	// GUI•`‰æ
 	void DrawGUI();
 private:
-	Sprite* sprite = nullptr;
 
 	UIController* uiController = nullptr;
 	TargetManager* targetManager = nullptr;

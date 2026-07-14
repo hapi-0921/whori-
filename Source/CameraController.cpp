@@ -28,6 +28,8 @@ void CameraController::CameraReset()
 
 }
 
+
+
 bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 {
 	float screenWidth = Graphics::Instance().GetScreenWidth();
@@ -87,22 +89,18 @@ bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 
 	Stage& stage = Stage::Instance();
 
-	// 実際の6枚の壁
-	for (int i = 0; i < 6; i++)
+	//奥行き判定用壁
+	XMFLOAT3 hit, normal;
+	if (Collision::RayCast(rayStart, rayEnd,
+		stage.centerWall[Stage::wallType::DEPTH].transform, stage.GetCenterWall(), hit, normal))
 	{
-		XMFLOAT3 hit, normal;
-		if (Collision::RayCast(rayStart, rayEnd,
-			stage.wall[i].transform, stage.GetWall(), hit, normal))
+		float distSq = XMVectorGetX(XMVector3LengthSq(//
+			XMLoadFloat3(&hit) - XMLoadFloat3(&rayStart)));
+		if (distSq < nearest)
 		{
-			float distSq = XMVectorGetX(XMVector3LengthSq(//
-				XMLoadFloat3(&hit) - XMLoadFloat3(&rayStart)));
-
-			if (distSq < nearest)
-			{
-				nearest = distSq;
-				realHit = hit;
-				hitReal = true;
-			}
+			nearest = distSq;
+			realHit = hit;
+			hitReal = true;
 		}
 	}
 
@@ -112,12 +110,12 @@ bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 	XMFLOAT3 centerHit;
 	XMFLOAT3 dummyNormal;
 	if (!Collision::RayCast(rayStart, rayEnd,
-		stage.centerWall.transform, stage.GetWall(), centerHit, dummyNormal))
+		stage.centerWall[Stage::wallType::CENTER].transform, stage.GetCenterWall(), centerHit, dummyNormal))
 	{
 		return false;
 	}
 
-	// ================ ================
+	// ================================
 	XMVECTOR delta = XMLoadFloat3(&centerHit) - XMLoadFloat3(&realHit);
 
 	//
@@ -143,20 +141,36 @@ void CameraController::Update(float elapsedTime)
 {
 	Mouse& mouse = Input::Instance().GetMouse();
 
-	//中ドラッグで回転
+	//-------------中ドラッグで回転--------------------
 	if (mouse.GetButton() & Mouse::BTN_MIDDLE)
 	{
-		float dx = static_cast<float>(
-			mouse.GetPositionX() - mouse.GetOldPositionX());
+		float dx = static_cast<float>(mouse.GetPositionX() - mouse.GetOldPositionX());
+		float dy = static_cast<float>(mouse.GetPositionY() - mouse.GetOldPositionY());
 
-		float dy = static_cast<float>(
-			mouse.GetPositionY() - mouse.GetOldPositionY());
+		if (!isRotating)
+		{
+			isRotating = true;
 
+			XMMATRIX rot =XMMatrixRotationRollPitchYaw(angle.x,angle.y,angle.z);
+			XMVECTOR forward =XMVector3Normalize(rot.r[2]);
+			XMVECTOR eyePos =XMLoadFloat3(&eye);
 
-		float mouseRotateSpeed = 0.01f;
+			float rotateDistance = 150.0f;
+
+			XMVECTOR center =eyePos + forward * rotateDistance;
+
+			XMStoreFloat3(&rotateCenter, center);
+		}
+
+		//＊＊回転速度＊＊
+		float mouseRotateSpeed = 0.002f;
 
 		angle.y += dx * mouseRotateSpeed;
 		angle.x += dy * mouseRotateSpeed;
+	}
+	else
+	{
+		isRotating = false;
 	}
 
 	//======回転の制限======
@@ -183,31 +197,43 @@ void CameraController::Update(float elapsedTime)
 	DirectX::XMFLOAT3 front;
 	DirectX::XMStoreFloat3(&front, Front);
 
-
-	//＊制作用
-	{
-		//左ドラッグで平行移動(パン移動)
-		//if (mouse.GetButton() & Mouse::BTN_LEFT)
-		//{
-		//	float dx = static_cast<float>(
-		//		mouse.GetPositionX() - mouse.GetOldPositionX());
-		//	float dy = static_cast<float>(
-		//		mouse.GetPositionY() - mouse.GetOldPositionY());
-		//	float moveSpeed = 5.0f;
-		//	target.x -= right.x * dx * moveSpeed;
-		//	target.z -= right.z * dx * moveSpeed;
-		//	target.x += front.x * dy * moveSpeed;
-		//	target.z += front.z * dy * moveSpeed;
-		//}
-	}
-
-
 	// ================== ホイールズーム ==================
 	float wheel = ImGui::GetIO().MouseWheel;
+
+	float zoomSpeed = 20;
+	float moveSpeed = 0.1;
+
 	if (wheel != 0.0f)
 	{
 		// ================ ズームイン ================
-		if (wheel > 0.0f)
+
+			if (wheel > 0.0f)
+			{
+				XMFLOAT3 hitDelta;
+				if (cursorRay(hitDelta))
+				{
+					XMVECTOR targetV = XMLoadFloat3(&target);
+					XMVECTOR deltaV = XMLoadFloat3(&hitDelta);
+
+					float distToHit = XMVectorGetX(XMVector3Length(deltaV));
+
+					if (distToHit > 0.05f)
+					{
+						XMVECTOR dir = XMVector3Normalize(deltaV);
+
+						float strength = wheel * moveSpeed;
+						float maxMove = distToHit * 0.3f;
+
+						float moveAmount = std::min(strength * distToHit, maxMove);
+
+						XMVECTOR offset = XMVectorScale(dir, moveAmount);
+						XMVECTOR newTarget = targetV + offset;
+						XMStoreFloat3(&target, newTarget);
+					}
+				}
+			}
+		// ================ ズームアウト（カーソル） ===============
+		else
 		{
 			XMFLOAT3 hitDelta;
 			if (cursorRay(hitDelta))
@@ -215,69 +241,68 @@ void CameraController::Update(float elapsedTime)
 				XMVECTOR targetV = XMLoadFloat3(&target);
 				XMVECTOR deltaV = XMLoadFloat3(&hitDelta);
 
-				float distToHit = XMVectorGetX(XMVector3Length(deltaV));
-
-				if (distToHit > 0.05f)
+				float dist = XMVectorGetX(XMVector3Length(deltaV));
+				if (dist > 0.08f)
 				{
 					XMVECTOR dir = XMVector3Normalize(deltaV);
 
-					float strength = wheel * 0.3f;
-					float maxMove = distToHit * 0.42f;
+					float strength = std::abs(wheel) * 0.095f;   // 調整しやすい値
+					float moveAmount = strength * dist;
 
-					float moveAmount = std::min(strength * distToHit, maxMove);
+					XMVECTOR offset = XMVectorScale(dir, moveAmount);  
 
-					XMVECTOR offset = XMVectorScale(dir, moveAmount);
-					XMVECTOR newTarget = targetV + offset;
-					XMStoreFloat3(&target, newTarget);
+					XMStoreFloat3(&target, targetV + offset);
 				}
 			}
 		}
-		// ================ ズームアウト ===============
-		else
-		{
-			XMVECTOR targetV = XMLoadFloat3(&target);
-			XMVECTOR center = XMVectorZero();
 
-			XMVECTOR toCenter = center - targetV;
-			float dist = XMVectorGetX(XMVector3Length(toCenter));
 
-			if (dist > 0.2f)
+		// ================ ズームアウト（中心） ===============
+		//else
+		//{
+		//	XMVECTOR targetV = XMLoadFloat3(&target);
+		//	XMVECTOR center = XMVectorZero();
+
+		//	XMVECTOR toCenter = center - targetV;
+		//	float dist = XMVectorGetX(XMVector3Length(toCenter));
+
+		//	if (dist > 0.2f)
+		//	{
+		//		XMVECTOR dir = XMVector3Normalize(toCenter);
+		//		float strength = std::abs(wheel) * 0.20f;
+		//		float moveDist = strength * dist * 0.1f;
+
+		//		XMVECTOR offset = XMVectorScale(dir, moveDist);
+		//		XMVECTOR newTarget = targetV + offset;
+		//		XMStoreFloat3(&target, newTarget);
+		//	}
+		//}
+
+			if (!targetManager->canZoom)
 			{
-				XMVECTOR dir = XMVector3Normalize(toCenter);
-				float strength = std::abs(wheel) * 0.20f;
-				float moveDist = strength * dist * 0.1f;
-
-				XMVECTOR offset = XMVectorScale(dir, moveDist);
-				XMVECTOR newTarget = targetV + offset;
-				XMStoreFloat3(&target, newTarget);
+				// range調整
+				range = std::clamp(range - wheel * zoomSpeed, minRange, maxRange);
+				//range = range - wheel * zoomSpeed * 1.15f;
 			}
-		}
-
-		// range調整
-		range = std::clamp(range - wheel * zoomSpeed * 1.15f, minRange, maxRange);
-		//range = range - wheel * zoomSpeed * 1.15f;
 	}
 
 	// カメラ更新
 	float safeRange = std::max(range, 0.0001f);
 
+
 	eye.x = target.x - front.x * safeRange;
 	eye.y = target.y - front.y * safeRange;
 	eye.z = target.z - front.z * safeRange;
 
-	Camera::Instance().SetLookAt(eye, target, XMFLOAT3(0, 1, 0));
+	Camera::Instance().SetLookAt(
+		eye,
+		target,
+		XMFLOAT3(0, 1, 0));
 }
 
 void CameraController::Render(const RenderContext& rc)
 {
-	ShapeRenderer* shapeRenderer = Graphics::Instance().GetShapeRenderer();
 
-	XMFLOAT3 pos{ 0,0,0 };
-	XMFLOAT4 color{ 1,1,1,1 };
-	XMFLOAT4 color1{ 1,0,0,1 };
-	//shapeRenderer->RenderSphere(rc, pos, 1.0f, color);
-	shapeRenderer->RenderSphere(rc, rayStart, 0.001f, color);
-	//shapeRenderer->RenderSphere(rc, hitPosition, 0.01f, color1);
 }
 
 void CameraController::DrawDebugGUI()
@@ -285,7 +310,7 @@ void CameraController::DrawDebugGUI()
 
 	//ウィンドウの位置
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
-	ImGui::SetNextWindowPos(ImVec2(pos.x , pos.y + 300), ImGuiCond_Once);
+	ImGui::SetNextWindowPos(ImVec2(pos.x, pos.y + 300), ImGuiCond_Once);
 	//ウィンドウサイズ
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
@@ -294,22 +319,25 @@ void CameraController::DrawDebugGUI()
 		//折り畳みメニュー
 		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
 			//位置
-			ImGui::InputFloat3("target", &target.x);
-			ImGui::InputFloat3("rayStart", &rayStart.x);
-			//ズーム
-			ImGui::InputFloat("range", &range);
-			ImGui::Checkbox("hitRay", &hitRay);
-			//回転
-			DirectX::XMFLOAT3 a;
-			a.x = DirectX::XMConvertToDegrees(angle.x);
-			a.y = DirectX::XMConvertToDegrees(angle.y);
-			a.z = DirectX::XMConvertToDegrees(angle.z);
-			ImGui::InputFloat3("Angle", &a.x);
-			angle.x = DirectX::XMConvertToRadians(a.x);
-			angle.y = DirectX::XMConvertToRadians(a.y);
-			angle.z = DirectX::XMConvertToRadians(a.z);
+			//ImGui::InputFloat3("target", &target.x);
+			//ImGui::InputFloat3("rayStart", &rayStart.x);
+			////ズーム
+			//ImGui::InputFloat("range", &range);
+			//ImGui::Checkbox("hitRay", &hitRay);
+			ImGui::Checkbox("targetManager->canZoom", &targetManager->canZoom);
+			////回転
+			//DirectX::XMFLOAT3 a;
+			//a.x = DirectX::XMConvertToDegrees(angle.x);
+			//a.y = DirectX::XMConvertToDegrees(angle.y);
+			//a.z = DirectX::XMConvertToDegrees(angle.z);
+			//ImGui::InputFloat3("Angle", &a.x);
+			//angle.x = DirectX::XMConvertToRadians(a.x);
+			//angle.y = DirectX::XMConvertToRadians(a.y);
+			//angle.z = DirectX::XMConvertToRadians(a.z);
 
+			ImGui::InputFloat("minVec", &minVec);
 
+			
 		}
 	}
 	ImGui::End();

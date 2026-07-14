@@ -20,7 +20,7 @@ public:
 	void Finalize() override;
 
 	// XVˆ—
-	void Update(float epalsedTime) override;
+	void Update(float elapsedTime) override;
 
 	// •`‰æˆ—
 	void Render() override;
@@ -52,6 +52,8 @@ private:
 	std::thread* thread = nullptr;
 	float LoadTimer = 4000;
 	Sprite* sprFadeRect = nullptr;
+
+	int ItemNum = {};
 
 	// 3Dƒ‚ƒfƒ‹
 	Model* mdlApple = nullptr;

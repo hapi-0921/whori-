@@ -52,6 +52,7 @@ void LambertShader::Update(const RenderContext& rc, const ModelResource::Materia
 	// マテリアル用定数バッファ更新
 	CbMaterial cbMaterial{};
 	cbMaterial.materialColor = material.color;
+	cbMaterial.emissionColor = material.emissionColor;
 	dc->UpdateSubresource(constantBuffer.Get(), 0, 0, &cbMaterial, 0, 0);
 
 	// シェーダーリソースビュー設定

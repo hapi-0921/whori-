@@ -3,6 +3,7 @@
 cbuffer CbMesh : register(b1)
 {
 	float4				materialColor;
+    float4 emissionColor;
 };
 
 Texture2D DiffuseMap		: register(t0);
@@ -16,8 +17,9 @@ float4 main(VS_OUT pin) : SV_TARGET
 	float3 L = normalize(-lightDirection.xyz);
 	float power = max(0, dot(L, N));
 
+   
 	power = power * 0.5 + 0.5f;
-
+    color.rgb += emissionColor.rgb;
 	color.rgb *= power;
 
 	return color;

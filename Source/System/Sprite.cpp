@@ -96,7 +96,17 @@ void Sprite::Render(const RenderContext& rc,
 	float r, float g, float b, float a	// 色
 	) const
 {
+
+
 	ID3D11DeviceContext* dc = rc.deviceContext;
+
+	// サンプラステート設定
+	ID3D11SamplerState* samplerStates[] =
+	{
+		rc.renderState->GetSamplerState(SamplerState::LinearWrap)
+	};
+	dc->PSSetSamplers(0, _countof(samplerStates), samplerStates);
+
 
 	// 頂点座標
 	DirectX::XMFLOAT2 positions[] = {
