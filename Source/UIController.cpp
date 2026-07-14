@@ -1,13 +1,14 @@
-#include"UIController.h"
+﻿#include"UIController.h"
+#include "System/Graphics.h"
 
 #include<imgui.h>
 
 UIController::UIController()
 {
-	sprCard = new Sprite("Data/Sprite/UI.png");
-	sprChain = new Sprite("Data/Sprite/UI.png"); 
-	sprCard = new Sprite("Data/Sprite/chain/UI.png");
-	sprChain = new Sprite("Data/Sprite/chain/UI.png"); 
+	sprChain = new Sprite("Data/Sprite/chain/UI/UI.png"); 
+
+	sprite = new Sprite("Data/Sprite/cursor.png"); // デバッグspr
+
 }
 UIController::~UIController()
 {
@@ -15,14 +16,21 @@ UIController::~UIController()
 		delete sprChain;
 		sprChain = nullptr;
 	}
-	if (sprCard != nullptr) {
-		delete sprCard;
-		sprCard = nullptr;
+
+	if (sprite != nullptr)
+	{
+		delete sprite;
+		sprite = nullptr;
 	}
+
 
 }
 void UIController::Initialize()
 {
+	//----------------------------３Ⅾ（モデル）------------------------------------
+
+
+	//----------------------------２Ⅾ（スプリト）------------------------------------
 	Graphics& graphics = Graphics::Instance();
 	screenWidth = static_cast<float>(graphics.GetScreenWidth());
 	screenHeight = static_cast<float>(graphics.GetScreenHeight());
@@ -40,71 +48,122 @@ void UIController::Initialize()
 		cardData.sw = cardData.sh =190;//texSize
 		cardData.dx = screenWidth * 0.5f-(cardData.sw*0.5f);//pos
 		cardData.dy = screenHeight * 0.5f-(cardData.sh*0.5f);
-
 	}
-}
-void UIController::Update(float elapsedTime	)
-{
 
 }
-void UIController::Render(const RenderContext& rc)
+void UIController::Update(float elapsedTime)
 {
+	//----------------------------３Ⅾ（モデル）------------------------------------
+
+
+	//----------------------------２Ⅾ（スプリト）------------------------------------
 	if (targetManager == nullptr) return;
-
-	for (int i = 0; i < targetManager->GetTargetSize(); ++i)
+	if (targetManager->moveCusol)
 	{
-		Sprite* sp = targetManager->GetTargetSpri(i);
-
-		sp->Render(rc,
-			screenWidth*0.5f, screenHeight*0.5f, 0,
-			75,75, 0,0,
-			75, 75, 0, 1, 1, 1, 1);
+		if (targetManager->cusolPos < 100)
+		{
+			targetManager->cusolPos += elapsedTime*150.0f;
+		}
+	}
+	else
+	{
+		if (targetManager->cusolPos > 50)
+		{
+			targetManager->cusolPos -= elapsedTime*150.0f;
+		}
 	}
 
-	{//����Ƃ�\��
+}
+void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
+{
+	//return;
+
+
+	Graphics& graphics = Graphics::Instance();
+
+	//----------------------------３Ⅾ（モデル）------------------------------------
+
+
+
+
+
+
+
+
+	//----------------------------２Ⅾ（スプリト）------------------------------------
+
+	{//しりとり表示
 		sprChain->Render(rc,
 			chainData.dx, chainData.dy, 0,
 			chainData.sw, chainData.sh, chainData.sx, chainData.sy,
 			chainData.sw, chainData.sh, 0, 1, 1, 1, 1);
 	}
-	{//target�J�[�h�\��
+	
+	if (targetManager == nullptr) return;
 
+	//カーソル
+	{
+
+		float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+		float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+		sprite->Render(rc,//left
+			screenWidth * 0.5f - 10- targetManager->cusolPos, screenHeight * 0.5f - 10- targetManager->cusolPos, 0,
+			20, 20, 0,
+			1, 1, 1, 1);
+		sprite->Render(rc,//right
+			screenWidth * 0.5f - 10+ targetManager->cusolPos, screenHeight * 0.5f - 10+ targetManager->cusolPos, 0,
+			20, 20, 180,
+			1, 1, 1, 1);
+
+	}
+
+	{//targetカード表示
+		//判定前
 		for (int i = 0; i < targetManager->GetTargetSize(); ++i)
 		{
-			Sprite* sp = targetManager->GetTargetSpri(i);
-			//���S�`��
-			if (targetManager->GetisFocus(i))
-			{
-				sprCard->Render(rc,
-					cardData.dx, cardData.dy, 0,
-					cardData.sw, cardData.sh, cardData.sx, cardData.sy,
-					cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
+			if (targetManager->GetTargetSpri(i) == nullptr)continue;
 
-				sp->Render(rc,
-					cardData.dx, cardData.dy, 0,
-					cardData.sw, cardData.sw, cardData.sx, cardData.sy,
-					75,75, 0, 1, 1, 1, 1);
+			Sprite* sp = targetManager->GetTargetSpri(i);
+
+			if (targetManager->GetCarsRen(i))
+			{
+				//中心描画
+				//sprChain->Render(rc,
+				//	cardData.dx, cardData.dy, 0,
+				//	cardData.sw, cardData.sh, cardData.sx, cardData.sy,
+				//	cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
+
+				//sp->Render(rc,
+				//	cardData.dx, cardData.dy, 0,
+				//	cardData.sw, cardData.sw, 0,0,
+				//	750,750, 0, 1, 1, 1, 1);
 			}
+
 		}
+		//判定後
 		for (int i = 0; i < targetManager->GetKeepTargetSize(); ++i) 
 		{
-			Sprite* sp = targetManager->GetTargetSpri(i);
-				//�`�F�[���ɓ���Ă�
-				sprCard->Render(rc,
+			if (targetManager->GetgetTargetSpri(i) == nullptr)continue;
+
+			Sprite* sp = targetManager->GetgetTargetSpri(i);
+				//チェーンに入れてく
+			sprChain->Render(rc,
 					chainData.dx, chainData.dy + (renSpan * i), 0,
 					cardData.dw, cardData.dh, cardData.sx, cardData.sy,
 					cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
-
 				sp->Render(rc,
 					chainData.dx, chainData.dy + (renSpan * i), 0,
 					cardData.dw, cardData.dh,0,0,
-					75, 75, 0, 1, 1, 1, 1);
+					750, 750, 0, 1, 1, 1, 1);
 		}
-	}
+	}	
+
 }
 
 void UIController::DrawDebugGUI()
 {
+	//return;
+
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
 	ImGui::SetNextWindowPos(ImVec2(pos.x + 10, pos.y), ImGuiCond_Once);
 
@@ -112,13 +171,12 @@ void UIController::DrawDebugGUI()
 
 	if (ImGui::Begin("camera", nullptr, ImGuiWindowFlags_None))
 	{
-		//�܂���
+		//折り畳み
 		if (ImGui::CollapsingHeader("UIrender", ImGuiTreeNodeFlags_DefaultOpen))
 		{
-
 			//for (int i = 0; i < targetManager->GetTargetSize(); ++i)
 			//{
-			//	ImGui::Checkbox("isCard ", &isCard[i]);
+				ImGui::Checkbox("moveCusol ",&targetManager->moveCusol);
 			//}
 		}
 	}

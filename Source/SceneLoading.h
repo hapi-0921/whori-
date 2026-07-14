@@ -20,7 +20,7 @@ public:
 	void Finalize() override;
 
 	// XVˆ—
-	void Update(float epalsedTime) override;
+	void Update(float elapsedTime) override;
 
 	// •`‰æˆ—
 	void Render() override;
