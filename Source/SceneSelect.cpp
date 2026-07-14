@@ -91,47 +91,54 @@ void SceneSelect::Update(float elapsedTime)
 	stage.SetCamera(cameraController);
 	stage.Update(elapsedTime);
 
+	// ステージを回転させる
+	selectStage.angle.y += 0.005f;
+
 	// ステージ変換 //
 	// ステージ１が選択されている状態
 	if(stageState == stageType::stage1)
 	{
-		// ステージ移動
-		selectStage.position.x += 5;
+		// ステージ切り替え
+		selectStage.position.x += (10 - selectStage.position.x) * 0.02f;
+		selectStage.scale.x += (0.005f - selectStage.scale.x) * 0.13f;
+		selectStage.scale.y += (0.005f - selectStage.scale.y) * 0.13f;
+		selectStage.scale.z += (0.005f - selectStage.scale.z) * 0.13f;
+
 		if (selectStage.position.x > 0)
 		{
 			selectStage.position.x = 0;
+
+			selectStage.scale.x = 0.005f;
+			selectStage.scale.y = 0.005f;
+			selectStage.scale.z = 0.005f;
 		}
-
-		if (mouse.GetButtonDown() & mouseButton)
-		{
-			if (CursorX > ArrowSize && CursorX < screenWidth - ArrowSize)
-			{
-				GameManager::Instance().CreateTargetManager();
-
-				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-			}
-		}
-
-		// 回転させる
-		selectStage.angle.y += 0.005f;
 	}
 	// ステージ2が選択されている状態
 	if (stageState == stageType::stage2)
 	{
-		// ステージ移動
-		selectStage.position.x += -5;
-		if (selectStage.position.x <= -20)
+		// ステージ切り替え
+		selectStage.position.x += (-10 - selectStage.position.x) * 0.05f;
+		selectStage.scale.x += (0.003f - selectStage.scale.x) * 0.05f;
+		selectStage.scale.y += (0.003f - selectStage.scale.y) * 0.05f;
+		selectStage.scale.z += (0.003f - selectStage.scale.z) * 0.05f;
+
+		if (selectStage.position.x <= -10)
 		{
-			selectStage.position.x = -20;
+			selectStage.position.x = -10;
+
+			selectStage.scale.x = 0.003f;
+			selectStage.scale.y = 0.003f;
+			selectStage.scale.z = 0.003f;
 		}
 	}
 
-	// 左クリックを押したらフェードインスタート
+
+	// 左クリックを押したら、
 	if (mouse.GetButtonDown() & mouseButton)
 	{
 		// stage1が選択されている状態　＋　ステージが選択された場合
 		if(stageState == stageType::stage1 &&
-			CursorX > ArrowSize && CursorX < screenWidth - ArrowSize)
+			CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
 		{
 			GameManager::Instance().CreateTargetManager();
 
@@ -139,13 +146,15 @@ void SceneSelect::Update(float elapsedTime)
 		}
 		// stage1が選択されている状態　＋　右の矢印選択された場合
 		else if (stageState == stageType::stage1 &&
-			CursorX > screenWidth - ArrowSize)
+			CursorX > screenWidth - ArrowSize &&
+			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 		{
 			stageState = stageType::stage2;
 		}
 		// stage2が選択されている状態　＋　左の矢印選択された場合
-		else if (stageState == stageType::stage2 &&
-			CursorX < ArrowSize)
+		if (stageState == stageType::stage2 &&
+			CursorX < ArrowSize &&
+			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 		{
 			stageState = stageType::stage1;
 		}
@@ -173,15 +182,6 @@ void SceneSelect::Render()
 			0,
 			1, 1, 1, 1);
 
-		sprArrowRight->Render(rc,
-			screenWidth - ArrowSize, ArrowH, 0, ArrowSize, ArrowSize,
-			0,
-			1, 1, 1, 1);
-		sprArrowLeft->Render(rc,
-			0, ArrowH, 0, ArrowSize, ArrowSize,
-			0,
-			1, 1, 1, 1);
-
 		// デバッグ用
 #ifndef NDEBUG
 		
@@ -194,6 +194,18 @@ void SceneSelect::Render()
 		// ステージ１を描画
 		Stage& stage1 = Stage::Instance();
 		stage1.Render(rc, modelRenderer, &selectStage);
+	}
+
+	// 矢印描画（2D）
+	{
+		sprArrowRight->Render(rc,
+			screenWidth - ArrowSize, ArrowH, 0, ArrowSize, ArrowSize,
+			0,
+			1, 1, 1, 1);
+		sprArrowLeft->Render(rc,
+			0, ArrowH, 0, ArrowSize, ArrowSize,
+			0,
+			1, 1, 1, 1);
 	}
 
 	cameraController->Render(rc);

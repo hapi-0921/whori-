@@ -36,9 +36,6 @@ private:
 	CameraController* cameraController = nullptr;
 	ShapeRenderer* shapeRenderer = nullptr;
 
-	// セレクト画面でのステージ用のスケール調整変数
-	DirectX::XMFLOAT3 StageSelectScale = { 0.1f, 0.1f, 0.1f };
-
 	Stage::StageTransform selectStage;
 
 	// マウスカーソルの位置
