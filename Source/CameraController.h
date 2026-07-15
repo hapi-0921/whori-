@@ -22,6 +22,8 @@ public:
 
 	void CameraReset();
 
+	//const DirectX::XMFLOAT3 DEFAULT_TARGET = {};
+	//const DirectX::XMFLOAT3 DEFAULT_ANGLE = {};
 	const DirectX::XMFLOAT3 DEFAULT_TARGET = { 0.0f, 0.0f, 0.0f };
 	const DirectX::XMFLOAT3 DEFAULT_ANGLE = { DirectX::XM_PI * 0.25f, -DirectX::XM_PI * 0.25f,  DirectX::XM_PI * 0.25f };
 

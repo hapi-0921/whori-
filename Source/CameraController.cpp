@@ -265,6 +265,8 @@ void CameraController::Update(float elapsedTime)
 				}
 			}
 			range -= wheel * zoomSpeed;
+			
+
 		}
 
 

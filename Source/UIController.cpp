@@ -3,11 +3,16 @@
 
 #include<imgui.h>
 
+
+#undef min
+#undef max
+
 UIController::UIController()
 {
-	sprChain = new Sprite("Data/Sprite/chain/UI/UI.png"); 
+	sprChain = new Sprite("Data/Sprite/chain/UI/chain.png"); 
 
-	sprite = new Sprite("Data/Sprite/cursor.png"); // デバッグspr
+	sprite = new Sprite("Data/Sprite/cursor.png"); 
+	centerCusol = new Sprite("Data/Sprite/centerCursor.png");
 
 }
 UIController::~UIController()
@@ -22,6 +27,11 @@ UIController::~UIController()
 		delete sprite;
 		sprite = nullptr;
 	}
+	if (centerCusol != nullptr)
+	{
+		delete centerCusol;
+		centerCusol = nullptr;
+	}
 
 
 }
@@ -34,9 +44,11 @@ void UIController::Initialize()
 	Graphics& graphics = Graphics::Instance();
 	screenWidth = static_cast<float>(graphics.GetScreenWidth());
 	screenHeight = static_cast<float>(graphics.GetScreenHeight());
-	{
+	{//チェーン
 		chainData.dx = screenWidth - 100;
 		chainData.dy = 130;
+		chainData.dw = 101;
+		chainData.dh = 630;
 		chainData.sx = chainData.sy = 0;
 		chainData.sw = 74;
 		chainData.sh = 420;
@@ -60,17 +72,13 @@ void UIController::Update(float elapsedTime)
 	if (targetManager == nullptr) return;
 	if (targetManager->moveCusol)
 	{
-		if (targetManager->cusolPos < 100)
-		{
-			targetManager->cusolPos += elapsedTime*150.0f;
-		}
+		cusolSize = std::min(169.0f, cusolSize + elapsedTime * 650.0f);
+		centerSize = std::min(20.0f, centerSize + elapsedTime * 230.0f);
 	}
 	else
 	{
-		if (targetManager->cusolPos > 50)
-		{
-			targetManager->cusolPos -= elapsedTime*150.0f;
-		}
+		cusolSize = std::max(130.0f, cusolSize - elapsedTime * 560.0f);
+		centerSize = std::max(13.0f, centerSize - elapsedTime * 230.0f);
 	}
 
 }
@@ -80,6 +88,8 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 
 
 	Graphics& graphics = Graphics::Instance();
+	float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+	float screenHeight = static_cast<float>(graphics.GetScreenHeight());
 
 	//----------------------------３Ⅾ（モデル）------------------------------------
 
@@ -93,27 +103,31 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 	//----------------------------２Ⅾ（スプリト）------------------------------------
 
 	{//しりとり表示
+
 		sprChain->Render(rc,
-			chainData.dx, chainData.dy, 0,
-			chainData.sw, chainData.sh, chainData.sx, chainData.sy,
-			chainData.sw, chainData.sh, 0, 1, 1, 1, 1);
+			300, 150, 0,
+			1620, 780, 0,
+			1, 1, 1, 0.7f);
+
 	}
 	
 	if (targetManager == nullptr) return;
-
+	//中央カーソル
+	{
+		centerCusol->Render(rc,
+			screenWidth * 0.5f - centerSize*0.5f, 
+			screenHeight * 0.5f - centerSize*0.5f, 0,
+			centerSize, centerSize, 0,
+			1, 1, 1, 0.7f);
+	}
 	//カーソル
 	{
 
-		float screenWidth = static_cast<float>(graphics.GetScreenWidth());
-		float screenHeight = static_cast<float>(graphics.GetScreenHeight());
-		sprite->Render(rc,//left
-			screenWidth * 0.5f - 10- targetManager->cusolPos, screenHeight * 0.5f - 10- targetManager->cusolPos, 0,
-			20, 20, 0,
-			1, 1, 1, 1);
-		sprite->Render(rc,//right
-			screenWidth * 0.5f - 10+ targetManager->cusolPos, screenHeight * 0.5f - 10+ targetManager->cusolPos, 0,
-			20, 20, 180,
-			1, 1, 1, 1);
+		sprite->Render(rc,
+			screenWidth * 0.5f - cusolSize *0.5f/*- targetManager->cusolPos*/, 
+			screenHeight * 0.5f - cusolSize *0.5f/*- targetManager->cusolPos*/, 0,
+			cusolSize, cusolSize, 0,
+			1, 1, 1, 0.9f);
 
 	}
 
@@ -127,10 +141,10 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 
 			if (targetManager->GetCarsRen(i))
 			{
-
+				float size = 740;
 				sp->Render(rc,
-					screenWidth*0.5f-500*0.5f, screenHeight*0.5f-500*0.5f, 0,
-					500,500, 0,0,
+					screenWidth*0.5f- size *0.5f, screenHeight*0.5f- size *0.5f, 0,
+					size, size, 0,0,
 					750,750, 0, 1, 1, 1, 1);
 			}
 
@@ -143,8 +157,8 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 			Sprite* sp = targetManager->GetgetTargetSpri(i);
 				//チェーンに入れてく
 				sp->Render(rc,
-					screenWidth - 100, 130 + (renSpan * i), 0,
-				70,70,
+					screenWidth - 230, 130 + (renSpan * i), 0,
+					130,130,
 					0,0,
 					750, 750, 0, 1, 1, 1, 1);
 		}

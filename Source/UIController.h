@@ -56,13 +56,16 @@ private:
 private://しりとり連鎖
 	sprData chainData;
 
-	float renSpan = 90;//連鎖表示の間隔
+	float renSpan = 180;//連鎖表示の間隔
 
 //targetカード
 	sprData cardData;
 
 	Sprite* sprite = nullptr;
+	float cusolSize = 130;
 
+	Sprite* centerCusol = nullptr;
+	float centerSize = 13;
 
 public:
 
