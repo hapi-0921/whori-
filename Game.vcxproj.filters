@@ -150,6 +150,9 @@
     <ClCompile Include="Source\UIController.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Font.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\Audio.h">
@@ -287,6 +290,9 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Font.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">
@@ -310,6 +316,7 @@
     <None Include="Shader\Sprite.hlsli">
       <Filter>Shader</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shader">

@@ -3,6 +3,8 @@
 #include "System/Sprite.h"
 #include "Scene.h"
 #include "Stage.h"
+#include <vector>
+#include"Font.h"
 
 // セレクトシーン
 class SceneResult : public Scene
@@ -27,6 +29,25 @@ public:
 	void DrawGUI() override;
 
 private:
+	Sprite* sprresult=nullptr;
+	Sprite* sprresultback = nullptr;
+	Sprite* sprresultback2 = nullptr;
 
+	Sprite* sprranking = nullptr;
 
+	Sprite* sprs = nullptr;
+	int CursorX = 0;
+	int	CursorY = 0;
+	bool ranking = false;
+	struct iti
+	{
+		int posx = 0;
+		int posy = -300;
+		int angle = 0;
+		int lastposy = 0;
+	};
+	iti  sikaku[30];
+	int nowCard = 0;
+	json data;
+	Font* font=nullptr;
 };
