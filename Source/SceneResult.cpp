@@ -18,7 +18,7 @@ void SceneResult::Initialize()
 	sprresultback= new Sprite("Data/Sprite/resultback.png");
 	sprresultback2 = new Sprite("Data/Sprite/resultback2.png");
 	sprranking= new Sprite("Data/Sprite/ranking.png");
-	sprs= new Sprite("Data/Sprite/chain/Apple.png");
+	sprs= new Sprite("Data/Sprite/chain/foods/Apple.png");
 	std::ifstream file("Data/resultData/result.json");
 	if (!file)
 	{
