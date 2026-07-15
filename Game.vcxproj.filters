@@ -316,7 +316,6 @@
     <None Include="Shader\Sprite.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shader">
