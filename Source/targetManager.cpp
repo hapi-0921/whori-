@@ -378,7 +378,7 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
 
 
-        if (t.endN == "ん")
+        if (t.endN == "n")
         {
             toResult = true;
             return;
@@ -390,8 +390,6 @@ void TargetManager::TargetFocus(float elapsedTime)
         GameManager::Instance().SetPlaying(true);
         cardTimer = 0.0f;
 
-        delete t.mdlCard;
-        t.mdlCard = nullptr;
 
         focusTimer = 0.0f;
 
@@ -438,6 +436,8 @@ void TargetManager::TargetFocus(float elapsedTime)
             GameManager::Instance().needCameraReset = true;
 
         }
+        delete t.mdlCard;
+        t.mdlCard = nullptr;
 
     }
 

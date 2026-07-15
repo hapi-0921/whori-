@@ -67,7 +67,7 @@
             "name": "べーこん",
             "charCount": 4,
             "startN": "へ",
-            "endN": "ん",
+            "endN": "n",
             "position": {
                 "x": -129.245,
                 "y": 45.643,
@@ -97,7 +97,7 @@
             "name": "ぱん",
             "charCount": 2,
             "startN": "は",
-            "endN": "ん",
+            "endN": "n",
             "position": {
                 "x": 553.805,
                 "y": 80.000,
@@ -172,7 +172,7 @@
             "name": "にんじん",
             "charCount": 4,
             "startN": "に",
-            "endN": "ん",
+            "endN": "n",
             "position": {
                 "x": -86.920,
                 "y": 207.584,
@@ -428,7 +428,7 @@
             "name": "れもん",
             "charCount": 3,
             "startN": "れ",
-            "endN": "ん",
+            "endN": "n",
             "position": {
                 "x": -158.494,
                 "y": -4.121,
@@ -473,7 +473,7 @@
             "name": "みかん",
             "charCount": 3,
             "startN": "み",
-            "endN": "ん",
+            "endN": "n",
             "position": {
                 "x": -365.118,
                 "y": 20.983,
@@ -619,7 +619,7 @@
         },
       {
         "model": "Data/Model/target/foods/tohu.mdl",
-        "sprite": "Data/Sprite/chain/foods/Tumip.png",
+        "sprite": "Data/Sprite/chain/foods/tohu.png",
         "name": "とうふ",
         "charCount": 3,
         "startN": "と",
