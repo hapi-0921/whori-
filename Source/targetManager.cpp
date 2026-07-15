@@ -116,30 +116,13 @@ TargetManager::~TargetManager()
     targets.clear();
 }
 
-
-//カーソル内かどうか
-bool TargetManager::IsInCursorArea(const DirectX::XMFLOAT2& screenPos, float delta)
-{
-    Graphics& graphics = Graphics::Instance();
-    Stage& stage = Stage::Instance();
-
-    float screenWidth = static_cast<float>(graphics.GetScreenWidth());
-    float screenHeight = static_cast<float>(graphics.GetScreenHeight());
-    float cx = screenWidth * 0.5f;
-    float cy = screenHeight * 0.5f;
-
-    float halfSize = 25.0f + delta * 1.2f;
-
-    return (screenPos.x >= cx - halfSize && screenPos.x <= cx + halfSize &&
-        screenPos.y >= cy - halfSize && screenPos.y <= cy + halfSize);
-}
-
+//フォーカス判定
 void TargetManager::TargetFocus(float elapsedTime)
 {
     Stage& stage = Stage::Instance();
     Camera& camera = Camera::Instance();
 
-    // 共通Ray
+    // 共通レイ
     DirectX::XMFLOAT3 rayStart = camera.GetEye();
     DirectX::XMFLOAT3 front = camera.GetFront();
     DirectX::XMFLOAT3 rayEnd = rayStart;
@@ -147,13 +130,14 @@ void TargetManager::TargetFocus(float elapsedTime)
     rayEnd.y += front.y * 2000.0f;
     rayEnd.z += front.z * 2000.0f;
 
+    DirectX::XMFLOAT3 normal;
+
     //初期化
     chrCount = 0;
     charRen = false;
     moveCusol = false;
 
-
-    //ヒット情報
+    // ---------- ヒット情報------------
     struct HitInfo {
         float distance = FLT_MAX;
         Target* pTarget = nullptr;
@@ -161,14 +145,14 @@ void TargetManager::TargetFocus(float elapsedTime)
 
     std::vector<HitInfo> hits;
 
-    // StageRayCast（ズーム制限等のため）
-    DirectX::XMFLOAT3 stageHitPos{};
-    DirectX::XMFLOAT3 normal{};
-    for (int i = 0; i < stage.stageNum; i++)
+    for (int i = 0; i < 4; i++)
     {
+        // ステージ
+        DirectX::XMFLOAT3 stageHitPos{};
         if (Collision::RayCast(rayStart, rayEnd,
             stage.GetTransform().transform,
-            stage.GetStage(i), stageHitPos, normal))
+            stage.GetStage(i),
+            stageHitPos, normal))
         {
             float dx = stageHitPos.x - rayStart.x;
             float dy = stageHitPos.y - rayStart.y;
@@ -179,7 +163,7 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
     }
 
-    // ターゲット判定
+    // ターゲット全部
     for (auto& t : targets)
     {
         t.preFocus = t.isFocus;
@@ -187,20 +171,8 @@ void TargetManager::TargetFocus(float elapsedTime)
         t.isRayHit = false;
 
         if (t.isChainRender) continue;
+        //if (!IsInCursor(t)) continue;
 
-        //-------------- 面で判定----------
-        DirectX::XMFLOAT2 screenPos{};
-        bool visible = camera.WorldToScreen(t.pos, screenPos);//target➝2D
-
-        bool inCursor = false;
-        if (visible )
-        {
-            inCursor =IsInCursorArea(screenPos, cusolPos);
-        }
-
-        if (!inCursor) continue;  
-
-        // targetRayCast（ズーム制限等のため）
         DirectX::XMFLOAT3 hitPos{};
         if (Collision::RayCast(rayStart, rayEnd, t.transform, t.model, hitPos, normal))
         {
@@ -212,24 +184,16 @@ void TargetManager::TargetFocus(float elapsedTime)
             t.distance = sqrtf(dx * dx + dy * dy + dz * dz);
 
             t.isRayHit = true;
+
+            hits.push_back({ t.distance, &t });
         }
         else
         {
-            float dx = t.hitPos.x - rayStart.x;
-            float dy = t.hitPos.y - rayStart.y;
-            float dz = t.hitPos.z - rayStart.z;
-            t.distance = sqrtf(dx * dx + dy * dy + dz * dz);
-
-
             for (auto& material : t.model->GetResource()->GetMaterials())
             {
                 material.emissionColor = nonColor;
             }
-
-
         }
-
-        hits.push_back({ t.distance, &t });
     }
 
     if (hits.empty())
@@ -250,24 +214,27 @@ void TargetManager::TargetFocus(float elapsedTime)
     distance = closest.distance;
     canZoom = (distance <= 200);
 
-
-    // Stageが一番近い
-    if (closest.pTarget == nullptr) 
+    if (closest.pTarget == nullptr)
     {
+        // ステージが近い
         focusTimer = 0.0f;
         return;
     }
-
 
     // ターゲットが近い
     Target& t = *closest.pTarget;
 
     if (t.distance > 1000.0f)
     {
+        //遠い
         focusTimer = 0.0f;
+        t.isFocus = false;
+        chrCount = 0;
+        charRen = false;
         return;
     }
 
+    
     //------------- 一番近いtargetだけの処理-----------
 
     // 文字数表示
@@ -277,13 +244,12 @@ void TargetManager::TargetFocus(float elapsedTime)
     tfCharCount.position.y += 50.0f;
     freeUpdateTransform(tfCharCount.scale, tfCharCount.angle, tfCharCount.position, tfCharCount.transform);
     chrCount = t.charCount;
- 
+
     moveCusol = true;
 
 
     if (maxDistance > t.distance)   // フォーカス中
     {
-
         focusTimer += elapsedTime;
 
         //チカチカ
@@ -309,7 +275,7 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
 
 
-        if (focusTimer >= 0.3f&&!t.isFocus)//獲得
+        if (focusTimer >= 0.3f && !t.isFocus)//獲得
         {
             GameManager::Instance().SetPlaying(false);
 
@@ -406,6 +372,19 @@ void TargetManager::TargetFocus(float elapsedTime)
     if (t.carsRen && (mouse.GetButtonDown() & Mouse::BTN_LEFT))
     {
 
+        for (auto& material : t.model->GetResource()->GetMaterials())
+        {
+            material.emissionColor = nonColor;
+        }
+
+
+        if (t.endN == "ん")
+        {
+            toResult = true;
+            return;
+        }
+
+
         t.carsRen = false;
 
         GameManager::Instance().SetPlaying(true);
@@ -418,6 +397,7 @@ void TargetManager::TargetFocus(float elapsedTime)
 
         if (chainCount == 0)//最初の文字決定
         {
+
             endName = t.endN;
             getTargets.push_back(&t);
             t.isChainRender = true;
@@ -425,6 +405,8 @@ void TargetManager::TargetFocus(float elapsedTime)
             allCharCount += t.charCount;
 
             t.isMoveToChain = true;
+
+
         }
         else if (t.startN == endName)//しりとり成功
         {
@@ -443,6 +425,8 @@ void TargetManager::TargetFocus(float elapsedTime)
             tfCard.scale.z -= 0.5f;
             freeUpdateTransform(tfCard.scale, tfCard.angle, tfCard.position, tfCard.transform);
 
+            delete t.mdlCard;
+            t.mdlCard = nullptr;
 
             // リセット処理
             allCharCount = 0;
@@ -451,10 +435,6 @@ void TargetManager::TargetFocus(float elapsedTime)
             for (auto& target : targets) target.isChainRender = false;
 
 
-            if (t.endN == "ん")
-            {
-
-            }
             GameManager::Instance().needCameraReset = true;
 
         }
@@ -462,17 +442,17 @@ void TargetManager::TargetFocus(float elapsedTime)
     }
 
 
-        Graphics& graphics = Graphics::Instance();
-        float screenWidth = static_cast<float>(graphics.GetScreenWidth());
-        float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+    Graphics& graphics = Graphics::Instance();
+    float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+    float screenHeight = static_cast<float>(graphics.GetScreenHeight());
 
-        DirectX::XMFLOAT2 goalScreenPos;
-        goalScreenPos.x = screenWidth - 100;
-        goalScreenPos.y = 130 + (renSpan * getTargets.size());
+    DirectX::XMFLOAT2 goalScreenPos;
+    goalScreenPos.x = screenWidth - 100;
+    goalScreenPos.y = 130 + (renSpan * getTargets.size());
 
     if (charRen)
     {
-        charRotate += elapsedTime * 0.5f;   
+        charRotate += elapsedTime * 3.5f;
         if (charRotate > DirectX::XM_PI * 2.0f)
         {
             charRotate -= DirectX::XM_PI * 2.0f;
@@ -499,6 +479,11 @@ void TargetManager::TargetFocus(float elapsedTime)
     //    //}
     //}
 }
+
+
+
+
+
 void TargetManager::Update(float elapsedTime)
 {
     //return;
@@ -579,7 +564,7 @@ void TargetManager::DrawDebugGUI()
             ImGui::InputFloat("t.timer", &timer);
             //ImGui::Checkbox("isChainRender", &targets[4].isChainRender);
             //ImGui::Checkbox("t.isFocus", &targets[4].isFocus);
-            ImGui::Checkbox("charRen", &charRen);
+            ImGui::Checkbox("toResult", &toResult);
             ImGui::InputFloat("lightTimer", &lightTimer);
             ImGui::InputInt("t.charCount", &targets[0].charCount);
             ImGui::InputInt("allCharCount", &allCharCount);

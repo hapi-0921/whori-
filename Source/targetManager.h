@@ -21,8 +21,6 @@ public:
 	void TargetFocus(float elapsedTime);//“–‚½‚Á‚Ä‚é‚©
 
 
-	bool IsInCursorArea(const DirectX::XMFLOAT2& screenPos, float delta);
-
 
 	struct TargetData
 	{
@@ -167,5 +165,8 @@ public:
 	//{
 	//	uiController = pUI;
 	//}
+
+
+	bool toResult = false;//ƒŠƒUƒ‹ƒg‚Ö
 
 };

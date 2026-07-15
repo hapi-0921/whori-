@@ -40,6 +40,7 @@ private:
 	bool nowGame = false;
 
 	float gameTimer = 0.0f;
+
 public:
 
 	void SetNowGame(bool nowGame)

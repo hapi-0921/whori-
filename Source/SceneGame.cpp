@@ -45,7 +45,8 @@ void SceneGame::Initialize()
 	cameraController->SetTargetManager(targetManager);
 	{
 		//stageTransform
-		gameStage.position = { 0, -100, 0 };
+		gameStage.position = {0, 0, 0 };
+		//gameStage.position = {0, -100, -2000 };
 		gameStage.angle = { 0, 0, 0 };
 		gameStage.scale = { 1, 1, 1 };
 		stage.SetTransform(&gameStage);
@@ -87,6 +88,18 @@ void SceneGame::Finalize()
 // 更新処理
 void SceneGame::Update(float elapsedTime)
 {
+
+
+	//GameManager::Instance().SetPlaying(false);でプレイ中かどうか入れる
+	if (GameManager::Instance().IsPlaying())
+	{
+
+		gameTimer++;
+
+		cameraController->Update(elapsedTime);
+	}
+
+
 	if (GameManager::Instance().needCameraReset)
 	{
 		cameraController->CameraReset();
@@ -100,22 +113,14 @@ void SceneGame::Update(float elapsedTime)
 	targetManager->Update(elapsedTime);
 	uiController->Update(elapsedTime);
 
-	//GameManager::Instance().SetPlaying(false);でプレイ中かどうか入れる
-	if (GameManager::Instance().IsPlaying())
-	{
-
-		gameTimer++;
-
-		cameraController->Update(elapsedTime);
-	}
 
 
 	// 画面遷移 //
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	// Zキーを押したらフェードインスタート
-	const GamePadButton ZKey = GamePad::BTN_A;
+	//const GamePadButton ZKey = GamePad::BTN_A;
 
-	if (gamePad.GetButtonDown() & ZKey)
+	if (targetManager->toResult)
 	{
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
 	}
@@ -169,6 +174,7 @@ void SceneGame::Render()
 // GUI描画
 void SceneGame::DrawGUI()
 {
+	return;
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
 	ImGui::SetNextWindowPos(ImVec2(pos.x + 10, pos.y), ImGuiCond_Once);
 
@@ -177,7 +183,8 @@ void SceneGame::DrawGUI()
 	if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
 	{
 
-		//ImGui::InputFloat("t.gameTimer", &gameTimer);
+		
+		ImGui::Checkbox("t.targetManager->toResult", &targetManager->toResult);
 
 		ImGui::End();
 	}
@@ -186,6 +193,6 @@ void SceneGame::DrawGUI()
 	//stage.DrawDebugGUI();
 
 	cameraController->DrawDebugGUI();
-	//targetManager->DrawDebugGUI();
+	targetManager->DrawDebugGUI();
 	//uiController->DrawDebugGUI();
 }
