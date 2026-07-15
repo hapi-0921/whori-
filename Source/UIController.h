@@ -56,7 +56,7 @@ private:
 private://しりとり連鎖
 	sprData chainData;
 
-	float renSpan = 180;//連鎖表示の間隔
+	float renSpan = 140;//連鎖表示の間隔
 
 //targetカード
 	sprData cardData;

@@ -6,7 +6,7 @@ void GameManager::CreateTargetManager()
     if (targetManager == nullptr)
     {
         targetManager = new TargetManager();
-        targetManager->LoadTargets("Data/targetData/target.json");  
+        //targetManager->LoadTargets("Data/targetData/target.json");  
     }
 }
 //”jŠü
