@@ -86,3 +86,37 @@ bool Camera::WorldToScreen(const DirectX::XMFLOAT3& worldPos, DirectX::XMFLOAT2&
 
 	return true;
 }
+
+bool Camera::ScreenToWorld(
+	const DirectX::XMFLOAT2& screenPos,
+	float worldDepth,
+	DirectX::XMFLOAT3& outWorldPos) const
+{
+	Graphics& graphics = Graphics::Instance();
+	float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+	float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+
+	// Screen → NDC (Normalized Device Coordinates)
+	float ndcX = (screenPos.x / screenWidth) * 2.0f - 1.0f;
+	float ndcY = 1.0f - (screenPos.y / screenHeight) * 2.0f;  // Yは反転
+
+	// View * Projection の逆行列を計算
+	DirectX::XMMATRIX viewMat = DirectX::XMLoadFloat4x4(&view);
+	DirectX::XMMATRIX projMat = DirectX::XMLoadFloat4x4(&projection);
+	DirectX::XMMATRIX invVP = DirectX::XMMatrixInverse(nullptr, viewMat * projMat);
+
+	// NDC + 指定深度でベクトル作成
+	DirectX::XMVECTOR screenVec = DirectX::XMVectorSet(ndcX, ndcY, worldDepth, 1.0f);
+
+	// ワールド座標に変換
+	DirectX::XMVECTOR worldVec = DirectX::XMVector4Transform(screenVec, invVP);
+
+	// wで割る（透視投影の場合）
+	float w = DirectX::XMVectorGetW(worldVec);
+	if (fabsf(w) < 0.00001f) return false;
+
+	worldVec = DirectX::XMVectorDivide(worldVec, DirectX::XMVectorReplicate(w));
+
+	DirectX::XMStoreFloat3(&outWorldPos, worldVec);
+	return true;
+}

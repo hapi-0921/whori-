@@ -40,7 +40,6 @@ Stage::Stage()
 	centerWall[DEPTH].scale.y = 4.5f;
 	centerWall[DEPTH].scale.z = 8.0f;
 
-
 }
 Stage::~Stage()
 {

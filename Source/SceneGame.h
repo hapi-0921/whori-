@@ -39,10 +39,15 @@ private:
 
 	bool nowGame = false;
 
+	float gameTimer = 0.0f;
 public:
 
 	void SetNowGame(bool nowGame)
 	{
 		this->nowGame = nowGame;
+	}
+	void SetGameTimer(float gameTimer)
+	{
+		this->gameTimer = gameTimer;
 	}
 };

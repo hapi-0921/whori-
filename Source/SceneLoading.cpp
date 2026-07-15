@@ -126,10 +126,11 @@ void SceneLoading::Render()
 		// 3D•`‰æ
 		if (targetManager)
 		{
-			//auto& targets = targetManager->GetTargets();
-			auto& lt = loadingTargets[1];
-				{
-			//auto& target = targets;
+			if (loadingTargets.size() > 1)
+			{
+				auto& lt = loadingTargets[1];
+
+				//auto& target = targets;
 				if (lt.model)
 				{
 					modelRenderer->Render(rc, lt.transform, lt.model, ShaderId::Lambert);
