@@ -127,16 +127,11 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 
 			if (targetManager->GetCarsRen(i))
 			{
-				//中心描画
-				//sprChain->Render(rc,
-				//	cardData.dx, cardData.dy, 0,
-				//	cardData.sw, cardData.sh, cardData.sx, cardData.sy,
-				//	cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
 
-				//sp->Render(rc,
-				//	cardData.dx, cardData.dy, 0,
-				//	cardData.sw, cardData.sw, 0,0,
-				//	750,750, 0, 1, 1, 1, 1);
+				sp->Render(rc,
+					screenWidth*0.5f-500*0.5f, screenHeight*0.5f-500*0.5f, 0,
+					500,500, 0,0,
+					750,750, 0, 1, 1, 1, 1);
 			}
 
 		}
@@ -147,13 +142,10 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 
 			Sprite* sp = targetManager->GetgetTargetSpri(i);
 				//チェーンに入れてく
-			sprChain->Render(rc,
-					chainData.dx, chainData.dy + (renSpan * i), 0,
-					cardData.dw, cardData.dh, cardData.sx, cardData.sy,
-					cardData.sw, cardData.sh, 0, 1, 1, 1, 1);
 				sp->Render(rc,
-					chainData.dx, chainData.dy + (renSpan * i), 0,
-					cardData.dw, cardData.dh,0,0,
+					screenWidth - 100, 130 + (renSpan * i), 0,
+				70,70,
+					0,0,
 					750, 750, 0, 1, 1, 1, 1);
 		}
 	}	

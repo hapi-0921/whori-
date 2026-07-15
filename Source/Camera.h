@@ -22,9 +22,11 @@ public:
 	//パースペクティブ設定
 	void SetPerspectiveFov(float fovY, float aspect, float nearZ, float farZ);
 
-	// Camera.h
 	bool WorldToScreen(const DirectX::XMFLOAT3& worldPos, DirectX::XMFLOAT2& outScreenPos) const;
-
+	bool ScreenToWorld(
+		const DirectX::XMFLOAT2& screenPos,
+		float worldDepth,                    // ワールド空間での奥行き
+		DirectX::XMFLOAT3& outWorldPos) const;
 
 	//ビュー行列取得
 	const DirectX::XMFLOAT4X4& GetView() const {return view;}

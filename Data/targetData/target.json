@@ -670,11 +670,11 @@
             "charCount": 3,
             "startN": "す",
             "endN": "か",
-            "position": {
-                "x": -59.821,
-                "y": 160.042,
-                "z": 442.046
-            },
+          "position": {
+            "x": 799.260,
+            "y": 7.862,
+            "z": -744.722
+          },
             "card": "Data/Model/target/card/foods/Watermelon_0101.mdl"
 
         },

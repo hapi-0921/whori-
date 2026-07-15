@@ -23,12 +23,12 @@ public:
 	void CameraReset();
 
 	const DirectX::XMFLOAT3 DEFAULT_TARGET = { 0.0f, 0.0f, 0.0f };
-	const DirectX::XMFLOAT3 DEFAULT_ANGLE = { 0.0f, -DirectX::XM_PI * 0.25f, 0.0f };
+	const DirectX::XMFLOAT3 DEFAULT_ANGLE = { DirectX::XM_PI * 0.25f, -DirectX::XM_PI * 0.25f,  DirectX::XM_PI * 0.25f };
 
 private:
 	//ãóó£êßå¿
-	float minRange = 0.0f;
 	float maxRange = 2000.0f;
+	float minRange = 0.0f;
 	float minVec;
 
 	//âÒì]

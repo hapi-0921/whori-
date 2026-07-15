@@ -280,23 +280,19 @@ void TargetManager::TargetFocus(float elapsedTime)
  
     moveCusol = true;
 
-    if (charRen)//ちかちか
-    {
-
-    }
 
     if (maxDistance > t.distance)   // フォーカス中
     {
 
         focusTimer += elapsedTime;
-        lightTimer += elapsedTime;
-        timer -= 0.003f;
 
+        //チカチカ
+        lightTimer += elapsedTime;
+        timer -= 0.004f;
         if (lightTimer >= timer * 1.9f)
         {
             lightTimer = 0.0f;
         }
-        //チカチカさせる
         if (lightTimer > timer)
         {
             for (auto& material : t.model->GetResource()->GetMaterials())
@@ -313,7 +309,7 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
 
 
-        if (focusTimer >= 0.5f)//獲得
+        if (focusTimer >= 0.3f&&!t.isFocus)//獲得
         {
             GameManager::Instance().SetPlaying(false);
 
@@ -324,7 +320,7 @@ void TargetManager::TargetFocus(float elapsedTime)
 
 
             }
-            timer = 0.0f;
+            timer = 0.15f;
             lightTimer = 0.0f;
 
             if (t.mdlCard == nullptr)//カードの初期値
@@ -336,7 +332,13 @@ void TargetManager::TargetFocus(float elapsedTime)
                 tfCard.angle.z = stage.centerWall[0].angle.x;
 
                 tfCard.scale = { 0.5f,1,0.5f };
-                tfCard.position = t.pos;
+
+                tfCard.position = t.hitPos;
+
+                //tfCard.position.x =camera.GetEye().x + front.x * 300.0f;
+                //tfCard.position.y =camera.GetEye().y + front.y * 300.0f;
+                //tfCard.position.z =camera.GetEye().z + front.z * 300.0f;
+
                 freeUpdateTransform(tfCard.scale, tfCard.angle, tfCard.position, tfCard.transform);
 
             }
@@ -352,7 +354,7 @@ void TargetManager::TargetFocus(float elapsedTime)
         {
             material.emissionColor = nonColor;
         }
-        lightTimer = 0.0f;
+        //lightTimer = 0.0f;
 
         focusTimer = 0.0f;
         t.isFocus = false;
@@ -367,7 +369,7 @@ void TargetManager::TargetFocus(float elapsedTime)
         targetPos.y = camera.GetEye().y + front.y * 300.0f;
         targetPos.z = camera.GetEye().z + front.z * 300.0f;
 
-        float t = 5.0f * elapsedTime;
+        float t = 10.0f * elapsedTime;
 
         tfCard.position.x += (targetPos.x - tfCard.position.x) * t;//正面に向かう
         tfCard.position.y += (targetPos.y - tfCard.position.y) * t;
@@ -394,7 +396,7 @@ void TargetManager::TargetFocus(float elapsedTime)
 
         cardTimer += elapsedTime;
     }
-    if (cardTimer > 0.65f)
+    if (cardTimer > 0.2f)
     {
         t.carsRen = true;
     }
@@ -421,6 +423,8 @@ void TargetManager::TargetFocus(float elapsedTime)
             t.isChainRender = true;
             chainCount++;
             allCharCount += t.charCount;
+
+            t.isMoveToChain = true;
         }
         else if (t.startN == endName)//しりとり成功
         {
@@ -429,6 +433,8 @@ void TargetManager::TargetFocus(float elapsedTime)
             getTargets.push_back(&t);
             t.isChainRender = true;
             endName = t.endN;
+
+            t.isMoveToChain = true;
         }
         else//しりとり失敗
         {
@@ -444,6 +450,7 @@ void TargetManager::TargetFocus(float elapsedTime)
             chainCount = 0;
             for (auto& target : targets) target.isChainRender = false;
 
+
             if (t.endN == "ん")
             {
 
@@ -451,7 +458,46 @@ void TargetManager::TargetFocus(float elapsedTime)
             GameManager::Instance().needCameraReset = true;
 
         }
+
     }
+
+
+        Graphics& graphics = Graphics::Instance();
+        float screenWidth = static_cast<float>(graphics.GetScreenWidth());
+        float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+
+        DirectX::XMFLOAT2 goalScreenPos;
+        goalScreenPos.x = screenWidth - 100;
+        goalScreenPos.y = 130 + (renSpan * getTargets.size());
+
+    if (charRen)
+    {
+        charRotate += elapsedTime * 0.5f;   
+        if (charRotate > DirectX::XM_PI * 2.0f)
+        {
+            charRotate -= DirectX::XM_PI * 2.0f;
+        }
+    }
+
+    //クリア時の補間
+    //if (t.isMoveToChain)
+    //{
+    //    camera.ScreenToWorld(goalScreenPos, 0.5f, chainPos);
+    //    tfCard.position = chainPos;
+
+    //    //tfCard.position.x += (chainPos.x - tfCard.position.x) * 10.0f * elapsedTime;
+    //    //tfCard.position.y += (chainPos.y - tfCard.position.y) * 10.0f * elapsedTime;
+    //    //tfCard.position.z += (chainPos.z - tfCard.position.z) * 10.0f * elapsedTime;
+
+    //    freeUpdateTransform(tfCard.scale, tfCard.angle, tfCard.position, tfCard.transform);
+
+    //    // 到着
+    //    //if (Distance(tfCard.position, goalPos) < 10.0f)
+    //    //{
+    //    //    t.isMoveToChain = false;
+
+    //    //}
+    //}
 }
 void TargetManager::Update(float elapsedTime)
 {
@@ -488,7 +534,7 @@ void TargetManager::Render(const RenderContext& rc, ModelRenderer* renderer)
         float spacing = 30.0f;
         float offset = (chrCount - 1) * spacing * 0.5f;
 
-        tfCharCount.angle.y = stage.centerWall[0].angle.y;
+        tfCharCount.angle.y = charRotate;
 
         for (int i = 0; i < chrCount; i++)
         {
@@ -497,10 +543,12 @@ void TargetManager::Render(const RenderContext& rc, ModelRenderer* renderer)
             // 中心からのローカル位置
             float localX = i * spacing - offset;
 
+
             charTransform.position.z += localX * cosf(tfCharCount.angle.y);
             charTransform.position.x += localX * sinf(tfCharCount.angle.y);
 
-            charTransform.angle.y = stage.centerWall[0].angle.y + DirectX::XM_PI * 0.5f;
+
+            charTransform.angle.y = charRotate + DirectX::XM_PI * 0.5f;
 
             freeUpdateTransform(charTransform.scale, charTransform.angle, charTransform.position, charTransform.transform);
 
@@ -528,7 +576,7 @@ void TargetManager::DrawDebugGUI()
             ImGui::InputFloat("t.distance", &targets[4].distance);
             ImGui::InputFloat("t.focusTimer", &focusTimer);
             ImGui::InputFloat("t.cardTimer", &cardTimer);
-            ImGui::InputFloat("t.spinAngle", &spinAngle);
+            ImGui::InputFloat("t.timer", &timer);
             //ImGui::Checkbox("isChainRender", &targets[4].isChainRender);
             //ImGui::Checkbox("t.isFocus", &targets[4].isFocus);
             ImGui::Checkbox("charRen", &charRen);

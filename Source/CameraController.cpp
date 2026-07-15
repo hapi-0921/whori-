@@ -155,7 +155,7 @@ void CameraController::Update(float elapsedTime)
 			XMVECTOR forward =XMVector3Normalize(rot.r[2]);
 			XMVECTOR eyePos =XMLoadFloat3(&eye);
 
-			float rotateDistance = 150.0f;
+			float rotateDistance = 100.0f;
 
 			XMVECTOR center =eyePos + forward * rotateDistance;
 
@@ -231,6 +231,16 @@ void CameraController::Update(float elapsedTime)
 						XMStoreFloat3(&target, newTarget);
 					}
 				}
+				if (range > 0.0f)
+				{
+
+					if (!targetManager->canZoom)
+					{
+						// range調整
+						//range -= wheel * zoomSpeed;
+						range = std::max(range - wheel * zoomSpeed, 0.0f);
+					}
+				}
 			}
 		// ================ ズームアウト（カーソル） ===============
 		else
@@ -246,7 +256,7 @@ void CameraController::Update(float elapsedTime)
 				{
 					XMVECTOR dir = XMVector3Normalize(deltaV);
 
-					float strength = std::abs(wheel) * 0.095f;   // 調整しやすい値
+					float strength = std::abs(wheel) * 0.095f;  
 					float moveAmount = strength * dist;
 
 					XMVECTOR offset = XMVectorScale(dir, moveAmount);  
@@ -254,6 +264,7 @@ void CameraController::Update(float elapsedTime)
 					XMStoreFloat3(&target, targetV + offset);
 				}
 			}
+			range -= wheel * zoomSpeed;
 		}
 
 
@@ -278,17 +289,32 @@ void CameraController::Update(float elapsedTime)
 		//	}
 		//}
 
-			if (!targetManager->canZoom)
+			if (range < 0.0f)
 			{
-				// range調整
-				range = std::clamp(range - wheel * zoomSpeed, minRange, maxRange);
-				//range = range - wheel * zoomSpeed * 1.15f;
+				// rangeが負になってもeyeの計算では「絶対距離」を使う
+				// かつ、最低限の距離を確保（0.1fくらい）
+				// range自体は負のまま保持して自由に動かせる
 			}
+
+			//if (!targetManager->canZoom)
+			//{
+			//	// range調整
+			//	range = std::clamp(range - wheel * zoomSpeed, minRange, maxRange);
+			//}
+			//if (range < 10.0f)
+			//{
+			//	range = std::max(range, 10.0f);
+			//}
 	}
-
+		//if (range > -minRange && range < minRange)
+		//{
+		//	if (range >= 0.0f)
+		//		range = minRange;
+		//	else
+		//		range = -minRange;
+		//}
 	// カメラ更新
-	float safeRange = std::max(range, 0.0001f);
-
+		float safeRange = std::max(range, 0.05f);
 
 	eye.x = target.x - front.x * safeRange;
 	eye.y = target.y - front.y * safeRange;
@@ -322,7 +348,7 @@ void CameraController::DrawDebugGUI()
 			//ImGui::InputFloat3("target", &target.x);
 			//ImGui::InputFloat3("rayStart", &rayStart.x);
 			////ズーム
-			//ImGui::InputFloat("range", &range);
+			ImGui::InputFloat("range", &range);
 			//ImGui::Checkbox("hitRay", &hitRay);
 			ImGui::Checkbox("targetManager->canZoom", &targetManager->canZoom);
 			////回転
@@ -335,7 +361,7 @@ void CameraController::DrawDebugGUI()
 			//angle.y = DirectX::XMConvertToRadians(a.y);
 			//angle.z = DirectX::XMConvertToRadians(a.z);
 
-			ImGui::InputFloat("minVec", &minVec);
+			//ImGui::InputFloat("minVec", &minVec);
 
 			
 		}

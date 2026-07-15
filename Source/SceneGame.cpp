@@ -8,6 +8,8 @@
 #include"Camera.h"
 #include "targetManager.h"
 
+#include<imgui.h>
+
 // 初期化
 void SceneGame::Initialize()
 {
@@ -43,7 +45,7 @@ void SceneGame::Initialize()
 	cameraController->SetTargetManager(targetManager);
 	{
 		//stageTransform
-		gameStage.position = { 0, 0, 0 };
+		gameStage.position = { 0, -100, 0 };
 		gameStage.angle = { 0, 0, 0 };
 		gameStage.scale = { 1, 1, 1 };
 		stage.SetTransform(&gameStage);
@@ -101,9 +103,8 @@ void SceneGame::Update(float elapsedTime)
 	//GameManager::Instance().SetPlaying(false);でプレイ中かどうか入れる
 	if (GameManager::Instance().IsPlaying())
 	{
-		//タイマーを動かす
 
-
+		gameTimer++;
 
 		cameraController->Update(elapsedTime);
 	}
@@ -168,11 +169,23 @@ void SceneGame::Render()
 // GUI描画
 void SceneGame::DrawGUI()
 {
-	Stage& stage = Stage::Instance();
-	stage.DrawDebugGUI();
+	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
+	ImGui::SetNextWindowPos(ImVec2(pos.x + 10, pos.y), ImGuiCond_Once);
+
+	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
+
+	if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
+	{
+
+		//ImGui::InputFloat("t.gameTimer", &gameTimer);
+
+		ImGui::End();
+	}
+
+	//Stage& stage = Stage::Instance();
+	//stage.DrawDebugGUI();
 
 	cameraController->DrawDebugGUI();
-	targetManager->DrawDebugGUI();
-	uiController->DrawDebugGUI();
-
+	//targetManager->DrawDebugGUI();
+	//uiController->DrawDebugGUI();
 }

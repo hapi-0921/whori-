@@ -77,17 +77,19 @@ private:
 		bool isChainRender = false;//チェーンに表示するか
 
 		bool carsRen = false;//正面にはる
+		bool isMoveToChain = false;//カードをチェーンに
 
 		DirectX::XMFLOAT3 vec;
 	};
 	Target tfCard;
 
+	DirectX::XMFLOAT3 chainPos = {};
 
 	//フォーカス中の光
 	DirectX::XMFLOAT4 maxColor = { 0.6f,0.6f,0.6f,1.0f };
 	DirectX::XMFLOAT4 minColor = { 0.3f,0.3f,0.3f,1.0f };
 	DirectX::XMFLOAT4 nonColor = {};
-	float timer = 0.2f;
+	float timer = 0.15f;
 
 	float maxDistance = 500.0f;
 	int chrCount =0.0f;
@@ -105,6 +107,7 @@ private:
 	float stageVec;
 	float targetVec;
 
+	float renSpan = 90;//連鎖表示の間隔
 
 	//カーソル判定（面）
 	//bool TargetManager::IsInCursor(Target& t);
@@ -126,7 +129,7 @@ private:
 
 	bool charRen = false;
 
-
+	float charRotate = 0.0f;//文字数回転
 public:
 	float cusolPos = 50;
 	//bool IsInCursorArea(const DirectX::XMFLOAT2& screenPos, float delta);
@@ -139,8 +142,11 @@ public:
 
 	//float posForRotate;//回転用position
 
-	//*****獲得した最終文字数****
-	int allCharCount = 0;
+
+	//*****
+	int allCharCount = 0;//最大文字数
+	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }//獲得したtargetの大きさ
+	Sprite* GetgetTargetSpri(int index) { return getTargets[index]->sprite; }//獲得したカード（スプライト）
 	//*****
 
 	bool GetCarsRen(int index) { return targets[index].carsRen; }
@@ -148,7 +154,6 @@ public:
 	int GetChainCount() { return chainCount - 1; }
 
 	//Target GetKeepTarget(int index) { return *getTargets[index]; }
-	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }
 
 	int GetTargetSize() const { return static_cast<int>(targets.size()); }
 	std::vector<Target> GetTargets() const { return targets; }
@@ -156,7 +161,6 @@ public:
 
 
 	Sprite* GetTargetSpri(int index)  { return targets[index].sprite; }
-	Sprite* GetgetTargetSpri(int index)  { return getTargets[index]->sprite; }
 
 
 	//void TargetManager::SetUIController(UIController* pUI)
