@@ -3,7 +3,6 @@
 
 TitleStage::TitleStage()
 {
-	mdlStage = new Model("Data/Model/stage/matimati.mdl");
 	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
 	{
 		models.push_back(new Model("Data/Model/target/foods/Apple.mdl"));

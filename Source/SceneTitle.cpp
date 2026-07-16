@@ -15,8 +15,8 @@ int title_timer;
 void SceneTitle::Initialize()
 {
 	// スプライト初期化
-	sprite = new Sprite("Data/Sprite/kumo.png"); // 背景のスプライト
-	clicklogo = new Sprite("Data/Sprite/Click_to_Search.png");
+	sprite = new Sprite("Data/Sprite/title_back.png"); // 背景のスプライト
+	clicklogo = new Sprite("Data/Sprite/Clikc_to_Search.png");
 	titlelogo = new Sprite("Data/Sprite/titlerogokari.png");
 	titleStage = new TitleStage();
 
