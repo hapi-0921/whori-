@@ -116,6 +116,37 @@ TargetManager::~TargetManager()
     targets.clear();
 }
 
+
+//提出
+void TargetManager::TargetUpload()
+{
+    Mouse& mouse = Input::Instance().GetMouse();
+    
+    DirectX::XMFLOAT2 pos = { 1626,932 };
+    DirectX::XMFLOAT2 size = { 270,77 };
+
+    if (pos.x  < mousePos.x &&//l
+        pos.x + size.x > mousePos.x &&//r
+        pos.y  < mousePos.y &&//t
+        pos.y + size.y  > mousePos.y)  //b
+    {
+        if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
+        {
+             upload = true;
+        }
+    }
+
+    if (upload&& chainCount!=0)
+    {
+        chainCount = 0;
+
+        if (chainCount == 1) return;
+
+        //スコア換算
+        resultData.score = 100 * resultData.allCharCount;//コンボ数追加
+    }
+}
+
 //フォーカス判定
 void TargetManager::TargetFocus(float elapsedTime)
 {
@@ -136,6 +167,14 @@ void TargetManager::TargetFocus(float elapsedTime)
     chrCount = 0;
     charRen = false;
     moveCusol = false;
+
+    Mouse& mouse = Input::Instance().GetMouse();
+    const MouseButton mouseButton = Mouse::BTN_LEFT;
+    mousePos.x = mouse.GetPositionX();
+    mousePos.y = mouse.GetPositionY();
+
+    //提出
+    TargetUpload();
 
     // ---------- ヒット情報------------
     struct HitInfo {
@@ -196,6 +235,8 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
     }
 
+
+
     if (hits.empty())
     {
         focusTimer = 0.0f;
@@ -234,7 +275,8 @@ void TargetManager::TargetFocus(float elapsedTime)
         return;
     }
 
-    
+
+
     //------------- 一番近いtargetだけの処理-----------
 
     // 文字数表示
@@ -283,9 +325,8 @@ void TargetManager::TargetFocus(float elapsedTime)
             for (auto& material : t.model->GetResource()->GetMaterials())
             {
                 material.emissionColor = maxColor;
-
-
             }
+
             timer = 0.15f;
             lightTimer = 0.0f;
 
@@ -306,7 +347,6 @@ void TargetManager::TargetFocus(float elapsedTime)
                 //tfCard.position.z =camera.GetEye().z + front.z * 300.0f;
 
                 freeUpdateTransform(tfCard.scale, tfCard.angle, tfCard.position, tfCard.transform);
-
             }
 
             t.isFocus = true;
@@ -320,7 +360,6 @@ void TargetManager::TargetFocus(float elapsedTime)
         {
             material.emissionColor = nonColor;
         }
-        //lightTimer = 0.0f;
 
         focusTimer = 0.0f;
         t.isFocus = false;
@@ -368,7 +407,6 @@ void TargetManager::TargetFocus(float elapsedTime)
     }
 
     // クリック処理（獲得）
-    Mouse& mouse = Input::Instance().GetMouse();
     if (t.carsRen && (mouse.GetButtonDown() & Mouse::BTN_LEFT))
     {
 
@@ -383,6 +421,7 @@ void TargetManager::TargetFocus(float elapsedTime)
             toResult = true;
             return;
         }
+
 
 
         t.carsRen = false;
@@ -400,7 +439,7 @@ void TargetManager::TargetFocus(float elapsedTime)
             getTargets.push_back(&t);
             t.isChainRender = true;
             chainCount++;
-            allCharCount += t.charCount;
+            resultData.allCharCount += t.charCount;
 
             t.isMoveToChain = true;
 
@@ -408,8 +447,11 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
         else if (t.startN == endName)//しりとり成功
         {
+            //resultData
+            resultData.siritoriNum++;
+
             chainCount++;
-            allCharCount += t.charCount;
+            resultData.allCharCount += t.charCount;
             getTargets.push_back(&t);
             t.isChainRender = true;
             endName = t.endN;
@@ -427,10 +469,10 @@ void TargetManager::TargetFocus(float elapsedTime)
             t.mdlCard = nullptr;
 
             // リセット処理
-            allCharCount = 0;
+            //allCharCount = 0;
             getTargets.clear();
             chainCount = 0;
-            for (auto& target : targets) target.isChainRender = false;
+            //for (auto& target : targets) target.isChainRender = false;
 
 
             GameManager::Instance().needCameraReset = true;
@@ -551,28 +593,40 @@ void TargetManager::DrawDebugGUI()
 
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
-	if (ImGui::Begin("targets", nullptr, ImGuiWindowFlags_None))
+	if (ImGui::Begin("socore", nullptr, ImGuiWindowFlags_None))
 	{
 		//折り畳み
-		//for (auto& t : targets)
-		//{
         if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            ImGui::InputFloat("t.distance", &targets[4].distance);
-            ImGui::InputFloat("t.focusTimer", &focusTimer);
-            ImGui::InputFloat("t.cardTimer", &cardTimer);
-            ImGui::InputFloat("t.timer", &timer);
-            //ImGui::Checkbox("isChainRender", &targets[4].isChainRender);
-            //ImGui::Checkbox("t.isFocus", &targets[4].isFocus);
-            ImGui::Checkbox("toResult", &toResult);
-            ImGui::InputFloat("lightTimer", &lightTimer);
-            ImGui::InputInt("t.charCount", &targets[0].charCount);
-            ImGui::InputInt("allCharCount", &allCharCount);
-            //ImGui::Checkbox("canZoom", &canZoom);
+            ImGui::InputInt("allCharCount", &resultData.allCharCount);
         }
 		ImGui::Text("getTargets.size() = %zu", getTargets.size());
 		ImGui::InputInt("t.chainCount", &chainCount);
 
 	}
+	//if (ImGui::Begin("targets", nullptr, ImGuiWindowFlags_None))
+	//{
+	//	//折り畳み
+	//	//for (auto& t : targets)
+	//	//{
+ //       if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+ //       {
+ //           ImGui::InputFloat("t.distance", &targets[4].distance);
+ //           ImGui::Checkbox("t.upload.x ", &upload);
+ //           ImGui::InputFloat("t.focusTimer", &focusTimer);
+ //           ImGui::InputFloat("t.cardTimer", &cardTimer);
+ //           ImGui::InputFloat("t.timer", &timer);
+ //           //ImGui::Checkbox("isChainRender", &targets[4].isChainRender);
+ //           //ImGui::Checkbox("t.isFocus", &targets[4].isFocus);
+ //           ImGui::Checkbox("toResult", &toResult);
+ //           ImGui::InputFloat("lightTimer", &lightTimer);
+ //           ImGui::InputInt("t.charCount", &targets[0].charCount);
+ //           ImGui::InputInt("allCharCount", &resultData.allCharCount);
+ //           //ImGui::Checkbox("canZoom", &canZoom);
+ //       }
+	//	ImGui::Text("getTargets.size() = %zu", getTargets.size());
+	//	ImGui::InputInt("t.chainCount", &chainCount);
+
+	//}
 	ImGui::End();
 }

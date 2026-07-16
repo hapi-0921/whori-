@@ -45,6 +45,10 @@ void SceneSelect::Initialize()
 		selectStage.angle = { 0, 0, 0 };
 		selectStage.scale = { 0.005f, 0.005f, 0.005f };
 
+		selectStage2.position = { 10, 0, 0 };
+		selectStage2.angle = { 0, 0, 0 };
+		selectStage2.scale = { 0.003f, 0.003f, 0.003f };
+
 		//ここでカメラとの距離を変える
 		cameraController->range = 0.0f;
 	}
@@ -93,16 +97,25 @@ void SceneSelect::Update(float elapsedTime)
 
 	// ステージを回転させる
 	selectStage.angle.y += 0.005f;
+	selectStage2.angle.y += 0.005f;
 
 	// ステージ変換 //
 	// ステージ１が選択されている状態
 	if(stageState == stageType::stage1)
 	{
+		stage.stageType = Stage::StageType::MACHI;
+
 		// ステージ切り替え
 		selectStage.position.x += (10 - selectStage.position.x) * 0.02f;
 		selectStage.scale.x += (0.005f - selectStage.scale.x) * 0.13f;
 		selectStage.scale.y += (0.005f - selectStage.scale.y) * 0.13f;
 		selectStage.scale.z += (0.005f - selectStage.scale.z) * 0.13f;
+
+		// ステージ切り替え
+		selectStage2.position.x += (10 - selectStage2.position.x) * 0.05f;
+		selectStage2.scale.x += (0.003f - selectStage2.scale.x) * 0.05f;
+		selectStage2.scale.y += (0.003f - selectStage2.scale.y) * 0.05f;
+		selectStage2.scale.z += (0.003f - selectStage2.scale.z) * 0.05f;
 
 		if (selectStage.position.x > 0)
 		{
@@ -112,15 +125,31 @@ void SceneSelect::Update(float elapsedTime)
 			selectStage.scale.y = 0.005f;
 			selectStage.scale.z = 0.005f;
 		}
+		if (selectStage2.position.x > 10)
+		{
+			selectStage2.position.x = 10;
+
+			selectStage2.scale.x = 0.003f;
+			selectStage2.scale.y = 0.003f;
+			selectStage2.scale.z = 0.003f;
+		}
 	}
 	// ステージ2が選択されている状態
 	if (stageState == stageType::stage2)
 	{
+		stage.stageType = Stage::StageType::SIMA;
+
 		// ステージ切り替え
 		selectStage.position.x += (-10 - selectStage.position.x) * 0.05f;
 		selectStage.scale.x += (0.003f - selectStage.scale.x) * 0.05f;
 		selectStage.scale.y += (0.003f - selectStage.scale.y) * 0.05f;
 		selectStage.scale.z += (0.003f - selectStage.scale.z) * 0.05f;
+
+		// ステージ切り替え
+		selectStage2.position.x += (-10 - selectStage2.position.x) * 0.02f;
+		selectStage2.scale.x += (0.005f - selectStage2.scale.x) * 0.13f;
+		selectStage2.scale.y += (0.005f - selectStage2.scale.y) * 0.13f;
+		selectStage2.scale.z += (0.005f - selectStage2.scale.z) * 0.13f;
 
 		if (selectStage.position.x <= -10)
 		{
@@ -129,6 +158,14 @@ void SceneSelect::Update(float elapsedTime)
 			selectStage.scale.x = 0.003f;
 			selectStage.scale.y = 0.003f;
 			selectStage.scale.z = 0.003f;
+		}
+		if (selectStage2.position.x <= 0)
+		{
+			selectStage2.position.x = 0;
+
+			selectStage2.scale.x = 0.005f;
+			selectStage2.scale.y = 0.005f;
+			selectStage2.scale.z = 0.005f;
 		}
 	}
 
@@ -144,8 +181,16 @@ void SceneSelect::Update(float elapsedTime)
 
 			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 		}
+		// stage2が選択されている状態　＋　ステージが選択された場合
+		if (stageState == stageType::stage2 &&
+			CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
+		{
+			GameManager::Instance().CreateTargetManager();
+
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+		}
 		// stage1が選択されている状態　＋　右の矢印選択された場合
-		else if (stageState == stageType::stage1 &&
+		if (stageState == stageType::stage1 &&
 			CursorX > screenWidth - ArrowSize &&
 			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 		{
@@ -194,6 +239,11 @@ void SceneSelect::Render()
 		// ステージ１を描画
 		Stage& stage1 = Stage::Instance();
 		stage1.Render(rc, modelRenderer, &selectStage);
+
+		// ステージ２を描画
+		Stage& stage2 = Stage::Instance();
+		stage2.stageType = Stage::StageType::SIMA;
+		stage2.Render(rc, modelRenderer, &selectStage2);
 	}
 
 	// 矢印描画（2D）

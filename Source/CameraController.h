@@ -28,6 +28,8 @@ public:
 	const DirectX::XMFLOAT3 DEFAULT_ANGLE = { DirectX::XM_PI * 0.25f, -DirectX::XM_PI * 0.25f,  DirectX::XM_PI * 0.25f };
 
 private:
+
+
 	//ãóó£êßå¿
 	float maxRange = 2000.0f;
 	float minRange = 0.0f;
