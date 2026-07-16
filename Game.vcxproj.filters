@@ -159,6 +159,7 @@
     <ClCompile Include="Source\TitleStage.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ScoreManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\Audio.h">
@@ -305,6 +306,7 @@
     <ClInclude Include="Source\TitleStage.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ScoreManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">

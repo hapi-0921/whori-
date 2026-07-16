@@ -118,40 +118,41 @@ TargetManager::~TargetManager()
 
 
 //提出
-void TargetManager::TargetUpload()
-{
-    Mouse& mouse = Input::Instance().GetMouse();
-    
-    DirectX::XMFLOAT2 pos = { 1626,932 };
-    DirectX::XMFLOAT2 size = { 270,77 };
-
-    if (pos.x  < mousePos.x &&//l
-        pos.x + size.x > mousePos.x &&//r
-        pos.y  < mousePos.y &&//t
-        pos.y + size.y  > mousePos.y)  //b
-    {
-        if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
-        {
-             upload = true;
-        }
-    }
-
-    if (upload&& chainCount!=0)
-    {
-        chainCount = 0;
-
-        if (chainCount == 1) return;
-
-        //スコア換算
-        resultData.score = 100 * resultData.allCharCount;//コンボ数追加
-    }
-}
+//void TargetManager::TargetUpload()
+//{
+//    Mouse& mouse = Input::Instance().GetMouse();
+//    
+//    DirectX::XMFLOAT2 pos = { 1626,932 };
+//    DirectX::XMFLOAT2 size = { 270,77 };
+//
+//    if (pos.x  < mousePos.x &&//l
+//        pos.x + size.x > mousePos.x &&//r
+//        pos.y  < mousePos.y &&//t
+//        pos.y + size.y  > mousePos.y)  //b
+//    {
+//        if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
+//        {
+//             upload = true;
+//        }
+//    }
+//
+//    if (upload&& chainCount!=0)
+//    {
+//        chainCount = 0;
+//
+//        if (chainCount == 1) return;
+//
+//        //スコア換算
+//        resultData.score = 100 * resultData.allCharCount;//コンボ数追加
+//    }
+//}
 
 //フォーカス判定
 void TargetManager::TargetFocus(float elapsedTime)
 {
     Stage& stage = Stage::Instance();
     Camera& camera = Camera::Instance();
+    ScoreManager& scoreManager = ScoreManager::Instance();
 
     // 共通レイ
     DirectX::XMFLOAT3 rayStart = camera.GetEye();
@@ -170,11 +171,16 @@ void TargetManager::TargetFocus(float elapsedTime)
 
     Mouse& mouse = Input::Instance().GetMouse();
     const MouseButton mouseButton = Mouse::BTN_LEFT;
-    mousePos.x = mouse.GetPositionX();
-    mousePos.y = mouse.GetPositionY();
+    scoreManager.mousePos.x = mouse.GetPositionX();
+    scoreManager.mousePos.y = mouse.GetPositionY();
 
     //提出
-    TargetUpload();
+    scoreManager.TargetUpload();
+    if (scoreManager.reset)
+    {
+        getTargets.clear();
+        scoreManager.reset = false;
+    }
 
     // ---------- ヒット情報------------
     struct HitInfo {
@@ -407,7 +413,7 @@ void TargetManager::TargetFocus(float elapsedTime)
     }
 
     // クリック処理（獲得）
-    if (t.carsRen && (mouse.GetButtonDown() & Mouse::BTN_LEFT))
+    if (t.carsRen/* && (mouse.GetButtonDown() & Mouse::BTN_LEFT)*/)
     {
 
         for (auto& material : t.model->GetResource()->GetMaterials())
@@ -415,6 +421,10 @@ void TargetManager::TargetFocus(float elapsedTime)
             material.emissionColor = nonColor;
         }
 
+        if (scoreManager.maxChar < t.charCount)
+        {
+            scoreManager.maxChar = t.charCount;
+        }
 
         if (t.endN == "n")
         {
@@ -432,14 +442,14 @@ void TargetManager::TargetFocus(float elapsedTime)
 
         focusTimer = 0.0f;
 
-        if (chainCount == 0)//最初の文字決定
+        if (scoreManager.chainCount == 0)//最初の文字決定
         {
 
             endName = t.endN;
             getTargets.push_back(&t);
             t.isChainRender = true;
-            chainCount++;
-            resultData.allCharCount += t.charCount;
+            scoreManager.chainCount++;
+            scoreManager.allCharCount += t.charCount;
 
             t.isMoveToChain = true;
 
@@ -448,10 +458,10 @@ void TargetManager::TargetFocus(float elapsedTime)
         else if (t.startN == endName)//しりとり成功
         {
             //resultData
-            resultData.siritoriNum++;
+            scoreManager.siritoriNum++;
 
-            chainCount++;
-            resultData.allCharCount += t.charCount;
+            scoreManager.chainCount++;
+            scoreManager.allCharCount += t.charCount;
             getTargets.push_back(&t);
             t.isChainRender = true;
             endName = t.endN;
@@ -471,7 +481,7 @@ void TargetManager::TargetFocus(float elapsedTime)
             // リセット処理
             //allCharCount = 0;
             getTargets.clear();
-            chainCount = 0;
+            scoreManager.chainCount = 0;
             //for (auto& target : targets) target.isChainRender = false;
 
 
@@ -482,7 +492,6 @@ void TargetManager::TargetFocus(float elapsedTime)
         t.mdlCard = nullptr;
 
     }
-
 
     Graphics& graphics = Graphics::Instance();
     float screenWidth = static_cast<float>(graphics.GetScreenWidth());
@@ -593,17 +602,6 @@ void TargetManager::DrawDebugGUI()
 
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
-	if (ImGui::Begin("socore", nullptr, ImGuiWindowFlags_None))
-	{
-		//折り畳み
-        if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::InputInt("allCharCount", &resultData.allCharCount);
-        }
-		ImGui::Text("getTargets.size() = %zu", getTargets.size());
-		ImGui::InputInt("t.chainCount", &chainCount);
-
-	}
 	//if (ImGui::Begin("targets", nullptr, ImGuiWindowFlags_None))
 	//{
 	//	//折り畳み

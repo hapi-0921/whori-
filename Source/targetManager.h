@@ -8,6 +8,8 @@
 #include <json.hpp>
 using json = nlohmann::json;
 
+#include"ScoreManager.h"
+
 class TargetManager
 {
 public:
@@ -20,7 +22,7 @@ public:
 
 	void TargetFocus(float elapsedTime);//当たってるか
 
-	void TargetUpload();//targetを提出
+	//void TargetUpload();//targetを提出
 
 	struct TargetData
 	{
@@ -38,8 +40,8 @@ public:
 
 	std::vector<TargetManager::TargetData> LoadTargets(const std::string& path);
 private:
-	DirectX::XMFLOAT2 mousePos = {};
-	bool upload = false;
+	//DirectX::XMFLOAT2 mousePos = {};
+	//bool upload = false;
 
 	struct Target
 	{
@@ -95,7 +97,6 @@ private:
 	DirectX::XMFLOAT3 rayEnd;
 	DirectX::XMFLOAT3 rayStart;
 
-	int chainCount = 0;//何連鎖中か
 
 	//std::string firstName = "";//最初の文字
 	std::string endName = "";//前の文字
@@ -141,28 +142,13 @@ public:
 
 	//float posForRotate;//回転用position
 
-	//****
-	struct ResultData
-	{
-		//計算
-	int score = 0;//スコア
-	int allCharCount = 0;//合計文字数
-						//コンボ数
-	
-	//表示
-	int siritoriNum = 0;//しりとり数
-
-	};
-
-	ResultData resultData;
 
 	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }//獲得したtargetの大きさ
 	Sprite* GetgetTargetSpri(int index) { return getTargets[index]->sprite; }//獲得したカード（スプライト）
 	//*****
 
 	bool GetCarsRen(int index) { return targets[index].carsRen; }
-	bool GetisFocus(int index) { return targets[index].isFocus; }
-	int GetChainCount() { return chainCount - 1; }
+	//bool GetisFocus(int index) { return targets[index].isFocus; }
 
 	//Target GetKeepTarget(int index) { return *getTargets[index]; }
 
