@@ -2,18 +2,19 @@
   "targets": [
 
     {
-      "model": "Data/Model/target/animals/Alpaca.mdl",
-      "sprite": "Data/Sprite/chain/animals/Alpaca.png",
-      "name": "あるぱか",
-      "charCount": 4,
-      "startN": "あ",
-      "endN": "か",
-      "position": {
-        "x": -208.388,
-        "y": 16.780,
-        "z": -125.387
-      },
-      "card": "Data/Model/target/card/animals/card/Alpaca.mdl"
+        "model": "Data/Model/target/animals/Alpaca.mdl",
+        "sprite": "Data/Sprite/chain/animals/Alpaca.png",
+        "name": "あるぱか",
+        "charCount": 4,
+        "startN": "あ",
+        "endN": "か",
+        "position": {
+            "x": -208.388,
+            "y": 16.780,
+            "z": -125.387
+        },
+        "card": "Data/Model/target/card/animals/card/Alpaca.mdl",
+        "right": true
 
     },
     {
