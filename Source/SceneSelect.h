@@ -37,6 +37,7 @@ private:
 	ShapeRenderer* shapeRenderer = nullptr;
 
 	Stage::StageTransform selectStage;
+	Stage::StageTransform selectStage2;
 
 	// マウスカーソルの位置
 	float CursorX = {};
