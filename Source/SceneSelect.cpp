@@ -103,6 +103,8 @@ void SceneSelect::Update(float elapsedTime)
 	// ステージ１が選択されている状態
 	if(stageState == stageType::stage1)
 	{
+		stage.stageType = Stage::StageType::MACHI;
+
 		// ステージ切り替え
 		selectStage.position.x += (10 - selectStage.position.x) * 0.02f;
 		selectStage.scale.x += (0.005f - selectStage.scale.x) * 0.13f;
@@ -135,6 +137,8 @@ void SceneSelect::Update(float elapsedTime)
 	// ステージ2が選択されている状態
 	if (stageState == stageType::stage2)
 	{
+		stage.stageType = Stage::StageType::SIMA;
+
 		// ステージ切り替え
 		selectStage.position.x += (-10 - selectStage.position.x) * 0.05f;
 		selectStage.scale.x += (0.003f - selectStage.scale.x) * 0.05f;
@@ -191,7 +195,6 @@ void SceneSelect::Update(float elapsedTime)
 			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 		{
 			stageState = stageType::stage2;
-			stage.stageType = Stage::StageType::SIMA;
 		}
 		// stage2が選択されている状態　＋　左の矢印選択された場合
 		if (stageState == stageType::stage2 &&
@@ -199,7 +202,6 @@ void SceneSelect::Update(float elapsedTime)
 			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 		{
 			stageState = stageType::stage1;
-			stage.stageType = Stage::StageType::MACHI;
 		}
 	}
 }
