@@ -133,6 +133,7 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\SceneResult.h" />
     <ClInclude Include="Source\SceneSelect.h" />
+    <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\System\Audio.h" />
     <ClInclude Include="Source\System\AudioResource.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Source\System\ShapeRenderer.h" />
     <ClInclude Include="Source\System\Sprite.h" />
     <ClInclude Include="Source\targetManager.h" />
+    <ClInclude Include="Source\TitleStage.h" />
     <ClInclude Include="Source\UIController.h" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +181,7 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SceneResult.cpp" />
     <ClCompile Include="Source\SceneSelect.cpp" />
+    <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\System\Audio.cpp" />
     <ClCompile Include="Source\System\AudioResource.cpp" />
@@ -198,6 +201,7 @@
     <ClCompile Include="Source\System\ShapeRenderer.cpp" />
     <ClCompile Include="Source\System\Sprite.cpp" />
     <ClCompile Include="Source\targetManager.cpp" />
+    <ClCompile Include="Source\TitleStage.cpp" />
     <ClCompile Include="Source\UIController.cpp" />
   </ItemGroup>
   <ItemGroup>

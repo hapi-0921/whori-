@@ -153,6 +153,12 @@
     <ClCompile Include="Source\Font.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneTitle.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitleStage.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\Audio.h">
@@ -291,6 +297,12 @@
       <Filter>Source\h</Filter>
     </ClInclude>
     <ClInclude Include="Source\Font.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneTitle.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitleStage.h">
       <Filter>Source\h</Filter>
     </ClInclude>
   </ItemGroup>
