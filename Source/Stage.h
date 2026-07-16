@@ -74,9 +74,9 @@ public:
 	void Stage::Render(const RenderContext& rc, ModelRenderer* renderer, StageTransform* transform);
 
 	//void FrontWall();
+	void DrawDebugGUI();
 
 	//デバッグ用GUI描画
-	void DrawDebugGUI();
 
 
 public:

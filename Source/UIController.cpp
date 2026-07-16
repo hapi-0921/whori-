@@ -105,9 +105,9 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 	{//しりとり表示
 
 		sprChain->Render(rc,
-			300, 150, 0,
-			1620, 780, 0,
-			1, 1, 1, 0.7f);
+			0, 0, 0,
+			1920, 1080, 0,
+			1, 1, 1, 1.0f);
 
 	}
 	
