@@ -20,7 +20,7 @@ public:
 
 	void TargetFocus(float elapsedTime);//当たってるか
 
-
+	void TargetUpload();//targetを提出
 
 	struct TargetData
 	{
@@ -38,7 +38,8 @@ public:
 
 	std::vector<TargetManager::TargetData> LoadTargets(const std::string& path);
 private:
-
+	DirectX::XMFLOAT2 mousePos = {};
+	bool upload = false;
 
 	struct Target
 	{
@@ -140,9 +141,21 @@ public:
 
 	//float posForRotate;//回転用position
 
+	//****
+	struct ResultData
+	{
+		//計算
+	int score = 0;//スコア
+	int allCharCount = 0;//合計文字数
+						//コンボ数
+	
+	//表示
+	int siritoriNum = 0;//しりとり数
 
-	//*****
-	int allCharCount = 0;//最大文字数
+	};
+
+	ResultData resultData;
+
 	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }//獲得したtargetの大きさ
 	Sprite* GetgetTargetSpri(int index) { return getTargets[index]->sprite; }//獲得したカード（スプライト）
 	//*****

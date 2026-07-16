@@ -10,6 +10,7 @@
 #include "SceneSelect.h"
 #include "SceneLoading.h"
 #include "SceneManager.h"
+#include "SceneTitle.h"
 
 // ‚’¼“¯ŠúŠÔŠuİ’è
 static const int syncInterval = 1;
@@ -33,7 +34,7 @@ Framework::Framework(HWND hWnd)
 
 	// ƒV[ƒ“‰Šú‰»
 	//sceneGame.Initialize();
-	SceneManager::Instance().ChangeScene2(new SceneSelect);
+	SceneManager::Instance().ChangeScene2(new SceneTitle);
 
 }
 
