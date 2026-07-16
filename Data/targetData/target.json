@@ -13,7 +13,8 @@
                 "y": 0.0,
                 "z": 0.0
             },
-            "card": "Data/Model/target/card/foods/card.mdl"
+            "card": "Data/Model/target/card/foods/card.mdl",
+            "right": true
         },
         {
             "model": "Data/Model/target/foods/radio.mdl",
@@ -27,7 +28,8 @@
                 "y": 0.0,
                 "z": 0.0
             },
-            "card": "Data/Model/target/card/foods/card.mdl"
+            "card": "Data/Model/target/card/foods/card.mdl",
+            "right": true
 
         },
         {
@@ -42,7 +44,8 @@
                 "y": 97.358,
                 "z": -453.593
             },
-            "card": "Data/Model/target/card/foods/Apple.mdl"
+            "card": "Data/Model/target/card/foods/Apple.mdl",
+            "right": true
 
         },
 
@@ -58,7 +61,8 @@
                 "y": 331.123,
                 "z": 542.006
             },
-            "card": "Data/Model/target/card/foods/Avocado.mdl"
+            "card": "Data/Model/target/card/foods/Avocado.mdl",
+            "right": true
 
         },
         {
@@ -73,7 +77,8 @@
                 "y": 45.643,
                 "z": -377.539
             },
-            "card": "Data/Model/target/card/foods/Bacon_Burned.mdl"
+            "card": "Data/Model/target/card/foods/Bacon_Burned.mdl",
+            "right": true
 
         },
         {
@@ -88,7 +93,8 @@
                 "y": 164.719,
                 "z": -99.741
             },
-            "card": "Data/Model/target/card/foods/Banana.mdl"
+            "card": "Data/Model/target/card/foods/Banana.mdl",
+            "right": true
 
         },
         {
@@ -103,7 +109,8 @@
                 "y": 80.000,
                 "z": -633.731
             },
-            "card": "Data/Model/target/card/foods/Bread.mdl"
+            "card": "Data/Model/target/card/foods/Bread.mdl",
+            "right": true
 
         },
         {
@@ -118,7 +125,8 @@
                 "y": 0.000,
                 "z": 299.368
             },
-            "card": "Data/Model/target/card/foods/Broccoli.mdl"
+            "card": "Data/Model/target/card/foods/Broccoli.mdl",
+            "right": true
 
         },
         {
@@ -133,7 +141,8 @@
                 "y": 18.914,
                 "z": 710.293
             },
-            "card": "Data/Model/target/card/foods/Burger.mdl"
+            "card": "Data/Model/target/card/foods/Burger.mdl",
+            "right": true
 
         },
         {
@@ -148,7 +157,8 @@
                 "y": 204.541,
                 "z": -552.936
             },
-            "card": "Data/Model/target/card/foods/cabbage.mdl"
+            "card": "Data/Model/target/card/foods/cabbage.mdl",
+            "right": false
 
         },
         {
@@ -163,7 +173,8 @@
                 "y": 224.436,
                 "z": 38.100
             },
-            "card": "Data/Model/target/card/foods/cake.mdl"
+            "card": "Data/Model/target/card/foods/cake.mdl",
+            "right": false
 
         },
         {
@@ -178,7 +189,8 @@
                 "y": 207.584,
                 "z": -72.879
             },
-            "card": "Data/Model/target/card/foods/Carrot.mdl"
+            "card": "Data/Model/target/card/foods/Carrot.mdl",
+            "right": true
 
         },
         {
@@ -193,7 +205,8 @@
                 "y": 98.285,
                 "z": -579.800
             },
-            "card": "Data/Model/target/card/foods/cauliflower.mdl"
+            "card": "Data/Model/target/card/foods/cauliflower.mdl",
+            "right": false
 
         },
         {
@@ -208,7 +221,8 @@
                 "y": 234.174,
                 "z": 94.424
             },
-            "card": "Data/Model/target/card/foods/cherries.mdl"
+            "card": "Data/Model/target/card/foods/cherries.mdl",
+            "right": false
 
 
         },
@@ -224,7 +238,8 @@
                 "y": 51.430,
                 "z": 549.983
             },
-            "card": "Data/Model/target/card/foods/ChocolateBar.mdl"
+            "card": "Data/Model/target/card/foods/ChocolateBar.mdl",
+            "right": true
 
         },
         {
@@ -239,7 +254,8 @@
                 "y": 139.231,
                 "z": 86.475
             },
-            "card": "Data/Model/target/card/foods/Coconut_Half.mdl"
+            "card": "Data/Model/target/card/foods/Coconut_Half.mdl",
+            "right": true
 
         },
         {
@@ -254,7 +270,8 @@
                 "y": 73.149,
                 "z": -530.292
             },
-            "card": "Data/Model/target/card/foods/cup.mdl"
+            "card": "Data/Model/target/card/foods/cup.mdl",
+            "right": false
 
         },
         {
@@ -269,7 +286,8 @@
                 "y": -0.849,
                 "z": -612.644
             },
-            "card": "Data/Model/target/card/foods/cookie.mdl"
+            "card": "Data/Model/target/card/foods/cookie.mdl",
+            "right": false
 
         },
         {
@@ -284,7 +302,8 @@
                 "y": -5.204,
                 "z": 722.872
             },
-            "card": "Data/Model/target/card/foods/corn.mdl"
+            "card": "Data/Model/target/card/foods/corn.mdl",
+            "right": false
 
         },
         {
@@ -299,7 +318,8 @@
                 "y": 104.986,
                 "z": 775.486
             },
-            "card": "Data/Model/target/card/foods/Cupcake.mdl"
+            "card": "Data/Model/target/card/foods/Cupcake.mdl",
+            "right": true
 
         },
         {
@@ -314,7 +334,8 @@
                 "y": 400.037,
                 "z": -749.680
             },
-            "card": "Data/Model/target/card/foods/Donut1.mdl"
+            "card": "Data/Model/target/card/foods/Donut1.mdl",
+            "right": true
 
         },
         {
@@ -329,7 +350,8 @@
                 "y": -0.168,
                 "z": -176.526
             },
-            "card": "Data/Model/target/card/foods/Egg_Whole_White.mdl"
+            "card": "Data/Model/target/card/foods/Egg_Whole_White.mdl",
+            "right": true
 
         },
         {
@@ -344,7 +366,8 @@
                 "y": 128.925,
                 "z": -216.815
             },
-            "card": "Data/Model/target/card/foods/Eggplant.mdl"
+            "card": "Data/Model/target/card/foods/Eggplant.mdl",
+            "right": true
 
         },
         {
@@ -359,7 +382,8 @@
                 "y": 132.365,
                 "z": 389.005
             },
-            "card": "Data/Model/target/card/foods/egg.mdl"
+            "card": "Data/Model/target/card/foods/egg.mdl",
+            "right": true
 
         },
         {
@@ -374,7 +398,8 @@
                 "y": 42.157,
                 "z": 454.163
             },
-            "card": "Data/Model/target/card/foods/Fries.mdl"
+            "card": "Data/Model/target/card/foods/Fries.mdl",
+            "right": true
 
         },
         {
@@ -389,7 +414,8 @@
                 "y": 5.681,
                 "z": -746.639
             },
-            "card": "Data/Model/target/card/foods/Hotdog.mdl"
+            "card": "Data/Model/target/card/foods/Hotdog.mdl",
+            "right": true
 
         },
         {
@@ -404,7 +430,8 @@
                 "y": 5.069,
                 "z": 153.183
             },
-            "card": "Data/Model/target/card/foods/IceCream_2.mdl"
+            "card": "Data/Model/target/card/foods/IceCream_2.mdl",
+            "right": true
 
         },
         {
@@ -419,7 +446,8 @@
                 "y": 61.236,
                 "z": -9.005
             },
-            "card": "Data/Model/target/card/foods/kyuri.mdl"
+            "card": "Data/Model/target/card/foods/kyuri.mdl",
+            "right": true
 
         },
         {
@@ -434,7 +462,8 @@
                 "y": -4.121,
                 "z": 632.538
             },
-            "card": "Data/Model/target/card/foods/lemon.001.mdl"
+            "card": "Data/Model/target/card/foods/lemon.001.mdl",
+            "right": false
 
         },
         {
@@ -449,7 +478,8 @@
                 "y": -4.8,
                 "z": 1.0
             },
-            "card": "Data/Model/target/card/foods/Mushroom.mdl"
+            "card": "Data/Model/target/card/foods/Mushroom.mdl",
+            "right": true
 
         },
         {
@@ -464,7 +494,8 @@
                 "y": 193.861,
                 "z": 209.172
             },
-            "card": "Data/Model/target/card/foods/onion.mdl"
+            "card": "Data/Model/target/card/foods/onion.mdl",
+            "right": false
 
         },
         {
@@ -479,7 +510,8 @@
                 "y": 20.983,
                 "z": -31.626
             },
-            "card": "Data/Model/target/card/foods/Orange.mdl"
+            "card": "Data/Model/target/card/foods/Orange.mdl",
+            "right": true
 
         },
         {
@@ -494,7 +526,8 @@
                 "y": 204.024,
                 "z": -538.679
             },
-            "card": "Data/Model/target/card/foods/Pancake.mdl"
+            "card": "Data/Model/target/card/foods/Pancake.mdl",
+            "right": true
 
         },
         {
@@ -509,7 +542,8 @@
                 "y": 146.273,
                 "z": -766.426
             },
-            "card": "Data/Model/target/card/foods/pear.mdl"
+            "card": "Data/Model/target/card/foods/pear.mdl",
+            "right": false
 
         },
         {
@@ -524,7 +558,8 @@
                 "y": 0.886,
                 "z": -549.107
             },
-            "card": "Data/Model/target/card/foods/Pepper_Red.mdl"
+            "card": "Data/Model/target/card/foods/Pepper_Red.mdl",
+            "right": true
 
         },
         {
@@ -539,7 +574,8 @@
                 "y": 14.633,
                 "z": -309.375
             },
-            "card": "Data/Model/target/card/foods/Pig_Cylinder.mdl"
+            "card": "Data/Model/target/card/foods/Pig_Cylinder.mdl",
+            "right": true
 
         },
         {
@@ -554,7 +590,8 @@
                 "y": -2.816,
                 "z": -411.434
             },
-            "card": "Data/Model/target/card/foods/Pizza.mdl"
+            "card": "Data/Model/target/card/foods/Pizza.mdl",
+            "right": true
 
         },
         {
@@ -569,7 +606,8 @@
                 "y": 196.662,
                 "z": 498.969
             },
-            "card": "Data/Model/target/card/foods/Pumpkin.mdl"
+            "card": "Data/Model/target/card/foods/Pumpkin.mdl",
+            "right": true
 
         },
         {
@@ -584,7 +622,8 @@
                 "y": 597.983,
                 "z": 642.502
             },
-            "card": "Data/Model/target/card/foods/strawberry.mdl"
+            "card": "Data/Model/target/card/foods/strawberry.mdl",
+            "right": false
 
         },
         {
@@ -599,7 +638,8 @@
                 "y": 478.228,
                 "z": 746.332
             },
-            "card": "Data/Model/target/card/foods/Sushi_Nigiri2.mdl"
+            "card": "Data/Model/target/card/foods/Sushi_Nigiri2.mdl",
+            "right": true
 
         },
         {
@@ -614,24 +654,26 @@
                 "y": 321.751,
                 "z": 210.448
             },
-            "card": "Data/Model/target/card/foods/Tomato.mdl"
+            "card": "Data/Model/target/card/foods/Tomato.mdl",
+            "right": true
 
         },
-      {
-        "model": "Data/Model/target/foods/tohu.mdl",
-        "sprite": "Data/Sprite/chain/foods/tohu.png",
-        "name": "とうふ",
-        "charCount": 3,
-        "startN": "と",
-        "endN": "ふ",
-        "position": {
-          "x": 744.279,
-          "y": 133.070,
-          "z": -566.643
-        },
-        "card": "Data/Model/target/card/foods/tohu.mdl"
+        {
+            "model": "Data/Model/target/foods/tohu.mdl",
+            "sprite": "Data/Sprite/chain/foods/tohu.png",
+            "name": "とうふ",
+            "charCount": 3,
+            "startN": "と",
+            "endN": "ふ",
+            "position": {
+                "x": 744.279,
+                "y": 133.070,
+                "z": -566.643
+            },
+            "card": "Data/Model/target/card/foods/tohu.mdl",
+            "right": false
 
-      },
+        },
         {
             "model": "Data/Model/target/foods/Tumip.mdl",
             "sprite": "Data/Sprite/chain/foods/Tumip.png",
@@ -644,7 +686,8 @@
                 "y": 36.435,
                 "z": -525.052
             },
-            "card": "Data/Model/target/card/foods/Tumip.mdl"
+            "card": "Data/Model/target/card/foods/Tumip.mdl",
+            "right": true
 
         },
         {
@@ -659,7 +702,8 @@
                 "y": 88.904,
                 "z": -615.502
             },
-            "card": "Data/Model/target/card/foods/waffle.mdl"
+            "card": "Data/Model/target/card/foods/waffle.mdl",
+            "right": true
 
         },
 
@@ -670,12 +714,13 @@
             "charCount": 3,
             "startN": "す",
             "endN": "か",
-          "position": {
-            "x": 799.260,
-            "y": 7.862,
-            "z": -744.722
-          },
-            "card": "Data/Model/target/card/foods/Watermelon_0101.mdl"
+            "position": {
+                "x": 799.260,
+                "y": 7.862,
+                "z": -744.722
+            },
+            "card": "Data/Model/target/card/foods/Watermelon_0101.mdl",
+            "right": false
 
         },
         {
@@ -690,7 +735,8 @@
                 "y": 0.0,
                 "z": 43.325
             },
-            "card": "Data/Model/target/card/foods/Cow_Cube.mdl"
+            "card": "Data/Model/target/card/foods/Cow_Cube.mdl",
+            "right": true
 
         }
     ]

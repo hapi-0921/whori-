@@ -11,6 +11,9 @@
 #include"targetManager.h"
 #include <fstream>
 #include <GameManager.h>
+#include"SceneSelect.h"
+#include"SceneTitle.h"
+
 // 初期化
 void SceneResult::Initialize()
 {
@@ -57,8 +60,7 @@ void SceneResult::Update(float elapsedTime)
 				if (CursorX >= 148 && CursorX <= 611)
 				{
 					//今はシーンセレクトないからコメントアウト
-					//SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
-					ranking = false;
+					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
 				}
 				//もう一度
 				else if (CursorX >= 667 && CursorX <=1157)
