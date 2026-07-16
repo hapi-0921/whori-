@@ -48,8 +48,8 @@ void ScoreManager::TargetUpload()
         //スコア換算
         if(nowChain>=0)
         score = 100 * allCharCount* comboMultiplier[nowChain-1];//倍率に変更
-        debug = comboMultiplier[nowChain - 1];
 
+        allScore += score;
         //最大コンボなら更新
         if (maxCombo < conbo)
         {
@@ -79,7 +79,7 @@ void ScoreManager::DrawDebugGUI()
         ImGui::InputInt("conbo", &conbo);
         ImGui::InputInt("maxCombo", &maxCombo);
         ImGui::InputInt("maxChar", &maxChar);
-        ImGui::InputFloat("debug", &debug);
+        ImGui::InputInt("allScore", &allScore);
 
         ImGui::Checkbox("reset", &reset);
     }
