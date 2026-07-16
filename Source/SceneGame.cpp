@@ -174,25 +174,25 @@ void SceneGame::Render()
 // GUI•`‰æ
 void SceneGame::DrawGUI()
 {
-	return;
+	//return;
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
 	ImGui::SetNextWindowPos(ImVec2(pos.x + 10, pos.y), ImGuiCond_Once);
 
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
-	if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
-	{
+	//if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
+	//{
 
-		
-		ImGui::Checkbox("t.targetManager->toResult", &targetManager->toResult);
+	//	
+	//	ImGui::Checkbox("t.targetManager->toResult", &targetManager->toResult);
 
-		ImGui::End();
-	}
+	//	ImGui::End();
+	//}
 
 	//Stage& stage = Stage::Instance();
 	//stage.DrawDebugGUI();
 
-	cameraController->DrawDebugGUI();
+	//cameraController->DrawDebugGUI();
 	targetManager->DrawDebugGUI();
 	//uiController->DrawDebugGUI();
 }
