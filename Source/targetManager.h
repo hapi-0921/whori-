@@ -10,6 +10,8 @@ using json = nlohmann::json;
 
 #include"ScoreManager.h"
 
+#include"Font.h"
+
 class TargetManager
 {
 public:
@@ -37,6 +39,8 @@ public:
 
 		DirectX::XMFLOAT3 position = { 0,0,0 };
 	};
+
+	Font* number = nullptr;
 
 
 	std::vector<TargetManager::TargetData> LoadTargets(const std::string& path);

@@ -95,6 +95,7 @@ TargetManager::TargetManager()
     }
 
     sprMiss = new Sprite("Data/Sprite/chain/UI/miss.png");
+    number = new Font("Data/Sprite/number.png");
 
 }
 
@@ -480,7 +481,10 @@ void TargetManager::TargetFocus(float elapsedTime)
             //resultData
             scoreManager.siritoriNum++;
             scoreManager.chainCount++;
+            scoreManager.conbo = scoreManager.chainCount - 1;
             scoreManager.allCharCount += t.charCount;
+
+            scoreManager.nowCombo = true;//何コンボ中か表示
 
             endName = t.endN;
 
@@ -678,6 +682,7 @@ void TargetManager::Update(float elapsedTime)
 	//フォーカス判定
 	TargetFocus(elapsedTime);
     UpdateCardMove(elapsedTime);
+
 }
 
 
@@ -771,6 +776,19 @@ void TargetManager::Render(const RenderContext& rc)
         }
     }
 
+    ScoreManager& scoreManager = ScoreManager::Instance();
+    if (scoreManager.nowCombo)
+    {
+        if (scoreManager.nowCombo)
+            number->DrawNumber(rc, scoreManager.conbo, 150, 950, 1.5f);
+
+    }
+    if (scoreManager.nowScore)
+    {
+        number->DrawNumber(rc, scoreManager.score, 400, 950, 1.5f);
+
+    }
+
 }
 
 
@@ -782,6 +800,7 @@ void TargetManager::DrawDebugGUI()
 	ImGui::SetNextWindowPos(ImVec2(pos.x + 10, pos.y), ImGuiCond_Once);
 
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
+    ScoreManager& scoreManager = ScoreManager::Instance();
 
 	//if (ImGui::Begin("targets", nullptr, ImGuiWindowFlags_None))
 	//{
@@ -796,11 +815,12 @@ void TargetManager::DrawDebugGUI()
  //           ImGui::InputFloat("t.cardTimer", &cardTimer);
  //           ImGui::InputFloat("t.timer", &timer);
             //ImGui::InputFloat("t.deltaTimer", &deltaTimer);
-            ImGui::Checkbox("isMoveToChain", &targets[2].isMoveToChain);
+            //ImGui::Checkbox("isMoveToChain", &targets[2].isMoveToChain);
  //           //ImGui::Checkbox("t.isFocus", &targets[4].isFocus);
  //           ImGui::Checkbox("toResult", &toResult);
  //           ImGui::InputFloat("lightTimer", &lightTimer);
- //           ImGui::InputInt("t.charCount", &targets[0].charCount);
+            ImGui::InputInt("conbo", &scoreManager.conbo);
+            ImGui::InputInt("score", &scoreManager.score);
  //           ImGui::InputInt("allCharCount", &resultData.allCharCount);
  //           //ImGui::Checkbox("canZoom", &canZoom);
  //       }

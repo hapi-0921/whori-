@@ -35,7 +35,6 @@ void ScoreManager::TargetUpload()
     {
         if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
         {
-            conbo = chainCount-1;
             upload = true;
         }
     }
@@ -51,6 +50,7 @@ void ScoreManager::TargetUpload()
 
             return;
         }
+        nowScore = true;//âΩÉXÉRÉAâ¡éZÇ≥ÇÍÇΩÇ©
 
         chainCount = 0;
 

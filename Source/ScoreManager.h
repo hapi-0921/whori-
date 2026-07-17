@@ -27,6 +27,11 @@ public:
 	bool reset = false;
 
 
+	bool nowCombo = false;//conbo
+	bool nowScore = false;//score
+	float comboTimer = 0.0f;
+	float scoreTimer = 0.0f;
+
 	int chainCount = 0;//‰½˜A½’†‚©
 	int conbo = 0;//ƒRƒ“ƒ{”
 	int nowChain = 0;
