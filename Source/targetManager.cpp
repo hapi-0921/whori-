@@ -226,28 +226,35 @@ void TargetManager::TargetFocus(float elapsedTime)
             {
                 material.emissionColor = nonColor;
             }
+            //timer = 0.15f;
+            //lightTimer = 0.0f;
+
         }
     }
 
 
 
-    if (hits.empty())
-    {
-        focusTimer = 0.0f;
-        distance = FLT_MAX;
-        canZoom = false;
-        return;
-    }
 
     // 一番近いもの
     std::sort(hits.begin(), hits.end(), [](const HitInfo& a, const HitInfo& b) {
         return a.distance < b.distance;
         });
 
+
     //一番近いものの算出（stage,target含む）
     HitInfo closest = hits[0];
     distance = closest.distance;
     canZoom = (distance <= 200);
+
+    if (hits.empty() || closest.pTarget == nullptr || closest.distance > 1000.0f)
+    {
+        focusTimer = 0.0f;
+        // フォーカス対象がいないときだけリセット
+        timer = 0.15f;
+        lightTimer = 0.0f;
+        canZoom = false;
+        return;
+    }
 
     if (closest.pTarget == nullptr)
     {
@@ -779,13 +786,28 @@ void TargetManager::Render(const RenderContext& rc)
     ScoreManager& scoreManager = ScoreManager::Instance();
     if (scoreManager.nowCombo)
     {
-        if (scoreManager.nowCombo)
-            number->DrawNumber(rc, scoreManager.conbo, 150, 950, 1.5f);
+        scoreManager.comboTimer++;
+        scoreManager.comboScale -= 10;
+        number->DrawNumber(rc, scoreManager.conbo, scoreManager.comboPos.x, scoreManager.comboPos.y, scoreManager.comboScale);
 
+        if (scoreManager.comboTimer >= 100.0)
+        {
+            scoreManager.nowCombo = false;
+            scoreManager.comboTimer = 0.0f;
+        }
     }
     if (scoreManager.nowScore)
     {
-        number->DrawNumber(rc, scoreManager.score, 400, 950, 1.5f);
+        scoreManager.scoreTimer++;
+        scoreManager.scoreScale -= 10;
+
+        number->DrawNumber(rc, scoreManager.score, scoreManager.scorePos.x, scoreManager.scorePos.y, scoreManager. scoreScale);
+
+        if (scoreManager.scoreTimer >= 100.0)
+        {
+            scoreManager.nowScore = false;
+            scoreManager.scoreTimer = 0.0f;
+        }
 
     }
 
