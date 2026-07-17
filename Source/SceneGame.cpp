@@ -54,12 +54,20 @@ void SceneGame::Initialize()
 		cameraController->range = cameraController->GetMaxRanget();
 	}
 
+
+	timer = new Font("Data/Sprite/number.png");
+	sprTimer = new Sprite("Data/Sprite/chain/UI/timer.png");
+
 	GameManager::Instance().SetPlaying(true);
 }
 
 // 終了化
 void SceneGame::Finalize()
 {
+	if (sprTimer != nullptr) {
+		delete sprTimer;
+		sprTimer = nullptr;
+	}
 	if (cameraController != nullptr) {
 		delete cameraController;
 		cameraController = nullptr;
@@ -82,6 +90,13 @@ void SceneGame::Finalize()
 		uiController = nullptr;
 	}
 
+	GameTimer = 0;
+	gameTimer = 0.0f;
+	sec = 0;
+	min = 0;
+
+
+
 	GameManager::Instance().SetPlaying(false);
 }
 
@@ -94,7 +109,14 @@ void SceneGame::Update(float elapsedTime)
 	if (GameManager::Instance().IsPlaying())
 	{
 
-		gameTimer++;
+		gameTimer += elapsedTime;
+		if (gameTimer >= 0.2f)
+		{
+			GameTimer++;
+			gameTimer = 0.0;
+		}
+		sec = GameTimer % 60;
+		min = GameTimer / 60;
 
 		cameraController->Update(elapsedTime);
 	}
@@ -117,10 +139,12 @@ void SceneGame::Update(float elapsedTime)
 
 	// 画面遷移 //
 	GamePad& gamePad = Input::Instance().GetGamePad();
+	
 	// Zキーを押したらフェードインスタート
 	//const GamePadButton ZKey = GamePad::BTN_A;
 
-	if (targetManager->toResult)
+	
+	if (targetManager->toResult || GameTimer >= 60 * 2 )
 	{
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
 	}
@@ -163,11 +187,15 @@ void SceneGame::Render()
 	{
 		uiController->Render(rc, modelRenderer);
 		targetManager->Render(rc);
+		sprTimer->Render(rc,
+			0, 0, 0,1920, 1080, 0, 0,1920, 1080, 0, 1, 1, 1, 1);
+
 
 	}
-	// 2Dデバッグ描画
+	// 値描画
 	{
-
+		timer->DrawNumber0(rc, min, 150, 950, 2.0f);
+		timer->DrawNumber0(rc, sec, 400, 950, 2.0f);
 	}
 
 	cameraController->Render(rc);
@@ -187,6 +215,7 @@ void SceneGame::DrawGUI()
 
 		
 		ImGui::InputFloat("gameTimer", &gameTimer);
+		ImGui::InputInt("gameTimer", &GameTimer);
 
 		ImGui::End();
 	}
