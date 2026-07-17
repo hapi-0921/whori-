@@ -29,6 +29,7 @@ void SceneResult::Initialize()
 	}
 	file >> data;
 	font = new Font("Data/Font/font2.png");
+	Numberfont= new Font("Data/Sprite/number.png");
 }
 
 // 終了化
@@ -46,10 +47,10 @@ void SceneResult::Update(float elapsedTime)
 	CursorX = mouse.GetPositionX();
 	CursorY = mouse.GetPositionY();
 
-	if ((mouse.GetButtonDown() & mouseButton))
-	{
-		ranking = true;
-	}
+	//if ((mouse.GetButtonDown() & mouseButton))
+	//{
+	//	ranking = true;
+	//}
 	if (ranking)
 	{
 		if ((mouse.GetButtonDown() & mouseButton))
@@ -89,7 +90,7 @@ void SceneResult::Update(float elapsedTime)
 	}
 	if (nowCard < data["result"].size())
 	{
-		sikaku[nowCard].posy += 4;
+		sikaku[nowCard].posy += 5;
 
 		if (sikaku[nowCard].posy >= sikaku[nowCard].lastposy)
 		{
@@ -109,7 +110,7 @@ void SceneResult::Render()
 	RenderContext rc;
 	rc.deviceContext = dc;
 	rc.renderState = graphics.GetRenderState();
-
+	ScoreManager& scoreManager = ScoreManager::Instance();
 	// 2Dスプライト描画
 	{
 		
@@ -135,13 +136,45 @@ void SceneResult::Render()
 				0, 0, 0,
 				1920, 1080, 0, 0,
 				1920, 1080, 0, 1, 1, 1, 1);
+			Numberfont->DrawNumber(
+				rc,
+				scoreManager.getNum,
+				350,
+				580,
+				1.0f);
+			Numberfont->DrawNumber(
+				rc,
+				scoreManager.siritoriNum,
+				750,
+				580,
+				1.0f);
+			Numberfont->DrawNumber(
+				rc,
+				scoreManager.maxCombo,
+				1100,
+				580,
+				1.0f);
+			Numberfont->DrawNumber(
+				rc,
+				scoreManager.maxChar,
+				1500,
+				580,
+				1.0f);
+			Numberfont->DrawNumber(
+				rc,
+				scoreManager.allScore,
+				980,
+				200,
+				2.0f);
 		}
 		else
 		{
+			
 			sprranking->Render(rc,
 				0, 0, 0,
 				1920, 1080, 0, 0,
 				1920, 1080, 0, 1, 1, 1, 1);
+		
 		}
 		
 		/*font->Draw(

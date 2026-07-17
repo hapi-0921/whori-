@@ -1,4 +1,5 @@
 #include "Font.h"
+#include <string>
 
 Font::Font(const char* filename)
 {
@@ -62,5 +63,50 @@ void Font::Draw(
         drawX += CHAR_W * scale;
 
         text++;
+    }
+}
+void Font::Draw(
+    const RenderContext& rc,
+    int value,
+    float x,
+    float y,
+    float scale)
+{
+    std::string text = std::to_string(value);
+    Draw(rc, text.c_str(), x, y, scale);
+}
+
+void Font::DrawNumber(const RenderContext& rc, int number, float centerX, float y, float scale)
+{
+    char text[16];
+    sprintf_s(text, "%d", number);
+
+    int len = strlen(text);
+
+    float drawX = centerX - (len * NUM_W * scale) * 0.5f;
+
+    for (int i = 0; i < len; i++)
+    {
+        int digit = text[i] - '0';
+
+        sprite->Render(
+            rc,
+            drawX,
+            y,
+            0,
+
+            NUM_W * scale,
+            NUM_H * scale,
+
+            digit * NUM_W,
+            0,
+
+            NUM_W,
+            NUM_H,
+
+            0,
+            1, 1, 1, 1);
+
+        drawX += NUM_W * scale;
     }
 }

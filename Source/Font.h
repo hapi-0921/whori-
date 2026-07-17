@@ -15,6 +15,18 @@ public:
         float x,
         float y,
         float scale = 1.0f);
+    void Draw(
+        const RenderContext& rc,
+        int value,
+        float x,
+        float y,
+        float scale);
+    void DrawNumber(
+        const RenderContext& rc,
+        int number,
+        float x,
+        float y,
+        float scale);
 
 private:
 
@@ -23,4 +35,7 @@ private:
     static constexpr int CHAR_W = 32;
     static constexpr int CHAR_H = 32;
     static constexpr int COLS = 16;
+
+    static constexpr int NUM_W = 42;
+    static constexpr int NUM_H = 42;
 };

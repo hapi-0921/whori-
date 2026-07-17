@@ -50,4 +50,6 @@ private:
 	int nowCard = 0;
 	json data;
 	Font* font=nullptr;
+	Font* Numberfont = nullptr;
+
 };
