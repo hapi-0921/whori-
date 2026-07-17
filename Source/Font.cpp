@@ -89,23 +89,26 @@ void Font::DrawNumber(const RenderContext& rc, int number, float centerX, float 
     {
         int digit = text[i] - '0';
 
-        sprite->Render(
-            rc,
-            drawX,
-            y,
-            0,
+        for (int i = 0; i < 10; i++)
+{
+    sprite->Render(
+        rc,
+        i * 100,
+        100,
+        0,
 
-            NUM_W * scale,
-            NUM_H * scale,
+        86,
+        86,
 
-            digit * NUM_W,
-            0,
+        i * NUM_W,
+        0,
 
-            NUM_W,
-            NUM_H,
+        NUM_W,
+        NUM_H,
 
-            0,
-            1, 1, 1, 1);
+        0,
+        1,1,1,1);
+}
 
         drawX += NUM_W * scale;
     }

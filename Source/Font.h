@@ -36,6 +36,6 @@ private:
     static constexpr int CHAR_H = 32;
     static constexpr int COLS = 16;
 
-    static constexpr int NUM_W = 42;
-    static constexpr int NUM_H = 42;
+    static constexpr int NUM_W = 43;
+    static constexpr int NUM_H = 43;
 };

@@ -36,8 +36,15 @@ private:
 	Sprite* sprranking = nullptr;
 
 	Sprite* sprs = nullptr;
+	Sprite* sprrank[5] = {};
+	Sprite* sprrankword[5] = {};
+
+	int resultTimer = 0;
+	int rankTimer = 0;
+	int rank=0;
 	int CursorX = 0;
 	int	CursorY = 0;
+	int rankset = 0;
 	bool ranking = false;
 	struct iti
 	{
@@ -46,6 +53,12 @@ private:
 		int angle = 0;
 		int lastposy = 0;
 	};
+	float scorescale = 2;
+	float rankScale = 1.0f;
+
+	bool rankScaleAnim = false;
+	bool rankFinish = false;   
+	bool next = false;
 	iti  sikaku[30];
 	int nowCard = 0;
 	json data;
