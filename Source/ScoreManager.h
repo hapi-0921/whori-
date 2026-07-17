@@ -46,8 +46,12 @@ public:
 	//---そのまま表示---
 	int allScore = 0;//スコア
 	int siritoriNum = 0;//しりとり数
+
 	int getNum = 0;//見つけた数
+	int targetNum = 0;//target合計
+
 	int maxCombo = 0;//最大コンボ
 	int maxChar = 0;//最大文字数
+
 
 };
