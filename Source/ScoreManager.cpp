@@ -1,5 +1,6 @@
 #include"ScoreManager.h"
 
+#include"Stage.h"
 #include"System/Input.h"
 #include<imgui.h>
 
@@ -19,6 +20,11 @@ void ScoreManager::TargetUpload()
     mousePos.x = mouse.GetPositionX();
     mousePos.y = mouse.GetPositionY();
 
+    Stage& stage = Stage::Instance();
+    if (stage.stageType == stage.MACHI)targetNum = 48;//foods
+    else if (stage.stageType == stage.SIMA) targetNum = 41;//animals
+
+
     DirectX::XMFLOAT2 pos = { 1626,932 };
     DirectX::XMFLOAT2 size = { 270,77 };
 
@@ -37,13 +43,16 @@ void ScoreManager::TargetUpload()
     if (upload && chainCount != 0)
     {
         nowChain = chainCount;
+        reset = true;
+
         if (chainCount == 1 || chainCount == 0)
         {
+            chainCount = 0;
+
             return;
         }
 
         chainCount = 0;
-        reset = true;
 
         //ƒXƒRƒAŠ·ŽZ
         if(nowChain>=0)
@@ -70,17 +79,19 @@ void ScoreManager::DrawDebugGUI()
 
     if (ImGui::Begin("socore", nullptr, ImGuiWindowFlags_None))
     {
-        ImGui::InputInt("chainCount", &chainCount);
+        //ImGui::InputInt("chainCount", &chainCount);
 
-        ImGui::InputInt("score", &score);
-        ImGui::InputInt("siritoriNum", &siritoriNum);
+        //ImGui::InputInt("score", &score);
+        //ImGui::InputInt("siritoriNum", &siritoriNum);
 
-        ImGui::InputInt("allCharCount", &allCharCount);
-        ImGui::InputInt("conbo", &conbo);
-        ImGui::InputInt("maxCombo", &maxCombo);
-        ImGui::InputInt("maxChar", &maxChar);
-        ImGui::InputInt("allScore", &allScore);
+        //ImGui::InputInt("allCharCount", &allCharCount);
+        //ImGui::InputInt("conbo", &conbo);
+        //ImGui::InputInt("maxCombo", &maxCombo);
+        //ImGui::InputInt("maxChar", &maxChar);
+        //ImGui::InputInt("allScore", &allScore);
+        ImGui::InputInt("getNum", &getNum);
 
         ImGui::Checkbox("reset", &reset);
     }
+    ImGui::End();
 }

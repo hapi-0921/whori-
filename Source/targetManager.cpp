@@ -20,6 +20,7 @@
 #include"UIController.h"
 
 #undef min
+#undef max
 
 #include"SceneGame.h"
 
@@ -92,6 +93,9 @@ TargetManager::TargetManager()
         targets[i].cardPath = data[i].cardPath;
 
     }
+
+    sprMiss = new Sprite("Data/Sprite/chain/UI/miss.png");
+
 }
 
 TargetManager::~TargetManager()
@@ -108,6 +112,11 @@ TargetManager::~TargetManager()
         t.mdlCard = nullptr;
 
 	}
+    if (sprMiss != nullptr) {
+        delete sprMiss;
+        sprMiss = nullptr;
+    }
+
     if (mdlChrCount != nullptr) {
         delete mdlChrCount;
         mdlChrCount = nullptr;
@@ -116,36 +125,6 @@ TargetManager::~TargetManager()
     targets.clear();
 }
 
-
-//提出
-//void TargetManager::TargetUpload()
-//{
-//    Mouse& mouse = Input::Instance().GetMouse();
-//    
-//    DirectX::XMFLOAT2 pos = { 1626,932 };
-//    DirectX::XMFLOAT2 size = { 270,77 };
-//
-//    if (pos.x  < mousePos.x &&//l
-//        pos.x + size.x > mousePos.x &&//r
-//        pos.y  < mousePos.y &&//t
-//        pos.y + size.y  > mousePos.y)  //b
-//    {
-//        if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
-//        {
-//             upload = true;
-//        }
-//    }
-//
-//    if (upload&& chainCount!=0)
-//    {
-//        chainCount = 0;
-//
-//        if (chainCount == 1) return;
-//
-//        //スコア換算
-//        resultData.score = 100 * resultData.allCharCount;//コンボ数追加
-//    }
-//}
 
 //フォーカス判定
 void TargetManager::TargetFocus(float elapsedTime)
@@ -169,6 +148,7 @@ void TargetManager::TargetFocus(float elapsedTime)
     charRen = false;
     moveCusol = false;
 
+
     Mouse& mouse = Input::Instance().GetMouse();
     const MouseButton mouseButton = Mouse::BTN_LEFT;
     scoreManager.mousePos.x = mouse.GetPositionX();
@@ -180,6 +160,12 @@ void TargetManager::TargetFocus(float elapsedTime)
     {
         getTargets.clear();
         scoreManager.reset = false;
+
+        for (auto& t : targets)
+        {
+            t.carsRen = false;
+
+        }
     }
 
     // ---------- ヒット情報------------
@@ -214,9 +200,10 @@ void TargetManager::TargetFocus(float elapsedTime)
         t.preFocus = t.isFocus;
         t.isFocus = false;
         t.isRayHit = false;
+        //t.carsRen = false;
+
 
         if (t.isChainRender) continue;
-        //if (!IsInCursor(t)) continue;
 
         DirectX::XMFLOAT3 hitPos{};
         if (Collision::RayCast(rayStart, rayEnd, t.transform, t.model, hitPos, normal))
@@ -346,7 +333,9 @@ void TargetManager::TargetFocus(float elapsedTime)
 
                 tfCard.scale = { 0.5f,1,0.5f };
 
-                tfCard.position = t.hitPos;
+                tfCard.position.x = t.hitPos.x + front.x * 200.0f;
+                tfCard.position.y = t.hitPos.y + front.y * 200.0f;
+                tfCard.position.z = t.hitPos.z + front.z * 200.0f;
 
                 //tfCard.position.x =camera.GetEye().x + front.x * 300.0f;
                 //tfCard.position.y =camera.GetEye().y + front.y * 300.0f;
@@ -373,8 +362,6 @@ void TargetManager::TargetFocus(float elapsedTime)
 
     if (t.isFocus)
     {
-
-
         DirectX::XMFLOAT3 targetPos;
         targetPos.x = camera.GetEye().x + front.x * 300.0f;
         targetPos.y = camera.GetEye().y + front.y * 300.0f;
@@ -386,35 +373,70 @@ void TargetManager::TargetFocus(float elapsedTime)
         tfCard.position.y += (targetPos.y - tfCard.position.y) * t;
         tfCard.position.z += (targetPos.z - tfCard.position.z) * t;
 
-        //DirectX::XMVECTOR axis = DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&camera.GetFront()));
-        //spinAngle += elapsedTime * DirectX::XM_PI * 5.0f;
-        //if (spinAngle > DirectX::XM_PI * 2.0f)
-        //{
-        //    spinAngle -= DirectX::XM_PI * 2.0f;
-        //}
-        //DirectX::XMMATRIX S =  DirectX::XMMatrixScaling(tfCard.scale.x, tfCard.scale.y, tfCard.scale.z);
-        // DirectX::XMMATRIX Billboard =  DirectX::XMMatrixRotationRollPitchYaw(tfCard.angle.x,tfCard.angle.y,tfCard.angle.z);
-        // DirectX::XMMATRIX Spin =  DirectX::XMMatrixRotationAxis(axis, spinAngle);
-        // DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(tfCard.position.x, tfCard.position.y, tfCard.position.z);
-        // DirectX::XMMATRIX W = S * Spin * Billboard * T;
-
-        //DirectX::XMStoreFloat4x4(&tfCard.transform, W);
-
-
 
         freeUpdateTransform(tfCard.scale, tfCard.angle, tfCard.position, tfCard.transform);
 
 
         cardTimer += elapsedTime;
     }
+
+//if (t.isFocus)
+//{
+//    DirectX::XMFLOAT3 targetPos = {
+//        camera.GetEye().x + front.x * 300.0f,
+//        camera.GetEye().y + front.y * 300.0f,
+//        camera.GetEye().z + front.z * 300.0f
+//    };
+//
+//    float moveSpeed = 10.0f * elapsedTime;
+//    tfCard.position.x += (targetPos.x - tfCard.position.x) * moveSpeed;
+//    tfCard.position.y += (targetPos.y - tfCard.position.y) * moveSpeed;
+//    tfCard.position.z += (targetPos.z - tfCard.position.z) * moveSpeed;
+//
+//    cardSpinAngle += elapsedTime * 5.0f;
+//
+//    // ==================== 調整しやすい版 ====================
+//    DirectX::XMVECTOR eye = DirectX::XMLoadFloat3(&camera.GetEye());
+//    DirectX::XMVECTOR pos = DirectX::XMLoadFloat3(&tfCard.position);
+//    DirectX::XMVECTOR lookDir = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(eye, pos));
+//
+//    DirectX::XMVECTOR up = DirectX::XMVectorSet(0, 1, 0, 0);
+//
+//    DirectX::XMMATRIX billboard = DirectX::XMMatrixLookToLH(DirectX::XMVectorZero(), lookDir, up);
+//    billboard = DirectX::XMMatrixInverse(nullptr, billboard);
+//
+//    // 自転
+//    DirectX::XMMATRIX spin = DirectX::XMMatrixRotationY(cardSpinAngle);
+//
+//    DirectX::XMMATRIX baseRotation = DirectX::XMMatrixRotationY(DirectX::XM_PI) *
+//        DirectX::XMMatrixRotationX(DirectX::XM_PI * 0.15f); 
+//
+//     DirectX::XMMATRIX S = DirectX::XMMatrixScaling(tfCard.scale.x, tfCard.scale.y, tfCard.scale.z);
+//    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(tfCard.position.x, tfCard.position.y, tfCard.position.z);
+//
+//    DirectX::XMMATRIX world = S * spin * baseRotation * billboard * T;
+//
+//    DirectX::XMStoreFloat4x4(&tfCard.transform, world);
+//
+//    cardTimer += elapsedTime;
+//}
+
     if (cardTimer > 0.2f)
     {
         t.carsRen = true;
+
+        scoreManager.getNum++;
+
+        delete t.mdlCard;
+        t.mdlCard = nullptr;
+
     }
 
     // クリック処理（獲得）
-    if (t.carsRen/* && (mouse.GetButtonDown() & Mouse::BTN_LEFT)*/)
+    if (t.carsRen)
     {
+        t.carsRen = false;
+
 
         for (auto& material : t.model->GetResource()->GetMaterials())
         {
@@ -432,65 +454,68 @@ void TargetManager::TargetFocus(float elapsedTime)
             return;
         }
 
-
-
-        t.carsRen = false;
-
-        GameManager::Instance().SetPlaying(true);
         cardTimer = 0.0f;
-
 
         focusTimer = 0.0f;
 
+        getTargets.push_back(&t);
+        t.isChainRender = true;
+
         if (scoreManager.chainCount == 0)//最初の文字決定
         {
+            GameManager::Instance().SetPlaying(true);
 
             endName = t.endN;
-            getTargets.push_back(&t);
-            t.isChainRender = true;
+
             scoreManager.chainCount++;
             scoreManager.allCharCount += t.charCount;
 
             t.isMoveToChain = true;
-
 
         }
         else if (t.startN == endName)//しりとり成功
         {
+            GameManager::Instance().SetPlaying(true);
+
             //resultData
             scoreManager.siritoriNum++;
-
             scoreManager.chainCount++;
             scoreManager.allCharCount += t.charCount;
-            getTargets.push_back(&t);
-            t.isChainRender = true;
+
             endName = t.endN;
 
             t.isMoveToChain = true;
+
+            if (getTargets.size() > 5)
+            {
+                for (auto* target : getTargets)
+                {
+                    target->isShift = true;
+                    target->shiftTimer = 0.0f;
+                    target->shifted = false;
+                }
+            }
         }
         else//しりとり失敗
         {
-            tfCard.scale.x -= 0.5f;
-            tfCard.scale.y -= 0.5f;
-            tfCard.scale.z -= 0.5f;
-            freeUpdateTransform(tfCard.scale, tfCard.angle, tfCard.position, tfCard.transform);
+            t.carsRen = false;
+            t.isMoveToChain = false;
 
             delete t.mdlCard;
             t.mdlCard = nullptr;
 
-            // リセット処理
-            //allCharCount = 0;
-            getTargets.clear();
             scoreManager.chainCount = 0;
-            //for (auto& target : targets) target.isChainRender = false;
 
+            for (auto& t : targets)
+            {
+                t.carsRen = false;
 
-            GameManager::Instance().needCameraReset = true;
+            }
 
+            nonChain = true;
+            t.failTimer = 0.0f;
+            t.drawScale = 1.0f;
         }
-        delete t.mdlCard;
-        t.mdlCard = nullptr;
-
     }
 
     Graphics& graphics = Graphics::Instance();
@@ -509,39 +534,150 @@ void TargetManager::TargetFocus(float elapsedTime)
             charRotate -= DirectX::XM_PI * 2.0f;
         }
     }
-
-    //クリア時の補間
-    //if (t.isMoveToChain)
-    //{
-    //    camera.ScreenToWorld(goalScreenPos, 0.5f, chainPos);
-    //    tfCard.position = chainPos;
-
-    //    //tfCard.position.x += (chainPos.x - tfCard.position.x) * 10.0f * elapsedTime;
-    //    //tfCard.position.y += (chainPos.y - tfCard.position.y) * 10.0f * elapsedTime;
-    //    //tfCard.position.z += (chainPos.z - tfCard.position.z) * 10.0f * elapsedTime;
-
-    //    freeUpdateTransform(tfCard.scale, tfCard.angle, tfCard.position, tfCard.transform);
-
-    //    // 到着
-    //    //if (Distance(tfCard.position, goalPos) < 10.0f)
-    //    //{
-    //    //    t.isMoveToChain = false;
-
-    //    //}
-    //}
 }
 
 
+float Lerp(float a, float b, float t)
+{
+    return a + (b - a) * t;
+}
 
+void TargetManager::UpdateCardMove(float elapsedTime)
+{
+    if (nonChain)//失敗
+    {
+        for (int i = 0; i < getTargets.size(); i++)
+        {
+            Target* t = getTargets[i];
 
+            t->stayTimer += elapsedTime;
+            stayTime = 0.1f;
 
+            if (t->stayTimer>= stayTime)
+            {
+                t->failTimer += elapsedTime;
+
+                if (t->failTimer >= 0.17f)
+                {
+                    t->drawScale -= elapsedTime * 20.0f;
+
+                }
+                if (t->drawScale <= 0.5f)
+                {
+                    // リセット処理
+
+                    GameManager::Instance().needCameraReset = true;
+                    GameManager::Instance().SetPlaying(true);
+
+                    t->failTimer = 0.0f;
+                    t->drawScale = 1.0f;
+                    getTargets.clear();
+                    nonChain = false;
+                    getTargets.clear();
+
+                }
+            }
+        }
+        return;
+    }
+
+    const float startW = 740.0f;
+    const float endW = 130.0f;
+    const float startH = 740.0f;
+    const float endH = 130.0f;
+
+    float screenW = static_cast<float>(Graphics::Instance().GetScreenWidth());
+    float screenH = static_cast<float>(Graphics::Instance().GetScreenHeight());
+
+    int offset = std::max(0, (int)getTargets.size() - 5);
+
+    for (int i = 0; i < getTargets.size(); i++)
+    {
+        Target* t = getTargets[i];
+
+        float goalX = screenW - 227.0f;
+        float goalY = 90.0f + renSpan * (i - offset);
+
+        if (t->isMoveToChain)
+        {
+            t->moveTimer += elapsedTime*1.8f;
+
+            float rate = std::min(t->moveTimer * 5.0f, 1.0f);
+
+            t->cardW = Lerp(startW, endW, rate);
+            t->cardH = Lerp(startH, endH, rate);
+
+            t->cardX = Lerp(
+                screenW * 0.5f - startW * 0.5f,
+                goalX,
+                rate);
+
+            t->cardY = Lerp(
+                screenH * 0.5f - startH * 0.5f,
+                goalY,
+                rate);
+
+            if (rate >= 1.0f)
+            {
+                t->isMoveToChain = false;
+                t->moveTimer = 0.0f;
+            }
+        }
+        else
+        {
+            t->cardX = goalX;
+            t->cardW = endW;
+            t->cardH = endH;
+        }
+
+        // ----- 5枚超えた時 ------
+        if (t->isShift)
+        {
+            t->shiftTimer += elapsedTime;
+
+            // 縮む
+            if (t->shiftTimer < 0.08f)
+            {
+                float r = t->shiftTimer / 0.08f;
+                t->drawScale = Lerp(1.0f, 0.0f, r);
+            }
+            // 大きく
+            else if (t->shiftTimer < 0.16f)
+            {
+                if (!t->shifted)
+                {
+                    if (displayIndex >= 0)
+                    {
+                        t->cardY = goalY;
+                    }
+
+                    t->shifted = true;
+                }
+
+                float r = (t->shiftTimer - 0.08f) / 0.08f;
+                t->drawScale = Lerp(0.0f, 1.0f, r);
+            }
+            // 終了
+            else
+            {
+                t->drawScale = 1.0f;
+                t->isShift = false;
+                t->shifted = false;
+            }
+        }
+        else
+        {
+            t->drawScale = 1.0f;
+        }
+    }
+}
 void TargetManager::Update(float elapsedTime)
 {
     //return;
 
 	//フォーカス判定
 	TargetFocus(elapsedTime);
-
+    UpdateCardMove(elapsedTime);
 }
 
 
@@ -591,7 +727,52 @@ void TargetManager::Render(const RenderContext& rc, ModelRenderer* renderer)
             renderer->Render(rc, charTransform.transform, mdlChrCount, ShaderId::Lambert);
         }
     }
+
 }
+
+//2D
+void TargetManager::Render(const RenderContext& rc)
+{
+    float screenW = static_cast<float>(Graphics::Instance().GetScreenWidth());
+    float screenH = static_cast<float>(Graphics::Instance().GetScreenHeight());
+
+    for (int i = 0; i < getTargets.size(); i++)
+    {
+        Target* t = getTargets[i];
+
+        if (!t->sprite) continue;
+
+        float drawW = t->cardW * t->drawScale;
+        float drawH = t->cardH * t->drawScale;
+
+        float drawX = t->cardX + (t->cardW - drawW) * 0.5f;
+        float drawY = t->cardY + (t->cardH - drawH) * 0.5f;
+
+        t->sprite->Render(
+            rc,
+            drawX,
+            drawY,
+            0,
+            drawW,
+            drawH,
+            0, 0,
+            750, 750,
+            0,
+            1, 1, 1, 1);
+
+        if (t->stayTimer >= stayTime&& nonChain)
+        {
+
+            sprMiss->Render(rc,
+                0, 0, 0,
+                1920, 1080, 0,
+                1, 1, 1, 1.0f);
+
+        }
+    }
+
+}
+
 
 void TargetManager::DrawDebugGUI()
 {
@@ -614,7 +795,8 @@ void TargetManager::DrawDebugGUI()
  //           ImGui::InputFloat("t.focusTimer", &focusTimer);
  //           ImGui::InputFloat("t.cardTimer", &cardTimer);
  //           ImGui::InputFloat("t.timer", &timer);
- //           //ImGui::Checkbox("isChainRender", &targets[4].isChainRender);
+            //ImGui::InputFloat("t.deltaTimer", &deltaTimer);
+            ImGui::Checkbox("isMoveToChain", &targets[2].isMoveToChain);
  //           //ImGui::Checkbox("t.isFocus", &targets[4].isFocus);
  //           ImGui::Checkbox("toResult", &toResult);
  //           ImGui::InputFloat("lightTimer", &lightTimer);
@@ -626,5 +808,5 @@ void TargetManager::DrawDebugGUI()
 	//	ImGui::InputInt("t.chainCount", &chainCount);
 
 	//}
-	ImGui::End();
+	//ImGui::End();
 }

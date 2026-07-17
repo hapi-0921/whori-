@@ -18,6 +18,7 @@ public:
 
 	void Update(float elapsedTime);
 	void Render(const RenderContext& rc, ModelRenderer* renderer);
+	void Render(const RenderContext& rc);
 	void DrawDebugGUI();
 
 	void TargetFocus(float elapsedTime);//当たってるか
@@ -40,8 +41,10 @@ public:
 
 	std::vector<TargetManager::TargetData> LoadTargets(const std::string& path);
 private:
-	//DirectX::XMFLOAT2 mousePos = {};
-	//bool upload = false;
+	// クラスメンバー
+	float cardSpinAngle = 0.0f;
+
+	int displayIndex = 0;
 
 	struct Target
 	{
@@ -65,8 +68,6 @@ private:
 			0,0,0,1
 		};
 
-
-
 		float distance = 0.0f;
 		DirectX::XMFLOAT3 hitPos = { 0.0f, 0.0f, 0.0f };
 
@@ -77,11 +78,38 @@ private:
 
 		bool isChainRender = false;//チェーンに表示するか
 
+
+		//カード
 		bool carsRen = false;//正面にはる
 		bool isMoveToChain = false;//カードをチェーンに
+		float moveTimer = 0.0f;//カード移動時間（成功時）
+		float cardX = 1920 * 0.5f - 740* 0.5f;
+		float cardY = 1080 * 0.5f - 740 * 0.5f;
+		float cardW = 740.0f;
+		float cardH = 740.0f;
+
+		float shiftTimer = 0.0f;
+		bool isShift = false;
+		bool shifted = false;
+
+		float stayTimer = 0.0f;
+		float failTimer = 0.0f;
+		float drawScale = 1.0f;
+		//---
+
+
+
 
 		DirectX::XMFLOAT3 vec;
+
 	};
+	void UpdateCardMove(float elapsedTime);
+
+	Sprite* sprMiss = nullptr;
+	bool nonChain = false;//しりとり失敗
+	float stayTime = 0.0f;//失敗時
+
+
 	Target tfCard;
 
 	DirectX::XMFLOAT3 chainPos = {};
@@ -107,11 +135,12 @@ private:
 	float stageVec;
 	float targetVec;
 
-	float renSpan = 90;//連鎖表示の間隔
+	float renSpan = 165;//連鎖表示の間隔
 
 	//カーソル判定（面）
 	//bool TargetManager::IsInCursor(Target& t);
 
+	//float deltaTimer = 0.0f;
 
 private:
 	//UIController* uiController = nullptr;
@@ -142,12 +171,23 @@ public:
 
 	//float posForRotate;//回転用position
 
+	//void AddMoveTime(int index, float elapsedTime)
+	//{
+	//	targets[index].moveTimer += elapsedTime;
+	//}
+
+	//float GetMoveTime(int index)
+	//{
+	//	return targets[index].moveTimer;
+	//}
+
 
 	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }//獲得したtargetの大きさ
 	Sprite* GetgetTargetSpri(int index) { return getTargets[index]->sprite; }//獲得したカード（スプライト）
 	//*****
 
 	bool GetCarsRen(int index) { return targets[index].carsRen; }
+	bool GetMoveToChain(int index) { return targets[index].isMoveToChain; }
 	//bool GetisFocus(int index) { return targets[index].isFocus; }
 
 	//Target GetKeepTarget(int index) { return *getTargets[index]; }

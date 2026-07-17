@@ -10,6 +10,7 @@
 UIController::UIController()
 {
 	sprChain = new Sprite("Data/Sprite/chain/UI/chain.png"); 
+	sprChainOver = new Sprite("Data/Sprite/chain/UI/chain_over.png");
 
 	sprite = new Sprite("Data/Sprite/cursor.png"); 
 	centerCusol = new Sprite("Data/Sprite/centerCursor.png");
@@ -20,6 +21,10 @@ UIController::~UIController()
 	if (sprChain != nullptr) {
 		delete sprChain;
 		sprChain = nullptr;
+	}
+	if (sprChainOver != nullptr) {
+		delete sprChainOver;
+		sprChainOver = nullptr;
 	}
 
 	if (sprite != nullptr)
@@ -54,13 +59,11 @@ void UIController::Initialize()
 		chainData.sh = 420;
 	}
 	{
-		cardData.dw = cardData.dh = 70;//size
-		cardData.sx = chainData.sw;//texPos
-		cardData.sy = 0;
-		cardData.sw = cardData.sh =190;//texSize
-		cardData.dx = screenWidth * 0.5f-(cardData.sw*0.5f);//pos
-		cardData.dy = screenHeight * 0.5f-(cardData.sh*0.5f);
+		cardData.dw = cardData.dh = 740;//size
+		cardData.dx = screenWidth * 0.5f - cardData.dw * 0.5f;//pos
+		cardData.dy = screenHeight * 0.5f - cardData.dh * 0.5f;
 	}
+
 
 }
 void UIController::Update(float elapsedTime)
@@ -81,6 +84,10 @@ void UIController::Update(float elapsedTime)
 		centerSize = std::max(13.0f, centerSize - elapsedTime * 230.0f);
 	}
 
+
+
+
+
 }
 void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 {
@@ -90,6 +97,7 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 	Graphics& graphics = Graphics::Instance();
 	float screenWidth = static_cast<float>(graphics.GetScreenWidth());
 	float screenHeight = static_cast<float>(graphics.GetScreenHeight());
+	ScoreManager& scoreManager = ScoreManager::Instance();
 
 	//----------------------------３Ⅾ（モデル）------------------------------------
 
@@ -103,12 +111,21 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 	//----------------------------２Ⅾ（スプリト）------------------------------------
 
 	{//しりとり表示
+		if (scoreManager.chainCount <= 2)
+		{
+			sprChain->Render(rc,
+				0, 0, 0,
+				1920, 1080, 0,
+				1, 1, 1, 1.0f);
+		}
+		else
+		{
+			sprChainOver->Render(rc,
+				0, 0, 0,
+				1920, 1080, 0,
+				1, 1, 1, 1.0f);
 
-		sprChain->Render(rc,
-			0, 0, 0,
-			1920, 1080, 0,
-			1, 1, 1, 1.0f);
-
+		}
 	}
 	
 	if (targetManager == nullptr) return;
@@ -133,35 +150,55 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 
 	{//targetカード表示
 		//判定前
-		for (int i = 0; i < targetManager->GetTargetSize(); ++i)
-		{
-			if (targetManager->GetTargetSpri(i) == nullptr)continue;
+		//for (int i = 0; i < targetManager->GetTargetSize(); ++i)
+		//{
+		//	if (targetManager->GetTargetSpri(i) == nullptr)continue;
 
-			Sprite* sp = targetManager->GetTargetSpri(i);
+		//	Sprite* sp = targetManager->GetTargetSpri(i);
 
-			if (targetManager->GetCarsRen(i))
-			{
-				float size = 740;
-				sp->Render(rc,
-					screenWidth*0.5f- size *0.5f, screenHeight*0.5f- size *0.5f, 0,
-					size, size, 0,0,
-					750,750, 0, 1, 1, 1, 1);
-			}
+		//	if (targetManager->GetCarsRen(i))
+		//	{
+		//		sp->Render(rc,
+		//			screenWidth * 0.5f - cardData.dw * 0.5f, 
+		//			screenHeight * 0.5f - cardData.dh * 0.5f, 0,
+		//			740, 740, 0, 0,
+		//			750, 750, 0, 1, 1, 1, 1);
+		//	}
 
-		}
+		//}
 		//判定後
-		for (int i = 0; i < targetManager->GetKeepTargetSize(); ++i) 
-		{
-			if (targetManager->GetgetTargetSpri(i) == nullptr)continue;
+		//for (int i = 0; i < targetManager->GetKeepTargetSize(); ++i) 
+		//{
 
-			Sprite* sp = targetManager->GetgetTargetSpri(i);
-				//チェーンに入れてく
-				sp->Render(rc,
-					screenWidth - 230, 130 + (renSpan * i), 0,
-					130,130,
-					0,0,
-					750, 750, 0, 1, 1, 1, 1);
-		}
+		//	if (targetManager->GetgetTargetSpri(i) == nullptr)continue;
+
+		//	Sprite* sp = targetManager->GetgetTargetSpri(i);
+
+		//		if (targetManager->GetMoveToChain(i))
+		//		{
+		//			//if (cardData.dh > 130)
+		//			{
+		//				float speed = 5.0f;
+		//				float t = std::min(targetManager->GetMoveTime(i) * speed, 1.0f);
+
+		//				float w = Lerp(740.0f, 130.0f, t);
+		//				float h = Lerp(740.0f, 130.0f, t);
+		//				float x = Lerp(screenWidth * 0.5f - 740.0f * 0.5f,
+		//					screenWidth - 230,
+		//					t);
+		//				float y = Lerp(screenHeight * 0.5f - 740.0f * 0.5f,
+		//					130 + renSpan * i,
+		//					t);
+		//			}
+		//		}
+
+
+		//		//チェーンに入れてく
+		//	sp->Render(rc,
+		//		cardData.dx, cardData.dy, 0,
+		//		cardData.dw, cardData.dh, 0, 0,
+		//		750, 750, 0, 1, 1, 1, 1);
+		//}
 	}	
 
 }
@@ -182,7 +219,8 @@ void UIController::DrawDebugGUI()
 		{
 			//for (int i = 0; i < targetManager->GetTargetSize(); ++i)
 			//{
-				ImGui::Checkbox("moveCusol ",&targetManager->moveCusol);
+			//bool a = targetManager->GetMoveToChain(2);
+			//	ImGui::Checkbox("GetMoveToChain ",&a);
 			//}
 		}
 	}

@@ -162,6 +162,8 @@ void SceneGame::Render()
 	// 2Dスプライト描画
 	{
 		uiController->Render(rc, modelRenderer);
+		targetManager->Render(rc);
+
 	}
 	// 2Dデバッグ描画
 	{
@@ -180,21 +182,21 @@ void SceneGame::DrawGUI()
 
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
-	//if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
-	//{
+	if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
+	{
 
-	//	
-	//	ImGui::Checkbox("t.targetManager->toResult", &targetManager->toResult);
+		
+		ImGui::InputFloat("gameTimer", &gameTimer);
 
-	//	ImGui::End();
-	//}
+		ImGui::End();
+	}
 
 	//Stage& stage = Stage::Instance();
 	//stage.DrawDebugGUI();
 
-	ScoreManager& scoreManager = ScoreManager::Instance();
-	scoreManager.DrawDebugGUI();
+	//ScoreManager& scoreManager = ScoreManager::Instance();
+	//scoreManager.DrawDebugGUI();
 	//cameraController->DrawDebugGUI();
-	targetManager->DrawDebugGUI();
+	//targetManager->DrawDebugGUI();
 	//uiController->DrawDebugGUI();
 }
