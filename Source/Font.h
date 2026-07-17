@@ -27,7 +27,12 @@ public:
         float x,
         float y,
         float scale);
-
+    void DrawNumber0(
+        const RenderContext& rc,
+        int number,
+        float x,
+        float y,
+        float scale);
 private:
 
     Sprite* sprite = nullptr;
