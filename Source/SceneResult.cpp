@@ -41,6 +41,15 @@ void SceneResult::Initialize()
 	file >> data;
 	font = new Font("Data/Font/font2.png");
 	Numberfont= new Font("Data/Sprite/number.png");
+	for (int i = 0; i < data["result"].size(); i++)
+	{
+		sikaku[i].posx = data["result"][i]["position"]["x"];//初期x位置
+		sikaku[i].lastposy = data["result"][i]["position"]["y"];//めっちゃややこいけど上から降ってきた後の着地位置
+		sikaku[i].angle = data["result"][i]["position"]["angle"];//初期角度
+
+		sikaku[i].posy = -300;
+	}
+
 }
 
 // 終了化
@@ -113,12 +122,6 @@ void SceneResult::Update(float elapsedTime)
 		
 
 	}
-	for (int i = 0; i < data["result"].size(); i++)
-	{
-		sikaku[i].posx = data["result"][i]["position"]["x"];//初期x位置
-		sikaku[i].lastposy = data["result"][i]["position"]["y"];//めっちゃややこいけど上から降ってきた後の着地位置
-		sikaku[i].angle = data["result"][i]["position"]["angle"];//初期角度
-	}
 	if (nowCard < data["result"].size())
 	{
 		sikaku[nowCard].posy += 5;
@@ -130,7 +133,7 @@ void SceneResult::Update(float elapsedTime)
 	}
 	resultTimer++;
 	rankTimer++;
-	if (resultTimer>=250&& resultTimer <= 300)
+	if (resultTimer>=250&& resultTimer <= 280)
 	{
 		scorescale = 2.5;
 	}
@@ -138,7 +141,7 @@ void SceneResult::Update(float elapsedTime)
 	{
 		scorescale = 2;
 	}
-	if (rankTimer >= 800)
+	if (rankTimer >= 700)
 	{
 		if (rank < rankset)
 		{
@@ -153,7 +156,7 @@ void SceneResult::Update(float elapsedTime)
 			rankScale = 0.0f;      
 		}
 
-		rankTimer = 650;
+		rankTimer = 550;
 	}
 	if (rankScaleAnim)
 	{
@@ -179,18 +182,19 @@ void SceneResult::Render()
 	RenderContext rc;
 	rc.deviceContext = dc;
 	rc.renderState = graphics.GetRenderState();
+
 	ScoreManager& scoreManager = ScoreManager::Instance();
 	// 2Dスプライト描画
 	{
 
-		if (!ranking)
+		if (!ranking)						//スコア表示
 		{
 			sprresultback->Render(rc,
 				0, 0, 0,
 				1920, 1080, 0, 0,
 				1920, 1080, 0, 1, 1, 1, 1);
 
-			for (int i = 0;i < data["result"].size();i++)
+			for (int i = 0;i < data["result"].size();i++)	//おちてくるやつ
 			{
 
 				sprs->Render(rc,
@@ -207,24 +211,27 @@ void SceneResult::Render()
 				0, 0, 0,
 				1920, 1080, 0, 0,
 				1920, 1080, 0, 1, 1, 1, 1);
-
-			if (resultTimer >= 600)
+				
+			if (resultTimer >= 500)						//ランク表示b
 			{
 				float w = 1920 * rankScale;
 				float h = 1080 * rankScale;
 
 				float x = (1920 - w) * 0.5f;
 				float y = (1080 - h) * 0.5f;
-
-				sprrank[rank]->Render(
-					rc,
-					x, y, 0,
-					w, h,
-					0, 0,
-					1920, 1080,
-					0, 1, 1, 1, 1);
+				if (rank != -1)
+				{
+					sprrank[rank]->Render(
+						rc,
+						x, y, 0,
+						w, h,
+						0, 0,
+						1920, 1080,
+						0, 1, 1, 1, 1);
+				}
+				
 			}
-			if (rank == rankset && rankScale == 1)
+			if (rank == rankset && rankScale == 1)		//一言メッセージ
 			{
 				if (rankTimer >= 150)
 				{
@@ -241,31 +248,37 @@ void SceneResult::Render()
 			}
 
 
-			Numberfont->DrawNumber(
+			Numberfont->DrawNumber(            //見つけたもの個数
 				rc,
 				scoreManager.getNum,
 				350,
 				580,
 				1.0f);
-			Numberfont->DrawNumber(
+			Numberfont->DrawNumber(            //見つけたもの総数後で変えるにょん
+				rc,
+				48,
+				470,
+				580,
+				1.0f);
+			Numberfont->DrawNumber(				//しりとりした数
 				rc,
 				scoreManager.siritoriNum,
 				750,
 				580,
 				1.0f);
-			Numberfont->DrawNumber(
+			Numberfont->DrawNumber(				//最大コンボ
 				rc,
 				scoreManager.maxCombo,
 				1100,
 				580,
 				1.0f);
-			Numberfont->DrawNumber(
+			Numberfont->DrawNumber(				//最大文字数
 				rc,
 				scoreManager.maxChar,
 				1500,
 				580,
 				1.0f);
-			if (resultTimer >= 250)
+			if (resultTimer >= 250)				//スコア
 			{
 
 				Numberfont->DrawNumber(
@@ -276,7 +289,7 @@ void SceneResult::Render()
 					scorescale);
 			}
 		}
-			else
+			else                               //ランキング
 			{
 
 				sprranking->Render(rc,

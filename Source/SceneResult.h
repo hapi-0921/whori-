@@ -41,7 +41,7 @@ private:
 
 	int resultTimer = 0;
 	int rankTimer = 0;
-	int rank=0;
+	int rank=-1;
 	int CursorX = 0;
 	int	CursorY = 0;
 	int rankset = 0;
