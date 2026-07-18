@@ -50,8 +50,9 @@ private:
 	TargetManager* targetManager = nullptr;	
 
 	Sprite* sprChain = nullptr;
+	Sprite* sprChainOver = nullptr;
 
-	//float delta = 50;
+	float deltaTimer = 0.0f;
 
 private://‚µ‚è‚Æ‚è˜A½
 	sprData chainData;

@@ -61,7 +61,7 @@ void Camera::SetPerspectiveFov(float fovY, float aspect, float nearZ, float farZ
 	DirectX::XMStoreFloat4x4(&projection, Projection);
 }
 
-//ワールド?スクリーン
+//ワールド->スクリーン
 bool Camera::WorldToScreen(const DirectX::XMFLOAT3& worldPos, DirectX::XMFLOAT2& outScreenPos) const
 {
 	Graphics& graphics = Graphics::Instance();

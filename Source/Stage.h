@@ -71,7 +71,7 @@ public:
 	void Update(float elapsedTime);
 
 	//•`‰æˆ—
-	void Stage::Render(const RenderContext& rc, ModelRenderer* renderer, StageTransform* transform);
+	void Render(const RenderContext& rc, ModelRenderer* renderer, StageTransform* transform);
 
 	//void FrontWall();
 	void DrawDebugGUI();

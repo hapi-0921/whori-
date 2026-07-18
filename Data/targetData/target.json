@@ -1,697 +1,743 @@
 {
-    "targets": [
+  "targets": [
 
-        {
-            "model": "Data/Model/target/foods/clock.mdl",
-            "sprite": "Data/Sprite/chain/foods/dish.png",
-            "name": "おさら",
-            "charCount": 3,
-            "startN": "お",
-            "endN": "ら",
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "card": "Data/Model/target/card/foods/card.mdl"
-        },
-        {
-            "model": "Data/Model/target/foods/radio.mdl",
-            "sprite": "Data/Sprite/chain/foods/radio.png",
-            "name": "ラジオ",
-            "charCount": 3,
-            "startN": "ら",
-            "endN": "お",
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "card": "Data/Model/target/card/foods/card.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Apple.mdl",
-            "sprite": "Data/Sprite/chain/foods/Apple.png",
-            "name": "りんご",
-            "charCount": 3,
-            "startN": "り",
-            "endN": "こ",
-            "position": {
-                "x": -477.639,
-                "y": 97.358,
-                "z": -453.593
-            },
-            "card": "Data/Model/target/card/foods/Apple.mdl"
-
-        },
-
-        {
-            "model": "Data/Model/target/foods/Avocado.mdl",
-            "sprite": "Data/Sprite/chain/foods/Avocado.png",
-            "name": "あぼかど",
-            "charCount": 4,
-            "startN": "あ",
-            "endN": "と",
-            "position": {
-                "x": 446.603,
-                "y": 331.123,
-                "z": 542.006
-            },
-            "card": "Data/Model/target/card/foods/Avocado.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Bacon_Burned.mdl",
-            "sprite": "Data/Sprite/chain/foods/Bacon_Burned.png",
-            "name": "べーこん",
-            "charCount": 4,
-            "startN": "へ",
-            "endN": "n",
-            "position": {
-                "x": -129.245,
-                "y": 45.643,
-                "z": -377.539
-            },
-            "card": "Data/Model/target/card/foods/Bacon_Burned.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Banana.mdl",
-            "sprite": "Data/Sprite/chain/foods/Banana.png",
-            "name": "ばなな",
-            "charCount": 3,
-            "startN": "は",
-            "endN": "な",
-            "position": {
-                "x": 342.690,
-                "y": 164.719,
-                "z": -99.741
-            },
-            "card": "Data/Model/target/card/foods/Banana.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Bread.mdl",
-            "sprite": "Data/Sprite/chain/foods/Bread.png",
-            "name": "ぱん",
-            "charCount": 2,
-            "startN": "は",
-            "endN": "n",
-            "position": {
-                "x": 553.805,
-                "y": 80.000,
-                "z": -633.731
-            },
-            "card": "Data/Model/target/card/foods/Bread.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Broccoli.mdl",
-            "sprite": "Data/Sprite/chain/foods/Broccoli.png",
-            "name": "ブロッコリー",
-            "charCount": 6,
-            "startN": "ふ",
-            "endN": "り",
-            "position": {
-                "x": 394.397,
-                "y": 0.000,
-                "z": 299.368
-            },
-            "card": "Data/Model/target/card/foods/Broccoli.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Burger.mdl",
-            "sprite": "Data/Sprite/chain/foods/Burger.png",
-            "name": "はんばーがー",
-            "charCount": 6,
-            "startN": "は",
-            "endN": "か",
-            "position": {
-                "x": 461.883,
-                "y": 18.914,
-                "z": 710.293
-            },
-            "card": "Data/Model/target/card/foods/Burger.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/cabbage.mdl",
-            "sprite": "Data/Sprite/chain/foods/cabbage.png",
-            "name": "きゃべつ",
-            "charCount": 4,
-            "startN": "き",
-            "endN": "つ",
-            "position": {
-                "x": 406.053,
-                "y": 204.541,
-                "z": -552.936
-            },
-            "card": "Data/Model/target/card/foods/cabbage.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/cake.mdl",
-            "sprite": "Data/Sprite/chain/foods/cake.png",
-            "name": "けーき",
-            "charCount": 3,
-            "startN": "け",
-            "endN": "き",
-            "position": {
-                "x": -358.778,
-                "y": 224.436,
-                "z": 38.100
-            },
-            "card": "Data/Model/target/card/foods/cake.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Carrot.mdl",
-            "sprite": "Data/Sprite/chain/foods/Carrot.png",
-            "name": "にんじん",
-            "charCount": 4,
-            "startN": "に",
-            "endN": "n",
-            "position": {
-                "x": -86.920,
-                "y": 207.584,
-                "z": -72.879
-            },
-            "card": "Data/Model/target/card/foods/Carrot.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/cauliflower.mdl",
-            "sprite": "Data/Sprite/chain/foods/cauliflower.png",
-            "name": "かりふらわー",
-            "charCount": 6,
-            "startN": "か",
-            "endN": "わ",
-            "position": {
-                "x": -689.182,
-                "y": 98.285,
-                "z": -579.800
-            },
-            "card": "Data/Model/target/card/foods/cauliflower.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/cherries.mdl",
-            "sprite": "Data/Sprite/chain/foods/cherries.png",
-            "name": "さくらんぼ",
-            "charCount": 5,
-            "startN": "さ",
-            "endN": "ほ",
-            "position": {
-                "x": 376.176,
-                "y": 234.174,
-                "z": 94.424
-            },
-            "card": "Data/Model/target/card/foods/cherries.mdl"
-
-
-        },
-        {
-            "model": "Data/Model/target/foods/ChocolateBar.mdl",
-            "sprite": "Data/Sprite/chain/foods/ChocolateBar.png",
-            "name": "ちょこれーと",
-            "charCount": 6,
-            "startN": "ち",
-            "endN": "と",
-            "position": {
-                "x": -713.665,
-                "y": 51.430,
-                "z": 549.983
-            },
-            "card": "Data/Model/target/card/foods/ChocolateBar.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Coconut_Half.mdl",
-            "sprite": "Data/Sprite/chain/foods/Coconut_Half.png",
-            "name": "ここなっつ",
-            "charCount": 5,
-            "startN": "こ",
-            "endN": "つ",
-            "position": {
-                "x": 740.799,
-                "y": 139.231,
-                "z": 86.475
-            },
-            "card": "Data/Model/target/card/foods/Coconut_Half.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/cohi.mdl",
-            "sprite": "Data/Sprite/chain/foods/cup.png",
-            "name": "コーヒー",
-            "charCount": 4,
-            "startN": "こ",
-            "endN": "ひ",
-            "position": {
-                "x": -139.303,
-                "y": 73.149,
-                "z": -530.292
-            },
-            "card": "Data/Model/target/card/foods/cup.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/cookie.mdl",
-            "sprite": "Data/Sprite/chain/foods/cookie.png",
-            "name": "くっきー",
-            "charCount": 4,
-            "startN": "く",
-            "endN": "き",
-            "position": {
-                "x": -419.993,
-                "y": -0.849,
-                "z": -612.644
-            },
-            "card": "Data/Model/target/card/foods/cookie.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/corn.mdl",
-            "sprite": "Data/Sprite/chain/foods/corn.png",
-            "name": "とうもろこし",
-            "charCount": 6,
-            "startN": "と",
-            "endN": "し",
-            "position": {
-                "x": -749.783,
-                "y": -5.204,
-                "z": 722.872
-            },
-            "card": "Data/Model/target/card/foods/corn.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Cupcake.mdl",
-            "sprite": "Data/Sprite/chain/foods/Cupcake.png",
-            "name": "かっぷけーき",
-            "charCount": 6,
-            "startN": "か",
-            "endN": "き",
-            "position": {
-                "x": 674.529,
-                "y": 104.986,
-                "z": 775.486
-            },
-            "card": "Data/Model/target/card/foods/Cupcake.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Donut1.mdl",
-            "sprite": "Data/Sprite/chain/foods/Donut1.png",
-            "name": "どーなつ",
-            "charCount": 4,
-            "startN": "と",
-            "endN": "つ",
-            "position": {
-                "x": 75.852,
-                "y": 400.037,
-                "z": -749.680
-            },
-            "card": "Data/Model/target/card/foods/Donut1.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Egg_Whole_White.mdl",
-            "sprite": "Data/Sprite/chain/foods/Egg_Whole_White.png",
-            "name": "たまご",
-            "charCount": 3,
-            "startN": "た",
-            "endN": "こ",
-            "position": {
-                "x": -59.174,
-                "y": -0.168,
-                "z": -176.526
-            },
-            "card": "Data/Model/target/card/foods/Egg_Whole_White.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Eggplant.mdl",
-            "sprite": "Data/Sprite/chain/foods/Eggplant.png",
-            "name": "なすび",
-            "charCount": 3,
-            "startN": "な",
-            "endN": "ひ",
-            "position": {
-                "x": -444.154,
-                "y": 128.925,
-                "z": -216.815
-            },
-            "card": "Data/Model/target/card/foods/Eggplant.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/egg.mdl",
-            "sprite": "Data/Sprite/chain/foods/egg.png",
-            "name": "めだまやき",
-            "charCount": 5,
-            "startN": "め",
-            "endN": "き",
-            "position": {
-                "x": -260.189,
-                "y": 132.365,
-                "z": 389.005
-            },
-            "card": "Data/Model/target/card/foods/egg.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Fries.mdl",
-            "sprite": "Data/Sprite/chain/foods/Fries.png",
-            "name": "ぽてと",
-            "charCount": 3,
-            "startN": "ほ",
-            "endN": "と",
-            "position": {
-                "x": -533.967,
-                "y": 42.157,
-                "z": 454.163
-            },
-            "card": "Data/Model/target/card/foods/Fries.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Hotdog.mdl",
-            "sprite": "Data/Sprite/chain/foods/Hotdog.png",
-            "name": "ほっとどっぐ",
-            "charCount": 6,
-            "startN": "ほ",
-            "endN": "く",
-            "position": {
-                "x": -31.428,
-                "y": 5.681,
-                "z": -746.639
-            },
-            "card": "Data/Model/target/card/foods/Hotdog.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/IceCream_2.mdl",
-            "sprite": "Data/Sprite/chain/foods/IceCream_2.png",
-            "name": "あいす",
-            "charCount": 3,
-            "startN": "あ",
-            "endN": "す",
-            "position": {
-                "x": 48.094,
-                "y": 5.069,
-                "z": 153.183
-            },
-            "card": "Data/Model/target/card/foods/IceCream_2.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/kyuri.mdl",
-            "sprite": "Data/Sprite/chain/foods/kyuri.png",
-            "name": "きゅうり",
-            "charCount": 4,
-            "startN": "き",
-            "endN": "り",
-            "position": {
-                "x": 786.455,
-                "y": 61.236,
-                "z": -9.005
-            },
-            "card": "Data/Model/target/card/foods/kyuri.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/lemon.001.mdl",
-            "sprite": "Data/Sprite/chain/foods/lemon.001.png",
-            "name": "れもん",
-            "charCount": 3,
-            "startN": "れ",
-            "endN": "n",
-            "position": {
-                "x": -158.494,
-                "y": -4.121,
-                "z": 632.538
-            },
-            "card": "Data/Model/target/card/foods/lemon.001.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Mushroom.mdl",
-            "sprite": "Data/Sprite/chain/foods/Mushroom.png",
-            "name": "まっしゅるーむ",
-            "charCount": 7,
-            "startN": "ま",
-            "endN": "む",
-            "position": {
-                "x": 7.8,
-                "y": -4.8,
-                "z": 1.0
-            },
-            "card": "Data/Model/target/card/foods/Mushroom.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/onion.mdl",
-            "sprite": "Data/Sprite/chain/foods/onion.png",
-            "name": "たまねぎ",
-            "charCount": 4,
-            "startN": "た",
-            "endN": "き",
-            "position": {
-                "x": 124.11,
-                "y": 193.861,
-                "z": 209.172
-            },
-            "card": "Data/Model/target/card/foods/onion.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Orange.mdl",
-            "sprite": "Data/Sprite/chain/foods/Orange.png",
-            "name": "みかん",
-            "charCount": 3,
-            "startN": "み",
-            "endN": "n",
-            "position": {
-                "x": -365.118,
-                "y": 20.983,
-                "z": -31.626
-            },
-            "card": "Data/Model/target/card/foods/Orange.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Pancake.mdl",
-            "sprite": "Data/Sprite/chain/foods/Pancake.png",
-            "name": "ぱんけーき",
-            "charCount": 5,
-            "startN": "は",
-            "endN": "き",
-            "position": {
-                "x": -578.075,
-                "y": 204.024,
-                "z": -538.679
-            },
-            "card": "Data/Model/target/card/foods/Pancake.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/pear.mdl",
-            "sprite": "Data/Sprite/chain/foods/pear.png",
-            "name": "なし",
-            "charCount": 2,
-            "startN": "な",
-            "endN": "し",
-            "position": {
-                "x": 406.635,
-                "y": 146.273,
-                "z": -766.426
-            },
-            "card": "Data/Model/target/card/foods/pear.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Pepper_Red.mdl",
-            "sprite": "Data/Sprite/chain/foods/Pepper_Red.png",
-            "name": "ぱぷりか",
-            "charCount": 4,
-            "startN": "は",
-            "endN": "か",
-            "position": {
-                "x": -767.187,
-                "y": 0.886,
-                "z": -549.107
-            },
-            "card": "Data/Model/target/card/foods/Pepper_Red.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Pig_Cylinder.mdl",
-            "sprite": "Data/Sprite/chain/foods/Pig_Cylinder.png",
-            "name": "ぶた",
-            "charCount": 2,
-            "startN": "ふ",
-            "endN": "た",
-            "position": {
-                "x": -242.595,
-                "y": 14.633,
-                "z": -309.375
-            },
-            "card": "Data/Model/target/card/foods/Pig_Cylinder.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Pizza.mdl",
-            "sprite": "Data/Sprite/chain/foods/Pizza.png",
-            "name": "ぴざ",
-            "charCount": 2,
-            "startN": "ひ",
-            "endN": "さ",
-            "position": {
-                "x": 411.234,
-                "y": -2.816,
-                "z": -411.434
-            },
-            "card": "Data/Model/target/card/foods/Pizza.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Pumpkin.mdl",
-            "sprite": "Data/Sprite/chain/foods/Pumpkin.png",
-            "name": "かぼちゃ",
-            "charCount": 4,
-            "startN": "か",
-            "endN": "や",
-            "position": {
-                "x": 69.105,
-                "y": 196.662,
-                "z": 498.969
-            },
-            "card": "Data/Model/target/card/foods/Pumpkin.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/strawberry.mdl",
-            "sprite": "Data/Sprite/chain/foods/strawberry.png",
-            "name": "いちご",
-            "charCount": 3,
-            "startN": "い",
-            "endN": "こ",
-            "position": {
-                "x": 466.971,
-                "y": 597.983,
-                "z": 642.502
-            },
-            "card": "Data/Model/target/card/foods/strawberry.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Sushi_Nigiri2.mdl",
-            "sprite": "Data/Sprite/chain/foods/Sushi_Nigiri2.png",
-            "name": "すし",
-            "charCount": 2,
-            "startN": "す",
-            "endN": "し",
-            "position": {
-                "x": -488.213,
-                "y": 478.228,
-                "z": 746.332
-            },
-            "card": "Data/Model/target/card/foods/Sushi_Nigiri2.mdl"
-
-        },
-        {
-            "model": "Data/Model/target/foods/Tomato.mdl",
-            "sprite": "Data/Sprite/chain/foods/Tomato.png",
-            "name": "とまと",
-            "charCount": 3,
-            "startN": "と",
-            "endN": "と",
-            "position": {
-                "x": 768.287,
-                "y": 321.751,
-                "z": 210.448
-            },
-            "card": "Data/Model/target/card/foods/Tomato.mdl"
-
-        },
-      {
-        "model": "Data/Model/target/foods/tohu.mdl",
-        "sprite": "Data/Sprite/chain/foods/tohu.png",
-        "name": "とうふ",
-        "charCount": 3,
-        "startN": "と",
-        "endN": "ふ",
-        "position": {
-          "x": 744.279,
-          "y": 133.070,
-          "z": -566.643
-        },
-        "card": "Data/Model/target/card/foods/tohu.mdl"
-
+    {
+      "model": "Data/Model/target/foods/clock.mdl",
+      "sprite": "Data/Sprite/chain/foods/dish.png",
+      "name": "おさら",
+      "charCount": 3,
+      "startN": "お",
+      "endN": "ら",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
-        {
-            "model": "Data/Model/target/foods/Tumip.mdl",
-            "sprite": "Data/Sprite/chain/foods/Tumip.png",
-            "name": "かぶ",
-            "charCount": 2,
-            "startN": "か",
-            "endN": "ふ",
-            "position": {
-                "x": -236.650,
-                "y": 36.435,
-                "z": -525.052
-            },
-            "card": "Data/Model/target/card/foods/Tumip.mdl"
+      "card": "Data/Model/target/card/foods/card.mdl",
+      "right": true
+    },
+    {
+      "model": "Data/Model/target/foods/radio.mdl",
+      "sprite": "Data/Sprite/chain/foods/radio.png",
+      "name": "ラジオ",
+      "charCount": 3,
+      "startN": "ら",
+      "endN": "お",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "card": "Data/Model/target/card/foods/card.mdl",
+      "right": true
 
-        },
-        {
-            "model": "Data/Model/target/foods/waffle.mdl",
-            "sprite": "Data/Sprite/chain/foods/waffle.png",
-            "name": "わっふる",
-            "charCount": 4,
-            "startN": "わ",
-            "endN": "る",
-            "position": {
-                "x": 151.874,
-                "y": 88.904,
-                "z": -615.502
-            },
-            "card": "Data/Model/target/card/foods/waffle.mdl"
+    },
+    {
+      "model": "Data/Model/target/foods/tohu.mdl",
+      "sprite": "Data/Sprite/chain/foods/tohu.png",
+      "name": "とうふ",
+      "charCount": 3,
+      "startN": "と",
+      "endN": "ふ",
+      "position": {
+        "x": 744.279,
+        "y": 133.070,
+        "z": -566.643
+      },
+      "card": "Data/Model/target/card/foods/tohu.mdl",
+      "right": false
 
-        },
+    },
+    {
+      "model": "Data/Model/target/foods/Apple.mdl",
+      "sprite": "Data/Sprite/chain/foods/Apple.png",
+      "name": "りんご",
+      "charCount": 3,
+      "startN": "り",
+      "endN": "こ",
+      "position": {
+        "x": -477.639,
+        "y": 85.0,
+        "z": -453.593
+      },
+      "card": "Data/Model/target/card/foods/Apple.mdl",
+      "right": true
 
-        {
-            "model": "Data/Model/target/foods/Watermelon_0101.mdl",
-            "sprite": "Data/Sprite/chain/foods/Watermelon_0101.png",
-            "name": "すいか",
-            "charCount": 3,
-            "startN": "す",
-            "endN": "か",
-          "position": {
-            "x": 799.260,
-            "y": 7.862,
-            "z": -744.722
-          },
-            "card": "Data/Model/target/card/foods/Watermelon_0101.mdl"
+    },
 
-        },
-        {
-            "model": "Data/Model/target/foods/Cow_Cube.mdl",
-            "sprite": "Data/Sprite/chain/foods/Cow_Cube.png",
-            "name": "うし",
-            "charCount": 2,
-            "startN": "う",
-            "endN": "し",
-            "position": {
-                "x": 177.288,
-                "y": 0.0,
-                "z": 43.325
-            },
-            "card": "Data/Model/target/card/foods/Cow_Cube.mdl"
+    {
+      "model": "Data/Model/target/foods/Avocado.mdl",
+      "sprite": "Data/Sprite/chain/foods/Avocado.png",
+      "name": "あぼかど",
+      "charCount": 4,
+      "startN": "あ",
+      "endN": "と",
+      "position": {
+        "x": 446.603,
+        "y": 331.123,
+        "z": 542.006
+      },
+      "card": "Data/Model/target/card/foods/Avocado.mdl",
+      "right": true
 
-        }
-    ]
+    },
+    {
+      "model": "Data/Model/target/foods/Bacon_Burned.mdl",
+      "sprite": "Data/Sprite/chain/foods/Bacon_Burned.png",
+      "name": "べーこん",
+      "charCount": 4,
+      "startN": "へ",
+      "endN": "n",
+      "position": {
+        "x": -129.245,
+        "y": 45.643,
+        "z": -377.539
+      },
+      "card": "Data/Model/target/card/foods/Bacon_Burned.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Banana.mdl",
+      "sprite": "Data/Sprite/chain/foods/Banana.png",
+      "name": "ばなな",
+      "charCount": 3,
+      "startN": "は",
+      "endN": "な",
+      "position": {
+        "x": 342.690,
+        "y": 144.0,
+        "z": -99.741
+      },
+      "card": "Data/Model/target/card/foods/Banana.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Bread.mdl",
+      "sprite": "Data/Sprite/chain/foods/Bread.png",
+      "name": "ぱん",
+      "charCount": 2,
+      "startN": "は",
+      "endN": "n",
+      "position": {
+        "x": 553.805,
+        "y": 80.000,
+        "z": -633.731
+      },
+      "card": "Data/Model/target/card/foods/Bread.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Broccoli.mdl",
+      "sprite": "Data/Sprite/chain/foods/Broccoli.png",
+      "name": "ブロッコリー",
+      "charCount": 6,
+      "startN": "ふ",
+      "endN": "り",
+      "position": {
+        "x": 394.397,
+        "y": 65.000,
+        "z": 299.368
+      },
+      "card": "Data/Model/target/card/foods/Broccoli.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Burger.mdl",
+      "sprite": "Data/Sprite/chain/foods/Burger.png",
+      "name": "はんばーがー",
+      "charCount": 6,
+      "startN": "は",
+      "endN": "か",
+      "position": {
+        "x": 461.883,
+        "y": 18.914,
+        "z": 710.293
+      },
+      "card": "Data/Model/target/card/foods/Burger.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/cabbage.mdl",
+      "sprite": "Data/Sprite/chain/foods/cabbage.png",
+      "name": "きゃべつ",
+      "charCount": 4,
+      "startN": "き",
+      "endN": "つ",
+      "position": {
+        "x": 390.053,
+        "y": 230.0,
+        "z": -532.936
+      },
+      "card": "Data/Model/target/card/foods/cabbage.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/cake.mdl",
+      "sprite": "Data/Sprite/chain/foods/cake.png",
+      "name": "けーき",
+      "charCount": 3,
+      "startN": "け",
+      "endN": "き",
+      "position": {
+        "x": -340.778,
+        "y": 254.436,
+        "z": 0.000
+      },
+      "card": "Data/Model/target/card/foods/cake.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/Carrot.mdl",
+      "sprite": "Data/Sprite/chain/foods/Carrot.png",
+      "name": "にんじん",
+      "charCount": 4,
+      "startN": "に",
+      "endN": "n",
+      "position": {
+        "x": -86.920,
+        "y": 207.584,
+        "z": -72.879
+      },
+      "card": "Data/Model/target/card/foods/Carrot.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/cauliflower.mdl",
+      "sprite": "Data/Sprite/chain/foods/cauliflower.png",
+      "name": "かりふらわー",
+      "charCount": 6,
+      "startN": "か",
+      "endN": "わ",
+      "position": {
+        "x": -689.182,
+        "y": 90.0,
+        "z": -579.800
+      },
+      "card": "Data/Model/target/card/foods/cauliflower.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/cherries.mdl",
+      "sprite": "Data/Sprite/chain/foods/cherries.png",
+      "name": "さくらんぼ",
+      "charCount": 5,
+      "startN": "さ",
+      "endN": "ほ",
+      "position": {
+        "x": 376.176,
+        "y": 250.0,
+        "z": 94.424
+      },
+      "card": "Data/Model/target/card/foods/cherries.mdl",
+      "right": false
+
+
+    },
+    {
+      "model": "Data/Model/target/foods/ChocolateBar.mdl",
+      "sprite": "Data/Sprite/chain/foods/ChocolateBar.png",
+      "name": "ちょこれーと",
+      "charCount": 6,
+      "startN": "ち",
+      "endN": "と",
+      "position": {
+        "x": -713.665,
+        "y": 210.0,
+        "z": 549.983
+      },
+      "card": "Data/Model/target/card/foods/ChocolateBar.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Coconut_Half.mdl",
+      "sprite": "Data/Sprite/chain/foods/Coconut_Half.png",
+      "name": "ここなっつ",
+      "charCount": 5,
+      "startN": "こ",
+      "endN": "つ",
+      "position": {
+        "x": 740.799,
+        "y": 900.0,
+        "z": 86.475
+      },
+      "card": "Data/Model/target/card/foods/Coconut_Half.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/cohi.mdl",
+      "sprite": "Data/Sprite/chain/foods/cup.png",
+      "name": "コーヒー",
+      "charCount": 4,
+      "startN": "こ",
+      "endN": "ひ",
+      "position": {
+        "x": -90.0,
+        "y": 73.149,
+        "z": -530.292
+      },
+      "card": "Data/Model/target/card/foods/cup.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/cookie.mdl",
+      "sprite": "Data/Sprite/chain/foods/cookie.png",
+      "name": "くっきー",
+      "charCount": 4,
+      "startN": "く",
+      "endN": "き",
+      "position": {
+        "x": -419.993,
+        "y": -0.849,
+        "z": -612.644
+      },
+      "card": "Data/Model/target/card/foods/cookie.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/corn.mdl",
+      "sprite": "Data/Sprite/chain/foods/corn.png",
+      "name": "とうもろこし",
+      "charCount": 6,
+      "startN": "と",
+      "endN": "し",
+      "position": {
+        "x": -705.0,
+        "y": -5.204,
+        "z": 722.872
+      },
+      "card": "Data/Model/target/card/foods/corn.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/Cupcake.mdl",
+      "sprite": "Data/Sprite/chain/foods/Cupcake.png",
+      "name": "かっぷけーき",
+      "charCount": 6,
+      "startN": "か",
+      "endN": "き",
+      "position": {
+        "x": 674.529,
+        "y": 130.0,
+        "z": 775.486
+      },
+      "card": "Data/Model/target/card/foods/Cupcake.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Donut1.mdl",
+      "sprite": "Data/Sprite/chain/foods/Donut1.png",
+      "name": "どーなつ",
+      "charCount": 4,
+      "startN": "と",
+      "endN": "つ",
+      "position": {
+        "x": 75.852,
+        "y": 400.037,
+        "z": -749.680
+      },
+      "card": "Data/Model/target/card/foods/Donut1.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Egg_Whole_White.mdl",
+      "sprite": "Data/Sprite/chain/foods/Egg_Whole_White.png",
+      "name": "たまご",
+      "charCount": 3,
+      "startN": "た",
+      "endN": "こ",
+      "position": {
+        "x": -59.174,
+        "y": -0.168,
+        "z": -176.526
+      },
+      "card": "Data/Model/target/card/foods/Egg_Whole_White.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Eggplant.mdl",
+      "sprite": "Data/Sprite/chain/foods/Eggplant.png",
+      "name": "なすび",
+      "charCount": 3,
+      "startN": "な",
+      "endN": "ひ",
+      "position": {
+        "x": -444.154,
+        "y": 160.0,
+        "z": -216.815
+      },
+      "card": "Data/Model/target/card/foods/Eggplant.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/egg.mdl",
+      "sprite": "Data/Sprite/chain/foods/egg.png",
+      "name": "めだまやき",
+      "charCount": 5,
+      "startN": "め",
+      "endN": "き",
+      "position": {
+        "x": -260.189,
+        "y": 132.365,
+        "z": 389.005
+      },
+      "card": "Data/Model/target/card/foods/egg.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Fries.mdl",
+      "sprite": "Data/Sprite/chain/foods/Fries.png",
+      "name": "ぽてと",
+      "charCount": 3,
+      "startN": "ほ",
+      "endN": "と",
+      "position": {
+        "x": -533.967,
+        "y": 72.157,
+        "z": 454.163
+      },
+      "card": "Data/Model/target/card/foods/Fries.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Hotdog.mdl",
+      "sprite": "Data/Sprite/chain/foods/Hotdog.png",
+      "name": "ほっとどっぐ",
+      "charCount": 6,
+      "startN": "ほ",
+      "endN": "く",
+      "position": {
+        "x": -31.428,
+        "y": 30.0,
+        "z": -746.639
+      },
+      "card": "Data/Model/target/card/foods/Hotdog.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/IceCream_2.mdl",
+      "sprite": "Data/Sprite/chain/foods/IceCream_2.png",
+      "name": "あいす",
+      "charCount": 3,
+      "startN": "あ",
+      "endN": "す",
+      "position": {
+        "x": 48.094,
+        "y": 5.069,
+        "z": 153.183
+      },
+      "card": "Data/Model/target/card/foods/IceCream_2.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/kyuri.mdl",
+      "sprite": "Data/Sprite/chain/foods/kyuri.png",
+      "name": "きゅうり",
+      "charCount": 4,
+      "startN": "き",
+      "endN": "り",
+      "position": {
+        "x": 786.455,
+        "y": 61.236,
+        "z": 10.00
+      },
+      "card": "Data/Model/target/card/foods/kyuri.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/lemon.001.mdl",
+      "sprite": "Data/Sprite/chain/foods/lemon.001.png",
+      "name": "れもん",
+      "charCount": 3,
+      "startN": "れ",
+      "endN": "n",
+      "position": {
+        "x": -158.494,
+        "y": -4.121,
+        "z": 600.0
+      },
+      "card": "Data/Model/target/card/foods/lemon.001.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/Mushroom.mdl",
+      "sprite": "Data/Sprite/chain/foods/Mushroom.png",
+      "name": "まっしゅるーむ",
+      "charCount": 7,
+      "startN": "ま",
+      "endN": "む",
+      "position": {
+        "x": 7.8,
+        "y": 50.8,
+        "z": 1.0
+      },
+      "card": "Data/Model/target/card/foods/Mushroom.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/onion.mdl",
+      "sprite": "Data/Sprite/chain/foods/onion.png",
+      "name": "たまねぎ",
+      "charCount": 4,
+      "startN": "た",
+      "endN": "き",
+      "position": {
+        "x": 154.11,
+        "y": 193.861,
+        "z": 209.172
+      },
+      "card": "Data/Model/target/card/foods/onion.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/Orange.mdl",
+      "sprite": "Data/Sprite/chain/foods/Orange.png",
+      "name": "みかん",
+      "charCount": 3,
+      "startN": "み",
+      "endN": "n",
+      "position": {
+        "x": -365.118,
+        "y": 20.983,
+        "z": -31.626
+      },
+      "card": "Data/Model/target/card/foods/Orange.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Pancake.mdl",
+      "sprite": "Data/Sprite/chain/foods/Pancake.png",
+      "name": "ぱんけーき",
+      "charCount": 5,
+      "startN": "は",
+      "endN": "き",
+      "position": {
+        "x": -578.075,
+        "y": 254.024,
+        "z": -538.679
+      },
+      "card": "Data/Model/target/card/foods/Pancake.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/pear.mdl",
+      "sprite": "Data/Sprite/chain/foods/pear.png",
+      "name": "なし",
+      "charCount": 2,
+      "startN": "な",
+      "endN": "し",
+      "position": {
+        "x": 426.635,
+        "y": 146.273,
+        "z": -766.426
+      },
+      "card": "Data/Model/target/card/foods/pear.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/Pepper_Red.mdl",
+      "sprite": "Data/Sprite/chain/foods/Pepper_Red.png",
+      "name": "ぱぷりか",
+      "charCount": 4,
+      "startN": "は",
+      "endN": "か",
+      "position": {
+        "x": -767.187,
+        "y": 0.886,
+        "z": -530.107
+      },
+      "card": "Data/Model/target/card/foods/Pepper_Red.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Pig_Cylinder.mdl",
+      "sprite": "Data/Sprite/chain/foods/Pig_Cylinder.png",
+      "name": "ぶた",
+      "charCount": 2,
+      "startN": "ふ",
+      "endN": "た",
+      "position": {
+        "x": -242.595,
+        "y": 14.633,
+        "z": -309.375
+      },
+      "card": "Data/Model/target/card/foods/Pig_Cylinder.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Pizza.mdl",
+      "sprite": "Data/Sprite/chain/foods/Pizza.png",
+      "name": "ぴざ",
+      "charCount": 2,
+      "startN": "ひ",
+      "endN": "さ",
+      "position": {
+        "x": 411.234,
+        "y": -2.816,
+        "z": -411.434
+      },
+      "card": "Data/Model/target/card/foods/Pizza.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Pumpkin.mdl",
+      "sprite": "Data/Sprite/chain/foods/Pumpkin.png",
+      "name": "かぼちゃ",
+      "charCount": 4,
+      "startN": "か",
+      "endN": "や",
+      "position": {
+        "x": 69.105,
+        "y": 196.662,
+        "z": 498.969
+      },
+      "card": "Data/Model/target/card/foods/Pumpkin.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/strawberry.mdl",
+      "sprite": "Data/Sprite/chain/foods/strawberry.png",
+      "name": "いちご",
+      "charCount": 3,
+      "startN": "い",
+      "endN": "こ",
+      "position": {
+        "x": 466.971,
+        "y": 597.983,
+        "z": 642.502
+      },
+      "card": "Data/Model/target/card/foods/strawberry.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/Sushi_Nigiri2.mdl",
+      "sprite": "Data/Sprite/chain/foods/Sushi_Nigiri2.png",
+      "name": "すし",
+      "charCount": 2,
+      "startN": "す",
+      "endN": "し",
+      "position": {
+        "x": -488.213,
+        "y": 478.228,
+        "z": 746.332
+      },
+      "card": "Data/Model/target/card/foods/Sushi_Nigiri2.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Tomato.mdl",
+      "sprite": "Data/Sprite/chain/foods/Tomato.png",
+      "name": "とまと",
+      "charCount": 3,
+      "startN": "と",
+      "endN": "と",
+      "position": {
+        "x": 768.287,
+        "y": 321.751,
+        "z": 210.448
+      },
+      "card": "Data/Model/target/card/foods/Tomato.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/Tumip.mdl",
+      "sprite": "Data/Sprite/chain/foods/Tumip.png",
+      "name": "かぶ",
+      "charCount": 2,
+      "startN": "か",
+      "endN": "ふ",
+      "position": {
+        "x": -236.650,
+        "y": 36.435,
+        "z": -525.052
+      },
+      "card": "Data/Model/target/card/foods/Tumip.mdl",
+      "right": true
+
+    },
+    {
+      "model": "Data/Model/target/foods/waffle.mdl",
+      "sprite": "Data/Sprite/chain/foods/waffle.png",
+      "name": "わっふる",
+      "charCount": 4,
+      "startN": "わ",
+      "endN": "る",
+      "position": {
+        "x": 151.874,
+        "y": 88.904,
+        "z": -615.502
+      },
+      "card": "Data/Model/target/card/foods/waffle.mdl",
+      "right": true
+
+    },
+
+    {
+      "model": "Data/Model/target/foods/Watermelon_0101.mdl",
+      "sprite": "Data/Sprite/chain/foods/Watermelon_0101.png",
+      "name": "すいか",
+      "charCount": 3,
+      "startN": "す",
+      "endN": "か",
+      "position": {
+        "x": 799.260,
+        "y": 7.862,
+        "z": -744.722
+      },
+      "card": "Data/Model/target/card/foods/Watermelon_0101.mdl",
+      "right": false
+
+    },
+    {
+      "model": "Data/Model/target/foods/Cow_Cube.mdl",
+      "sprite": "Data/Sprite/chain/foods/Cow_Cube.png",
+      "name": "うし",
+      "charCount": 2,
+      "startN": "う",
+      "endN": "し",
+      "position": {
+        "x": 177.288,
+        "y": 0.0,
+        "z": 43.325
+      },
+      "card": "Data/Model/target/card/foods/Cow_Cube.mdl",
+      "right": true
+
+    }
+  ]
 }
