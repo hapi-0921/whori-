@@ -28,16 +28,22 @@ public:
 	void DrawGUI() override;
 
 private:
+	// スプライト
 	Sprite* sprite = nullptr;
 	Sprite* sprArrowRight = nullptr;
 	Sprite* sprArrowLeft = nullptr;
-	
 
+	// カメラ
 	CameraController* cameraController = nullptr;
 	ShapeRenderer* shapeRenderer = nullptr;
 
+	// ステージ行列
 	Stage::StageTransform selectStage;
 	Stage::StageTransform selectStage2;
+
+	// ステージモデル
+	Model* mdlMachi[4] = {};
+	Model* mdlShima[7] = {};
 
 	// マウスカーソルの位置
 	float CursorX = {};
@@ -45,6 +51,10 @@ private:
 
 	// ステージの状態
 	int stageState = {};
+
+	// 矢印の色味
+	float arrowColorRight = {};
+	float arrowColorLeft = {};
 	
 	// ステージ
 	enum stageType
@@ -57,6 +67,6 @@ private:
 	Graphics& graphics = Graphics::Instance();
 	float screenWidth = static_cast<float>(graphics.GetScreenWidth());
 	float screenHeight = static_cast<float>(graphics.GetScreenHeight());
-	float ArrowSize = 128; // 矢印UIのサイズ
+	float ArrowSize = 256; // 矢印UIのサイズ
 	float ArrowH = screenHeight * 0.5f - ArrowSize * 0.5; // 矢印UIの描画位置（Y軸）
 };

@@ -111,7 +111,7 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 	//----------------------------２Ⅾ（スプリト）------------------------------------
 
 	{//しりとり表示
-		if (scoreManager.chainCount <= 2)
+		if (scoreManager.chainCount <= 5)
 		{
 			sprChain->Render(rc,
 				0, 0, 0,
@@ -148,58 +148,6 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 
 	}
 
-	{//targetカード表示
-		//判定前
-		//for (int i = 0; i < targetManager->GetTargetSize(); ++i)
-		//{
-		//	if (targetManager->GetTargetSpri(i) == nullptr)continue;
-
-		//	Sprite* sp = targetManager->GetTargetSpri(i);
-
-		//	if (targetManager->GetCarsRen(i))
-		//	{
-		//		sp->Render(rc,
-		//			screenWidth * 0.5f - cardData.dw * 0.5f, 
-		//			screenHeight * 0.5f - cardData.dh * 0.5f, 0,
-		//			740, 740, 0, 0,
-		//			750, 750, 0, 1, 1, 1, 1);
-		//	}
-
-		//}
-		//判定後
-		//for (int i = 0; i < targetManager->GetKeepTargetSize(); ++i) 
-		//{
-
-		//	if (targetManager->GetgetTargetSpri(i) == nullptr)continue;
-
-		//	Sprite* sp = targetManager->GetgetTargetSpri(i);
-
-		//		if (targetManager->GetMoveToChain(i))
-		//		{
-		//			//if (cardData.dh > 130)
-		//			{
-		//				float speed = 5.0f;
-		//				float t = std::min(targetManager->GetMoveTime(i) * speed, 1.0f);
-
-		//				float w = Lerp(740.0f, 130.0f, t);
-		//				float h = Lerp(740.0f, 130.0f, t);
-		//				float x = Lerp(screenWidth * 0.5f - 740.0f * 0.5f,
-		//					screenWidth - 230,
-		//					t);
-		//				float y = Lerp(screenHeight * 0.5f - 740.0f * 0.5f,
-		//					130 + renSpan * i,
-		//					t);
-		//			}
-		//		}
-
-
-		//		//チェーンに入れてく
-		//	sp->Render(rc,
-		//		cardData.dx, cardData.dy, 0,
-		//		cardData.dw, cardData.dh, 0, 0,
-		//		750, 750, 0, 1, 1, 1, 1);
-		//}
-	}	
 
 }
 

@@ -38,6 +38,20 @@ void SceneSelect::Initialize()
 
 	cameraController = new CameraController();
 
+	mdlMachi[0] = new Model("Data/Model/stage/machi/matimati/matimati1.mdl");
+	mdlMachi[1] = new Model("Data/Model/stage/machi/matimati/matimati2.mdl");
+	mdlMachi[2] = new Model("Data/Model/stage/machi/matimati/matimati3.mdl");
+	mdlMachi[3] = new Model("Data/Model/stage/machi/matimati/matimati4.mdl");
+
+	mdlShima[0] = new Model("Data/Model/stage/shima/simasima/simasima1.1.mdl");
+	mdlShima[1] = new Model("Data/Model/stage/shima/simasima/simasima1.2.mdl");
+	mdlShima[2] = new Model("Data/Model/stage/shima/simasima/simasima1.3.mdl");
+	mdlShima[3] = new Model("Data/Model/stage/shima/simasima/simasima1.mdl");
+	mdlShima[4] = new Model("Data/Model/stage/shima/simasima/simasima2.mdl");
+	mdlShima[5] = new Model("Data/Model/stage/shima/simasima/simasima3.mdl");
+	mdlShima[6] = new Model("Data/Model/stage/shima/simasima/simasima4.mdl");
+
+
 	//stageTransform
 	{
 		//ここでステージのサイズ変える
@@ -54,6 +68,9 @@ void SceneSelect::Initialize()
 	}
 
 	SceneManager::Instance().is_fadeIn = false;
+
+	arrowColorRight = 1.0f;
+	arrowColorLeft = 1.0f;
 }
 
 // 終了化
@@ -195,6 +212,7 @@ void SceneSelect::Update(float elapsedTime)
 			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 		{
 			stageState = stageType::stage2;
+			arrowColorRight = 0.5f;
 		}
 		// stage2が選択されている状態　＋　左の矢印選択された場合
 		if (stageState == stageType::stage2 &&
@@ -202,7 +220,30 @@ void SceneSelect::Update(float elapsedTime)
 			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 		{
 			stageState = stageType::stage1;
+			arrowColorLeft = 0.5f;
 		}
+	}
+
+	// カーソルが当たると矢印の色を変える
+	// 右の矢印
+	if (CursorX > screenWidth - ArrowSize &&
+		CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
+	{
+		arrowColorRight = 0.5f;
+	}
+	else
+	{
+		arrowColorRight = 1.0f;
+	}
+	// 左の矢印
+	if (CursorX < ArrowSize &&
+		CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
+	{
+		arrowColorLeft = 0.5f;
+	}
+	else
+	{
+		arrowColorLeft = 1.0f;
 	}
 }
 
@@ -236,26 +277,41 @@ void SceneSelect::Render()
 
 	// 3Dモデル描画
 	{
+		int MachiNum = 4;
+		int ShimaNum = 7;
+
 		// ステージ１を描画
-		Stage& stage1 = Stage::Instance();
-		stage1.Render(rc, modelRenderer, &selectStage);
+		freeUpdateTransform(selectStage.scale, selectStage.angle, selectStage.position, selectStage.transform);
+		for (int i = 0; i < MachiNum; i++)
+		{
+			modelRenderer->Render(rc, selectStage.transform, mdlMachi[i], ShaderId::Lambert);
+		}
 
 		// ステージ２を描画
-		Stage& stage2 = Stage::Instance();
-		stage2.stageType = Stage::StageType::SIMA;
-		stage2.Render(rc, modelRenderer, &selectStage2);
+		freeUpdateTransform(selectStage2.scale, selectStage2.angle, selectStage2.position, selectStage2.transform);
+		for (int i = 0; i < ShimaNum; i++)
+		{
+			modelRenderer->Render(rc, selectStage2.transform, mdlShima[i], ShaderId::Lambert);
+		}
+
 	}
 
 	// 矢印描画（2D）
 	{
-		sprArrowRight->Render(rc,
-			screenWidth - ArrowSize, ArrowH, 0, ArrowSize, ArrowSize,
-			0,
-			1, 1, 1, 1);
-		sprArrowLeft->Render(rc,
-			0, ArrowH, 0, ArrowSize, ArrowSize,
-			0,
-			1, 1, 1, 1);
+		if(stageState == stageType::stage1)
+		{
+			sprArrowRight->Render(rc,
+				screenWidth - ArrowSize, ArrowH, 0, ArrowSize, ArrowSize,
+				0,
+				arrowColorRight, arrowColorRight, arrowColorRight, 1);
+		}
+		if (stageState == stageType::stage2)
+		{
+			sprArrowLeft->Render(rc,
+				0, ArrowH, 0, ArrowSize, ArrowSize,
+				0,
+				arrowColorLeft, arrowColorLeft, arrowColorLeft, 1);
+		}
 	}
 
 	cameraController->Render(rc);

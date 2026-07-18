@@ -5,6 +5,7 @@
 #include"targetManager.h"
 #include "System/Sprite.h"
 #include"UIController.h"
+#include"Font.h"
 
 
 // ÉQÅ[ÉÄÉVÅ[Éì
@@ -40,8 +41,16 @@ private:
 	bool nowGame = false;
 
 	float gameTimer = 0.0f;
+	int GameTimer = 0;
+
+	int sec = 0;
+	int min = 0;
+
+	Sprite* sprTimer = nullptr;
+	Font* timer = nullptr;
 
 public:
+
 
 	void SetNowGame(bool nowGame)
 	{
