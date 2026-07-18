@@ -73,7 +73,7 @@ void Stage::Update(float elapsedTime)
 	centerWall[DEPTH].angle.y = camera->GetCameraAngle().y + DirectX::XM_PI * 0.5f;
 	freeUpdateTransform(centerWall[DEPTH].scale, centerWall[DEPTH].angle, centerWall[DEPTH].position, centerWall[DEPTH].transform);
 	DirectX::XMStoreFloat3(&vecDepth,
-		DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&target), DirectX::XMLoadFloat3(&centerWall[DEPTH].position)));
+	DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&target), DirectX::XMLoadFloat3(&centerWall[DEPTH].position)));
 
 
 	//レイ用の壁
@@ -101,7 +101,7 @@ void Stage::Render(const RenderContext& rc, ModelRenderer* renderer,StageTransfo
 	//ズーム用判定壁
 		//renderer->Render(rc, centerWall[CENTER].transform, mdlCenterWall, ShaderId::Lambert);
 		
-				//奥行き判定用壁
+		//奥行き判定用壁
 		//renderer->Render(rc, centerWall[DEPTH].transform, mdlCenterWall, ShaderId::Lambert);
 		 
 
