@@ -8,7 +8,7 @@
 #include "SceneManager.h"
 #include "SceneLoading.h"
 #include "Camera.h"
-
+#include"save.h"
 int title_timer;
 
 // ‰Šú‰»
@@ -36,6 +36,8 @@ void SceneTitle::Initialize()
 	);
 
 	title_timer = 0;
+	Save::Instance().LoadGame();
+
 }
 
 // I—¹‰»

@@ -13,7 +13,7 @@
 #include <GameManager.h>
 #include"SceneSelect.h"
 #include"SceneTitle.h"
-
+#include"save.h"
 // 初期化
 void SceneResult::Initialize()
 {
@@ -33,6 +33,7 @@ void SceneResult::Initialize()
 	}
 
 	sprs= new Sprite("Data/Sprite/chain/foods/Apple.png");
+	sprnew= new Sprite("Data/Sprite/new.png");
 	std::ifstream file("Data/resultData/result.json");
 	if (!file)
 	{
@@ -49,7 +50,12 @@ void SceneResult::Initialize()
 
 		sikaku[i].posy = -300;
 	}
-
+	Save::Instance().SaveGame();
+	Save::Instance().LoadGame();
+	record[0].posy = 290;
+	record[1].posy = 420;
+	record[2].posy = 540;
+	record[3].posy = 680;
 }
 
 // 終了化
@@ -141,7 +147,7 @@ void SceneResult::Update(float elapsedTime)
 	{
 		scorescale = 2;
 	}
-	if (rankTimer >= 700)
+	if (rankTimer >= 600)
 	{
 		if (rank < rankset)
 		{
@@ -156,7 +162,7 @@ void SceneResult::Update(float elapsedTime)
 			rankScale = 0.0f;      
 		}
 
-		rankTimer = 550;
+		rankTimer = 450;
 	}
 	if (rankScaleAnim)
 	{
@@ -180,10 +186,13 @@ void SceneResult::Render()
 	RenderState* renderState = graphics.GetRenderState();
 	ModelRenderer* modelRenderer = graphics.GetModelRenderer();
 	RenderContext rc;
+
 	rc.deviceContext = dc;
 	rc.renderState = graphics.GetRenderState();
-
+	
 	ScoreManager& scoreManager = ScoreManager::Instance();
+	Save& save = Save::Instance();
+
 	// 2Dスプライト描画
 	{
 
@@ -212,7 +221,7 @@ void SceneResult::Render()
 				1920, 1080, 0, 0,
 				1920, 1080, 0, 1, 1, 1, 1);
 				
-			if (resultTimer >= 500)						//ランク表示b
+			if (resultTimer >= 400)						//ランク表示b
 			{
 				float w = 1920 * rankScale;
 				float h = 1080 * rankScale;
@@ -291,11 +300,29 @@ void SceneResult::Render()
 		}
 			else                               //ランキング
 			{
-
 				sprranking->Render(rc,
 					0, 0, 0,
 					1920, 1080, 0, 0,
 					1920, 1080, 0, 1, 1, 1, 1);
+				for (int i = 0;i < 4;i++)
+				{
+					if (save.ranking[i] != 0)
+					{
+						Numberfont->DrawNumber(rc, save.ranking[i], record[i].posx, record[i].posy, 1.5f);
+					}
+
+					if (scoreManager.allScore == save.ranking[i])
+					{
+						if ((resultTimer / 40) % 2 == 0)
+						{
+							sprnew->Render(rc,
+								1300, record[i].posy, 0,
+								157, 52, 0, 0,
+								225, 75, 0, 1, 1, 1, 1);
+
+						}
+					}
+				}
 
 			}
 

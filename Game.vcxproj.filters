@@ -162,6 +162,9 @@
     <ClCompile Include="Source\ScoreManager.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\save.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\Audio.h">
@@ -309,6 +312,9 @@
       <Filter>Source\h</Filter>
     </ClInclude>
     <ClInclude Include="Source\ScoreManager.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\save.h">
       <Filter>Source\h</Filter>
     </ClInclude>
   </ItemGroup>

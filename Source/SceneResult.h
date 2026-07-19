@@ -38,7 +38,7 @@ private:
 	Sprite* sprs = nullptr;
 	Sprite* sprrank[5] = {};
 	Sprite* sprrankword[5] = {};
-
+	Sprite* sprnew = nullptr;
 	int resultTimer = 0;
 	int rankTimer = 0;
 	int rank=-1;
@@ -53,6 +53,12 @@ private:
 		int angle = 0;
 		int lastposy = 0;
 	};
+	struct Record
+	{
+		int posx = 1000;
+		int posy = 0;
+	};
+	Record record[4];
 	float scorescale = 2;
 	float rankScale = 1.0f;
 
