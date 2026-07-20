@@ -28,7 +28,7 @@ void SceneGame::Initialize()
 		DirectX::XMConvertToRadians(45),//fovY
 		graphics.GetScreenWidth() / graphics.GetScreenHeight(),//aspect
 		0.1f,//nearZ
-		3000.0f//farZ
+		10000.0f//farZ
 	);
 
 	cameraController = new CameraController();
@@ -262,7 +262,7 @@ void SceneGame::DrawGUI()
 
 	//ScoreManager& scoreManager = ScoreManager::Instance();
 	//scoreManager.DrawDebugGUI();
-	//cameraController->DrawDebugGUI();
+	cameraController->DrawDebugGUI();
 	//targetManager->DrawDebugGUI();
 	//uiController->DrawDebugGUI();
 }

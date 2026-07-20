@@ -8,6 +8,11 @@
 Stage::Stage()
 {
 
+	mdlBack = new Model("Data/Model/back/back.mdl");
+	//back.scale.x = 0.1f;
+	//back.scale.y = 0.1f;
+	//back.scale.z = 0.1f;
+	//freeUpdateTransform(back.scale, back.angle, back.position, back.transform);
 
 	mdlCenterWall = new Model("Data/Model/wall/wall.mdl");
 
@@ -25,6 +30,10 @@ Stage::~Stage()
 	for (int i=0;i< stageNum;i++)
 	{
 		delete mdlStage[i];
+	}
+	if (mdlBack != nullptr) {
+		delete mdlBack;
+		mdlBack = nullptr;
 	}
 
 	delete mdlCenterWall;
@@ -96,6 +105,8 @@ void Stage::Render(const RenderContext& rc, ModelRenderer* renderer,StageTransfo
 	{
 		renderer->Render(rc, stage->transform, mdlStage[i], ShaderId::Lambert);
 	}
+	renderer->Render(rc, back.transform, mdlBack, ShaderId::Lambert);
+
 
 	//ƒY[ƒ€—p”»’è•Ç
 		//renderer->Render(rc, centerWall[CENTER].transform, mdlCenterWall, ShaderId::Lambert);

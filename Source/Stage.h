@@ -90,6 +90,9 @@ public:
 	};
 
 private:
+	Model* mdlBack = nullptr;
+	StageTransform back ;
+
 
 	Model* mdlStage[7] = {};//ステージ本体
 	Model* mdlCenterWall = nullptr;//壁モデル

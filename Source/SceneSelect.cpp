@@ -124,17 +124,10 @@ void SceneSelect::Update(float elapsedTime)
 
 	if (first)
 	{
-<<<<<<< HEAD
-		if (selecttimer >= 300)
-=======
-		if (mouse.GetButtonUp() & mouseButton)
->>>>>>> 008ffbfc886315d3007ad7bd8047668604aa3c65
-		{
 			if (mouse.GetButtonUp() & mouseButton)
 			{
 				selectstart = true;
 			}
-		}
 	}
 
 	
