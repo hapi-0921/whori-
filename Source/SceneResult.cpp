@@ -106,8 +106,7 @@ void SceneResult::Update(float elapsedTime)
 				//ステージ選択
 				if (CursorX >= 148 && CursorX <= 611)
 				{
-					//今はシーンセレクトないからコメントアウト
-					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
+					SceneManager::Instance().ChangeScene( (new SceneSelect));
 				}
 				//もう一度
 				else if (CursorX >= 667 && CursorX <=1157)
@@ -119,8 +118,7 @@ void SceneResult::Update(float elapsedTime)
 				//タイトルへ
 				else if (CursorX >= 1216 && CursorX <= 1681)
 				{
-					//今はシーンタイトルないからコメントアウト
-					//SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
+					SceneManager::Instance().ChangeScene((new SceneTitle));
 				}
 
 			}
