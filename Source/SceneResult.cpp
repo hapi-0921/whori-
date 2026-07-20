@@ -126,7 +126,16 @@ void SceneResult::Update(float elapsedTime)
 		
 
 	}
-	if (nowCard < data["result"].size())
+
+	if (scoreManager.getNum > 10)
+	{
+		getDown = 10;
+	}
+	else
+	{
+		getDown = scoreManager.getNum;
+	}
+	if (nowCard < getDown)
 	{
 		sikaku[nowCard].posy += 5;
 
@@ -201,7 +210,7 @@ void SceneResult::Render()
 				1920, 1080, 0, 0,
 				1920, 1080, 0, 1, 1, 1, 1);
 
-			for (int i = 0;i < data["result"].size();i++)	//‚¨‚¿‚Ä‚­‚é‚â‚Â
+			for (int i = 0;i < getDown;i++)	//‚¨‚¿‚Ä‚­‚é‚â‚Â
 			{
 
 				sprs->Render(rc,
@@ -298,6 +307,10 @@ void SceneResult::Render()
 		}
 			else                               //ƒ‰ƒ“ƒLƒ“ƒO
 			{
+				sprresultback->Render(rc,
+					0, 0, 0,
+					1920, 1080, 0, 0,
+					1920, 1080, 0, 1, 1, 1, 1);
 				sprranking->Render(rc,
 					0, 0, 0,
 					1920, 1080, 0, 0,
@@ -355,7 +368,7 @@ void SceneResult::DrawGUI()
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
 	ImGui::Begin("Debug");
-	for (int i = 0;i < data["result"].size();i++)
+	for (int i = 0;i < getDown;i++)
 	{
 		ImGui::PushID(i);
 
