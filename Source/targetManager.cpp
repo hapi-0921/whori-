@@ -280,10 +280,10 @@ void TargetManager::TargetFocus(float elapsedTime)
 
         return;
     }
+    canZoom = (distance <= 200);
 
     HitInfo closest = hits[0];
     distance = closest.distance;
-    canZoom = (distance <= 200);
 
     if (hits.empty() || closest.pTarget == nullptr || closest.distance > 1000.0f)
     {

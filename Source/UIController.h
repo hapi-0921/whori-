@@ -28,7 +28,7 @@ public:
 		return optionUI;
 	}
 
-	bool homeOpen = false;
+	//bool homeOpen = false;
 	bool isOption = false;
 	bool isHome = false;
 	bool nowGameScene = false;
@@ -70,7 +70,7 @@ private:
 	float homeSize = 55.0f;
     //
 
-	bool ax = false;
+	//bool ax = false;
 
 };
 

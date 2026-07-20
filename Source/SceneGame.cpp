@@ -158,7 +158,7 @@ void SceneGame::Update(float elapsedTime)
 	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001) 
 	{
 		optionUI.isOption = true;
-		optionUI.homeOpen = true;
+		//optionUI.homeOpen = true;
 		optionUI.isHome = true;
 	}
 

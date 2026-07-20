@@ -7,6 +7,14 @@
 #include"GameManager.h"
 
 #include"tutorial.h"
+#include"ScoreManager.h"
+#include <SceneManager.h>
+
+#include"SceneLoading.h"
+#include"SceneTitle.h"
+#include"SceneSelect.h"
+#include"SceneGame.h"
+
 
 #undef min
 #undef max
@@ -204,7 +212,9 @@ bool escape = false;
 void OptionUI::UpdateOption(float elapsedTime)
 {
 	Tutorial& tutorial = Tutorial::Instance();
-	
+	ScoreManager& scoreManager = ScoreManager::Instance();
+	OptionUI& optionUI = OptionUI::Instance();
+
 	
 	Mouse& mouse = Input::Instance().GetMouse();
 	mousePos.x = mouse.GetPositionX();
@@ -265,100 +275,111 @@ void OptionUI::UpdateOption(float elapsedTime)
 		//ルール説明の選択
 		if (mouse.GetButtonDown() & Mouse::BTN_LEFT && !isHome)
 		{
-			if (isRectJubge(mousePos.x, mousePos.y, siriPos.x, siriPos.y,ruleSize.x, ruleSize.y))
+			if (isRectJubge(mousePos.x, mousePos.y, siriPos.x, siriPos.y, ruleSize.x, ruleSize.y))
 				ruleState = SIRITORI;
-			else if (isRectJubge(mousePos.x, mousePos.y, subPos.x, subPos.y,ruleSize.x, ruleSize.y))
+			else if (isRectJubge(mousePos.x, mousePos.y, subPos.x, subPos.y, ruleSize.x, ruleSize.y))
 				ruleState = SUBMIT;
-			else if (isRectJubge(mousePos.x, mousePos.y, souPos.x, souPos.y,ruleSize.x, ruleSize.y))
+			else if (isRectJubge(mousePos.x, mousePos.y, souPos.x, souPos.y, ruleSize.x, ruleSize.y))
 				ruleState = SOUSA;
 		}
 
 		//ホームボタン
-		if ((isCircleJubge(mousePos.x, mousePos.y, homePos.x, homePos.y, homeSize ) &&
-			mouse.GetButtonDown() & Mouse::BTN_LEFT)|| homeOpen)
+		if ((isCircleJubge(mousePos.x, mousePos.y, homePos.x, homePos.y, homeSize) &&
+			mouse.GetButtonDown() & Mouse::BTN_LEFT))
 		{
-			homeOpen = false;
-
-			if (isHome)
-			{
-
-				if (!nowGameScene)//シーンセレクトの時
-				{					
-					//タイトルへ
-					{
-						DirectX::XMFLOAT2 pos = {1276,144};
-						DirectX::XMFLOAT2 size = {368,108};
-						if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
-							mouse.GetButtonDown() & Mouse::BTN_LEFT)
-						{
-
-						}
-					}
-					//ゲームをやめる
-					{
-						DirectX::XMFLOAT2 pos = { 1276,339 };
-						DirectX::XMFLOAT2 size = { 368,154 };
-						if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
-							mouse.GetButtonDown() & Mouse::BTN_LEFT)
-						{
-							HWND hWnd = GetActiveWindow();
-							PostMessage(hWnd, WM_CLOSE, 0, 0);
-
-							ax = true;
-						}
-						else
-						{
-							ax = false;
-						}
-					}
-				}
-				else
-				{
-					//もう一度
-					{
-						DirectX::XMFLOAT2 pos = { 1256,142 };
-						DirectX::XMFLOAT2 size = { 389,92 };
-						if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
-							mouse.GetButtonDown() & Mouse::BTN_LEFT)
-						{
-
-
-						}
-					}
-
-					//セレクトへ
-					{
-						DirectX::XMFLOAT2 pos = { 1256,317 };
-						DirectX::XMFLOAT2 size = { 389,123 };
-						if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
-							mouse.GetButtonDown() & Mouse::BTN_LEFT)
-						{
-
-
-						}
-					}
-
-					//ゲームをやめる
-					{
-						DirectX::XMFLOAT2 pos = { 1256,517 };
-						DirectX::XMFLOAT2 size = { 389,139 };
-						if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
-							mouse.GetButtonDown() & Mouse::BTN_LEFT)
-						{
-							HWND hWnd = GetActiveWindow();
-							PostMessage(hWnd, WM_CLOSE, 0, 0);
-
-						}
-					}
-
-				}
-
-
-				isHome = false;
-				return;
-			}
-
 			isHome = true;
+		}
+		if (isHome)
+		{
+
+			if (!nowGameScene)//シーンセレクトの時
+			{
+				//タイトルへ
+				{
+					DirectX::XMFLOAT2 pos = { 1276,144 };
+					DirectX::XMFLOAT2 size = { 368,108 };
+					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
+						mouse.GetButtonDown() & Mouse::BTN_LEFT)
+					{
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
+					}
+				}
+				//ゲームをやめる
+				{
+					DirectX::XMFLOAT2 pos = { 1276,339 };
+					DirectX::XMFLOAT2 size = { 368,154 };
+					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
+						mouse.GetButtonDown() & Mouse::BTN_LEFT)
+					{
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						HWND hWnd = GetActiveWindow();
+						PostMessage(hWnd, WM_CLOSE, 0, 0);
+					}
+				}
+			}
+			else
+			{
+				//セレクトへ
+				{
+					DirectX::XMFLOAT2 pos = { 1256,142 };
+					DirectX::XMFLOAT2 size = { 389,92 };
+					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
+						mouse.GetButtonDown() & Mouse::BTN_LEFT)
+					{
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
+
+					}
+				}
+
+				//もう一度
+				{
+					DirectX::XMFLOAT2 pos = { 1256,317 };
+					DirectX::XMFLOAT2 size = { 389,123 };
+					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
+						mouse.GetButtonDown() & Mouse::BTN_LEFT)
+					{
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+					}
+				}
+
+				//ゲームをやめる
+				{
+					DirectX::XMFLOAT2 pos = { 1256,517 };
+					DirectX::XMFLOAT2 size = { 389,139 };
+					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
+						mouse.GetButtonDown() & Mouse::BTN_LEFT)
+					{
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						HWND hWnd = GetActiveWindow();
+						PostMessage(hWnd, WM_CLOSE, 0, 0);
+
+					}
+				}
+
+			}
 		}
 
 	}
@@ -441,7 +462,6 @@ void OptionUI::DrawDebugGUI()
 	{
 		ImGui::InputFloat("optionTimer", &optionTimer);
 		ImGui::InputFloat2("mousePos", &mousePos.x);
-		ImGui::Checkbox("ax", &ax);
 
 	}
 	ImGui::End();
