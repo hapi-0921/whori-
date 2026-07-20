@@ -114,6 +114,29 @@ void SceneSelect::Update(float elapsedTime)
 	tutorial.Update(elapsedTime);
 
 	OptionUI& optionUI = OptionUI::Instance();
+<<<<<<< HEAD
+=======
+
+	optionUI.nowGameScene = false;
+
+	if (tutorial.toSelect)
+	{
+		stage.stageType = Stage::StageType::MACHI;
+		//stage.Initialize();
+
+		tutorial.isTutorial = false;
+		tutorial.toSelect = false;
+		optionUI.nowGameScene = false;
+
+	}
+
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
+	{
+		optionUI.isOption = true;
+		optionUI.isHome = true;
+	}
+	optionUI.UpdateOption(elapsedTime);//設定画面
+>>>>>>> 55f480c13a89a8b48a23e87dc2f737748399f568
 
 	Mouse& mouse = Input::Instance().GetMouse();
 	const MouseButton mouseButton = Mouse::BTN_LEFT;
