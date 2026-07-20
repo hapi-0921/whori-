@@ -286,21 +286,12 @@ void OptionUI::UpdateOption(float elapsedTime)
 		//ホームボタン
 		if ((isCircleJubge(mousePos.x, mousePos.y, homePos.x, homePos.y, homeSize) &&
 			mouse.GetButtonDown() & Mouse::BTN_LEFT))
-<<<<<<< HEAD
 		{
 			if (isHome)	isHome = false;
-			else  isHome = true;
-			
+			else isHome = true;
 		}
 		if (isHome)
 		{
-=======
-		{
-			isHome = true;
-		}
-		if (isHome)
-		{
->>>>>>> yamamoto
 
 			if (!nowGameScene)//シーンセレクトの時
 			{
@@ -311,16 +302,12 @@ void OptionUI::UpdateOption(float elapsedTime)
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
-<<<<<<< HEAD
-
-=======
 						scoreManager.ResetData();
 
 						optionUI.isOption = false;
 						optionUI.isHome = false;
 
 						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
->>>>>>> yamamoto
 					}
 				}
 				//ゲームをやめる
@@ -330,11 +317,6 @@ void OptionUI::UpdateOption(float elapsedTime)
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
-<<<<<<< HEAD
-						HWND hWnd = GetActiveWindow();
-						PostMessage(hWnd, WM_CLOSE, 0, 0);
-
-=======
 						scoreManager.ResetData();
 
 						optionUI.isOption = false;
@@ -342,59 +324,41 @@ void OptionUI::UpdateOption(float elapsedTime)
 
 						HWND hWnd = GetActiveWindow();
 						PostMessage(hWnd, WM_CLOSE, 0, 0);
->>>>>>> yamamoto
 					}
 				}
 			}
 			else
 			{
-<<<<<<< HEAD
-				//もう一度
-=======
 				//セレクトへ
->>>>>>> yamamoto
 				{
 					DirectX::XMFLOAT2 pos = { 1256,142 };
 					DirectX::XMFLOAT2 size = { 389,92 };
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
-<<<<<<< HEAD
-
-=======
 						scoreManager.ResetData();
 
 						optionUI.isOption = false;
 						optionUI.isHome = false;
 
 						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
->>>>>>> yamamoto
 
 					}
 				}
 
-<<<<<<< HEAD
-				//セレクトへ
-=======
 				//もう一度
->>>>>>> yamamoto
 				{
 					DirectX::XMFLOAT2 pos = { 1256,317 };
 					DirectX::XMFLOAT2 size = { 389,123 };
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
-<<<<<<< HEAD
-
-
-=======
 						scoreManager.ResetData();
 
 						optionUI.isOption = false;
 						optionUI.isHome = false;
 
 						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
->>>>>>> yamamoto
 					}
 				}
 
@@ -405,14 +369,11 @@ void OptionUI::UpdateOption(float elapsedTime)
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
-<<<<<<< HEAD
-=======
 						scoreManager.ResetData();
 
 						optionUI.isOption = false;
 						optionUI.isHome = false;
 
->>>>>>> yamamoto
 						HWND hWnd = GetActiveWindow();
 						PostMessage(hWnd, WM_CLOSE, 0, 0);
 
@@ -420,18 +381,6 @@ void OptionUI::UpdateOption(float elapsedTime)
 				}
 
 			}
-<<<<<<< HEAD
-
-			//if ((isCircleJubge(mousePos.x, mousePos.y, homePos.x, homePos.y, homeSize) &&
-			//	mouse.GetButtonDown() & Mouse::BTN_LEFT))
-			//{
-=======
-		}
->>>>>>> yamamoto
-
-			//	isHome = false;
-			//}
-
 		}
 	}
 	else

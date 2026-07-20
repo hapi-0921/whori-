@@ -134,7 +134,7 @@ void SceneGame::Update(float elapsedTime)
 			gameTimer += elapsedTime;
 			if (gameTimer >= 0.3f)
 			{
-				GameTimer++;
+				GameTimer--;
 				gameTimer = 0.0;
 			}
 			sec = GameTimer % 60;
@@ -164,23 +164,11 @@ void SceneGame::Update(float elapsedTime)
 
 
 
-<<<<<<< HEAD
-=======
-	// ‰æ–Ê‘JˆÚ //
-	GamePad& gamePad = Input::Instance().GetGamePad();
-
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001) 
-	{
-		optionUI.isOption = true;
-		//optionUI.homeOpen = true;
-		optionUI.isHome = true;
-	}
-
 
 	uiController->Update(elapsedTime);
 
 	
-	if (targetManager->toResult /*|| GameTimer >= 60 * 2*/ )
+	if (targetManager->toResult || GameTimer<=0.0f)
 	{
 		optionUI.nowGameScene = false;
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));

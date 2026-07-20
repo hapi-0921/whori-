@@ -28,10 +28,6 @@ public:
 		return optionUI;
 	}
 
-<<<<<<< HEAD
-=======
-	//bool homeOpen = false;
->>>>>>> yamamoto
 	bool isOption = false;
 	bool isHome = false;
 	bool nowGameScene = false;
@@ -73,10 +69,6 @@ private:
 	float homeSize = 55.0f;
     //
 
-<<<<<<< HEAD
-=======
-	//bool ax = false;
->>>>>>> yamamoto
 
 };
 
