@@ -7,6 +7,8 @@
 #include "GameManager.h"
 #include"Camera.h"
 #include "targetManager.h"
+#include"Tutorial.h"
+#include "SceneSelect.h"
 
 #include<imgui.h>
 
@@ -72,10 +74,6 @@ void SceneGame::Finalize()
 		delete cameraController;
 		cameraController = nullptr;
 	}
-	//if (targetManager != nullptr) {
-	//	delete targetManager;
-	//	targetManager = nullptr;
-	//}
 
 	// delete しない！ 所有権はGameManagerにある
 	targetManager = nullptr;
@@ -103,22 +101,41 @@ void SceneGame::Finalize()
 // 更新処理
 void SceneGame::Update(float elapsedTime)
 {
+	Tutorial& tutorial = Tutorial::Instance();
+	tutorial.Update(elapsedTime);
+	if (tutorial.toGame)
+	{
+		tutorial.isTutorial = true;
+		tutorial.toGame = false;
+	}
+	OptionUI& optionUI = OptionUI::Instance();
+	optionUI.UpdateOption(elapsedTime);//設定画面
 
+	targetManager->Update(elapsedTime);
 
 	//GameManager::Instance().SetPlaying(false);でプレイ中かどうか入れる
 	if (GameManager::Instance().IsPlaying())
 	{
-
-		gameTimer += elapsedTime;
-		if (gameTimer >= 0.2f)
+		if (!tutorial.isTutorial)
 		{
-			GameTimer++;
-			gameTimer = 0.0;
+			gameTimer += elapsedTime;
+			if (gameTimer >= 0.3f)
+			{
+				GameTimer++;
+				gameTimer = 0.0;
+			}
+			sec = GameTimer % 60;
+			min = GameTimer / 60;
 		}
-		sec = GameTimer % 60;
-		min = GameTimer / 60;
 
 		cameraController->Update(elapsedTime);
+	}
+
+	if (tutorial.toSelect)//チュートリアルをやめる
+	{
+		//optionUI.nowGameScene = false;
+		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
+		//tutorial.toSelect = false;
 	}
 
 
@@ -132,23 +149,29 @@ void SceneGame::Update(float elapsedTime)
 	Stage& stage = Stage::Instance();
 	stage.Update(elapsedTime);
 
-	targetManager->Update(elapsedTime);
-	uiController->Update(elapsedTime);
-
 
 
 	// 画面遷移 //
 	GamePad& gamePad = Input::Instance().GetGamePad();
-	
-	// Zキーを押したらフェードインスタート
-	//const GamePadButton ZKey = GamePad::BTN_A;
 
-	
-	if (targetManager->toResult || GameTimer >= 60 * 2 )
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001) 
 	{
-		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
+		optionUI.isOption = true;
+		optionUI.homeOpen = true;
+		optionUI.isHome = true;
 	}
 
+
+	uiController->Update(elapsedTime);
+
+	
+	if (targetManager->toResult /*|| GameTimer >= 60 * 2*/ )
+	{
+		optionUI.nowGameScene = false;
+		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
+	}
+	// Update
+	debugElapsedTime = elapsedTime;
 }
 
 // 描画処理
@@ -168,6 +191,8 @@ void SceneGame::Render()
 	rc.view = camera.GetView();
 	rc.projection = camera.GetProjection();
 
+	OptionUI& optionUI = OptionUI::Instance();
+	Tutorial& tutorial = Tutorial::Instance();
 
 	// 3Dモデル描画
 	{
@@ -197,6 +222,10 @@ void SceneGame::Render()
 		timer->DrawNumber0(rc, min, 150, 950, 2.0f);
 		timer->DrawNumber0(rc, sec, 400, 950, 2.0f);
 	}
+	//設定画面
+	optionUI.RenderOption(rc, modelRenderer);
+	tutorial.Render(rc, modelRenderer);
+
 
 	cameraController->Render(rc);
 }
@@ -204,7 +233,6 @@ void SceneGame::Render()
 // GUI描画
 void SceneGame::DrawGUI()
 {
-	//return;
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
 	ImGui::SetNextWindowPos(ImVec2(pos.x + 10, pos.y), ImGuiCond_Once);
 
@@ -213,12 +241,19 @@ void SceneGame::DrawGUI()
 	if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
 	{
 
-		
+		// DrawGUI
+		ImGui::Text("elapsedTime = %.6f", debugElapsedTime);
 		ImGui::InputFloat("gameTimer", &gameTimer);
 		ImGui::InputInt("gameTimer", &GameTimer);
 
 		ImGui::End();
 	}
+
+	OptionUI& optionUI = OptionUI::Instance();
+	optionUI.DrawDebugGUI();
+
+	Tutorial& tutorial = Tutorial::Instance();
+	tutorial.DrawDebugGUI();
 
 	//Stage& stage = Stage::Instance();
 	//stage.DrawDebugGUI();
@@ -226,6 +261,6 @@ void SceneGame::DrawGUI()
 	//ScoreManager& scoreManager = ScoreManager::Instance();
 	//scoreManager.DrawDebugGUI();
 	//cameraController->DrawDebugGUI();
-	//targetManager->DrawDebugGUI();
+	targetManager->DrawDebugGUI();
 	//uiController->DrawDebugGUI();
 }

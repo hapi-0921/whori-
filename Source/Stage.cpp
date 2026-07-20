@@ -50,10 +50,10 @@ Stage::~Stage()
 
 	delete mdlCenterWall;
 }
-//void Stage::Initialize()
-//{
-//
-//}
+void Stage::Initialize()
+{
+
+}
 
 //XVˆ—
 void Stage::Update(float elapsedTime)

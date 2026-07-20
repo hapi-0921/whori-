@@ -165,6 +165,7 @@
     <ClCompile Include="Source\save.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\Audio.h">
@@ -317,6 +318,7 @@
     <ClInclude Include="Source\save.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Tutorial.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">

@@ -89,6 +89,8 @@ void Font::DrawNumber(const RenderContext& rc, int number, float centerX, float 
     }
     }
 }
+
+//Å@0ï\ãLÇ†ÇË
 void Font::DrawNumber0(const RenderContext& rc, int number, float centerX, float y, float scale)
 {
     char text[16];
