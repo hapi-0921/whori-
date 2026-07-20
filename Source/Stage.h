@@ -70,8 +70,7 @@ public:
 
 	//更新処理
 	void Update(float elapsedTime);
-
-	//描画処理
+	
 	void Render(const RenderContext& rc, ModelRenderer* renderer, StageTransform* transform);
 
 	//void FrontWall();
@@ -83,7 +82,7 @@ public:
 public:
 	int stageNum = 0;//ステージの個数
 
-	int stageType = SIMA;
+	int stageType = MACHI;
 	enum StageType
 	{
 		MACHI = 1,

@@ -163,6 +163,7 @@ void SceneSelect::Update(float elapsedTime)
 			arrowColorRight = 0.5f;
 			stage.stageType = Stage::StageType::MACHI;
 
+
 			selectStage.position.x += (10 - selectStage.position.x) * 0.02f;
 			selectStage.scale.x += (0.005f - selectStage.scale.x) * 0.13f;
 			selectStage.scale.y += (0.005f - selectStage.scale.y) * 0.13f;
@@ -198,13 +199,11 @@ void SceneSelect::Update(float elapsedTime)
 			arrowColorLeft = 0.5f;
 			stage.stageType = Stage::StageType::SIMA;
 
-			// �X�e�[�W�؂�ւ�
 			selectStage.position.x += (-10 - selectStage.position.x) * 0.05f;
 			selectStage.scale.x += (0.003f - selectStage.scale.x) * 0.05f;
 			selectStage.scale.y += (0.003f - selectStage.scale.y) * 0.05f;
 			selectStage.scale.z += (0.003f - selectStage.scale.z) * 0.05f;
 
-			// �X�e�[�W�؂�ւ�
 			selectStage2.position.x += (-10 - selectStage2.position.x) * 0.02f;
 			selectStage2.scale.x += (0.005f - selectStage2.scale.x) * 0.13f;
 			selectStage2.scale.y += (0.005f - selectStage2.scale.y) * 0.13f;

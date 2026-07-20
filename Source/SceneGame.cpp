@@ -56,6 +56,7 @@ void SceneGame::Initialize()
 		cameraController->range = cameraController->GetMaxRanget();
 	}
 
+	stage.Initialize();
 
 	timer = new Font("Data/Sprite/number.png");
 	sprTimer = new Sprite("Data/Sprite/chain/UI/timer.png");

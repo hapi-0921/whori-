@@ -109,6 +109,7 @@ void Tutorial::Update(float elapsedTime)
 void Tutorial::NowTutorial(float elapsedTime)
 {
 	Mouse& mouse = Input::Instance().GetMouse();
+	ScoreManager& scoreManager = ScoreManager::Instance();
 
 
 	blinkTimer += elapsedTime;
@@ -158,20 +159,9 @@ void Tutorial::NowTutorial(float elapsedTime)
 		if (mouse.GetButtonDown() & Mouse::BTN_LEFT) tutoType = 6;
 		break;
 	case 6:
-		tuto6 = true;
-
-		DirectX::XMFLOAT2 pos = { 1626,932 };
-		DirectX::XMFLOAT2 size = { 270,77 };
-
-		if (pos.x  < mousePos.x &&//l
-			pos.x + size.x > mousePos.x &&//r
-			pos.y  < mousePos.y &&//t
-			pos.y + size.y  > mousePos.y)  //b
+		if (tuto6)
 		{
-			if (mouse.GetButtonUp() & Mouse::BTN_LEFT)
-			{
-				tutoType = 7;
-			}
+			tutoType = 7;
 		}
 		break;
 	case 7:
@@ -191,6 +181,7 @@ void Tutorial::NowTutorial(float elapsedTime)
 		break;
 
 	case 10://チュートリアル終了
+		scoreManager.ResetData();
 		toSelect = true;
 		break;
 
