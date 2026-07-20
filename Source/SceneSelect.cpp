@@ -12,6 +12,9 @@
 bool SceneSelect::selectstart = false;
 bool SceneSelect::first = true;
 
+#include"nameManager.h"
+
+
 // 初期化
 void SceneSelect::Initialize()
 {
@@ -121,6 +124,15 @@ void SceneSelect::Update(float elapsedTime)
 	const MouseButton mouseButton = Mouse::BTN_LEFT;
 	CursorX = mouse.GetPositionX();
 	CursorY = mouse.GetPositionY();
+
+	NameManagger& nameManagger = NameManagger::Instance();
+
+
+	if (!name)
+	{
+		name=nameManagger.Update(elapsedTime);
+		return;
+	}
 
 	if (first)
 	{

@@ -168,6 +168,7 @@
     <ClCompile Include="Source\Tutorial.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\nameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\Audio.h">
@@ -323,6 +324,7 @@
     <ClInclude Include="Source\Tutorial.h">
       <Filter>Source\h</Filter>
     </ClInclude>
+    <ClInclude Include="Source\nameManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">

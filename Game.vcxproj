@@ -126,6 +126,7 @@
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\ModelCommon.h" />
     <ClInclude Include="Source\Framework.h" />
+    <ClInclude Include="Source\nameManager.h" />
     <ClInclude Include="Source\PrimitiveRenderer.h" />
     <ClInclude Include="Source\save.h" />
     <ClInclude Include="Source\Scene.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Source\ModelCommon.cpp" />
     <ClCompile Include="Source\Framework.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\nameManager.cpp" />
     <ClCompile Include="Source\PrimitiveRenderer.cpp" />
     <ClCompile Include="Source\save.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
