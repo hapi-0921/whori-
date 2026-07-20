@@ -107,6 +107,7 @@ void SceneGame::Update(float elapsedTime)
 	// ‰æ–Ê‘JˆÚ //
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	OptionUI& optionUI = OptionUI::Instance();
+	optionUI.nowGameScene = true;
 
 	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
 	{
@@ -140,7 +141,7 @@ void SceneGame::Update(float elapsedTime)
 			sec = GameTimer % 60;
 			min = GameTimer / 60;
 		}
-
+		
 		cameraController->Update(elapsedTime);
 	}
 

@@ -208,6 +208,7 @@ OptionUI::~OptionUI()
 		sprGHome = nullptr;
 	}
 }
+
 bool escape = false;
 void OptionUI::UpdateOption(float elapsedTime)
 {
@@ -225,6 +226,7 @@ void OptionUI::UpdateOption(float elapsedTime)
 	if (!nowGameScene)//シーンセレクトの時
 	{
 		optColor = { 0.3f,0.3f,0.3f,1 };
+		optPos = { 1920 - 200  ,20 };
 
 		if (isCircleJubge(mousePos.x, mousePos.y, optPos.x, optPos.y, optSize * 0.5f) &&
 			mouse.GetButtonDown() & Mouse::BTN_LEFT)
@@ -346,26 +348,10 @@ void OptionUI::UpdateOption(float elapsedTime)
 					}
 				}
 
-				//もう一度
-				{
-					DirectX::XMFLOAT2 pos = { 1256,317 };
-					DirectX::XMFLOAT2 size = { 389,123 };
-					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
-						mouse.GetButtonDown() & Mouse::BTN_LEFT)
-					{
-						scoreManager.ResetData();
-
-						optionUI.isOption = false;
-						optionUI.isHome = false;
-
-						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-					}
-				}
-
 				//ゲームをやめる
 				{
-					DirectX::XMFLOAT2 pos = { 1256,517 };
-					DirectX::XMFLOAT2 size = { 389,139 };
+					DirectX::XMFLOAT2 pos = { 1256,317 };
+					DirectX::XMFLOAT2 size = { 389,170 };
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
@@ -460,6 +446,7 @@ void OptionUI::DrawDebugGUI()
 
 	if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
 	{
+		ImGui::Checkbox("nowGameScene", &nowGameScene);
 		ImGui::InputFloat("optionTimer", &optionTimer);
 		ImGui::InputFloat2("mousePos", &mousePos.x);
 

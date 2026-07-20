@@ -111,7 +111,9 @@ void SceneSelect::Update(float elapsedTime)
 	tutorial.Update(elapsedTime);
 
 	OptionUI& optionUI = OptionUI::Instance();
-		
+
+	optionUI.nowGameScene = false;
+
 	if (tutorial.toSelect)
 	{
 		stage.stageType = Stage::StageType::MACHI;
