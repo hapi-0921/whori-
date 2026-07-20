@@ -93,7 +93,7 @@ void SceneResult::Update(float elapsedTime)
 	{
 		rankset = 4;
 	}
-	if ((mouse.GetButtonDown() & mouseButton)&&next)
+	if ((mouse.GetButtonUp() & mouseButton)&&next)
 	{
 		ranking = true;
 	}
@@ -263,7 +263,7 @@ void SceneResult::Render()
 				1.0f);
 			Numberfont->DrawNumber(            //Œ©‚Â‚¯‚½‚à‚Ì‘”Œã‚Å•Ï‚¦‚é‚É‚å‚ñ
 				rc,
-				48,
+				scoreManager.targetNum,
 				470,
 				580,
 				1.0f);

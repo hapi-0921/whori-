@@ -42,7 +42,7 @@ private:
 	bool nowGame = false;
 
 	float gameTimer = 0.0f;
-	int GameTimer = 60*2;
+	int GameTimer = 60;//本命タイマー
 
 	int sec = 0;
 	int min = 0;

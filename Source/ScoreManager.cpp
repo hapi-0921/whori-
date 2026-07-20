@@ -33,7 +33,7 @@ void ScoreManager::TargetUpload()
     else if (stage.stageType == stage.SIMA) targetNum = 41;//animals
 
     Tutorial& tutorial = Tutorial::Instance();
-
+    //if (chainCount <= 0) return;
     if (tutorial.isTutorial)
     {
         if (tutorial.tutoType != 6)    return;
@@ -42,35 +42,43 @@ void ScoreManager::TargetUpload()
     DirectX::XMFLOAT2 pos = { 1626,932 };
     DirectX::XMFLOAT2 size = { 270,77 };
 
-    if (pos.x  < mousePos.x &&//l
-        pos.x + size.x > mousePos.x &&//r
-        pos.y  < mousePos.y &&//t
-        pos.y + size.y  > mousePos.y)  //b
+    if (chainCount > 0)
     {
-        texPosY -= speed;
-        if(texPosY<=0.0f)
+        if (pos.x  < mousePos.x &&//l
+            pos.x + size.x > mousePos.x &&//r
+            pos.y  < mousePos.y &&//t
+            pos.y + size.y  > mousePos.y)  //b
         {
-            upload = true;
             if (tutorial.isTutorial)
             {
-                tutorial.tuto6 = true;
-                return;
+                speed = 0.3f;
+            }
+            else
+            {
+                speed = 3.0f;
             }
 
-            texPosY += speed;
-            if (77.0f >= texPosY)  texPosY = 77.0f;
+            texPosY -= speed;
+
+            if (texPosY <= 0.0f)
+            {
+                upload = true;
+                tutorial.tuto6 = true;
+
+                texPosY += speed;
+                if (77.0f >= texPosY)  texPosY = 77.0f;
+            }
         }
-    }
-    else
-    {
-        if (texPosY < 77.0f)
+        else
         {
+            if (texPosY < 77.0f)
+            {
 
-            texPosY += speed;
-            if (77.0f >= texPosY)  texPosY = 77.0f;
+                texPosY += speed;
+                if (77.0f >= texPosY)  texPosY = 77.0f;
+            }
         }
     }
-
     if (upload && chainCount != 0)
     {
         nowChain = chainCount;
@@ -134,6 +142,7 @@ void ScoreManager::DrawDebugGUI()
         //ImGui::InputInt("maxChar", &maxChar);
         //ImGui::InputInt("allScore", &allScore);
         ImGui::InputInt("getNum", &getNum);
+        ImGui::InputFloat("speed", &speed);
 
         ImGui::Checkbox("reset", &reset);
     }

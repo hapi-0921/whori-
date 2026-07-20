@@ -42,7 +42,7 @@ public:
 	float comboScale = 1.5f;
 	float scoreScale = 1.5f;
 
-	float speed = 1.5f;
+	float speed = 2.0f;
 
 	int chainCount = 0;//‰½˜A½’†‚©
 	int conbo = 0;//ƒRƒ“ƒ{”
