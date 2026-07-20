@@ -126,7 +126,6 @@ void SceneSelect::Update(float elapsedTime)
 	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
 	{
 		optionUI.isOption = true;
-		optionUI.homeOpen = true;
 		optionUI.isHome = true;
 	}
 	optionUI.UpdateOption(elapsedTime);//設定画面
