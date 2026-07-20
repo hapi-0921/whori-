@@ -63,6 +63,7 @@ private:
 	float scorescale = 2;
 	float rankScale = 1.0f;
 
+	int getDown = 0;
 	bool rankScaleAnim = false;
 	bool rankFinish = false;   
 	bool next = false;

@@ -64,6 +64,7 @@ private:
 	};
 	static bool selectstart;
 	static bool first;
+	int selecttimer = 0;
 	// 描画関数以外でも使いたいのでヘッダーに移動させる
 	Graphics& graphics = Graphics::Instance();
 	float screenWidth = static_cast<float>(graphics.GetScreenWidth());
