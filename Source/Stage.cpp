@@ -8,27 +8,6 @@
 Stage::Stage()
 {
 
-	if (stageType == MACHI)
-	{
-		stageNum = 4;
-
-		mdlStage[0] = new Model("Data/Model/stage/machi/matimati/matimati1.mdl");
-		mdlStage[1] = new Model("Data/Model/stage/machi/matimati/matimati2.mdl");
-		mdlStage[2] = new Model("Data/Model/stage/machi/matimati/matimati3.mdl");
-		mdlStage[3] = new Model("Data/Model/stage/machi/matimati/matimati4.mdl");
-	}
-	else if (stageType == SIMA)
-	{
-		stageNum = 7;
-
-		mdlStage[0] = new Model("Data/Model/stage/shima/simasima/simasima1.1.mdl");
-		mdlStage[1] = new Model("Data/Model/stage/shima/simasima/simasima1.2.mdl");
-		mdlStage[2] = new Model("Data/Model/stage/shima/simasima/simasima1.3.mdl");
-		mdlStage[3] = new Model("Data/Model/stage/shima/simasima/simasima1.mdl");
-		mdlStage[4] = new Model("Data/Model/stage/shima/simasima/simasima2.mdl");
-		mdlStage[5] = new Model("Data/Model/stage/shima/simasima/simasima3.mdl");
-		mdlStage[6] = new Model("Data/Model/stage/shima/simasima/simasima4.mdl");
-	}
 
 	mdlCenterWall = new Model("Data/Model/wall/wall.mdl");
 
@@ -52,7 +31,27 @@ Stage::~Stage()
 }
 void Stage::Initialize()
 {
+	if (stageType == MACHI)
+	{
+		stageNum = 4;
 
+		mdlStage[0] = new Model("Data/Model/stage/machi/matimati/matimati1.mdl");
+		mdlStage[1] = new Model("Data/Model/stage/machi/matimati/matimati2.mdl");
+		mdlStage[2] = new Model("Data/Model/stage/machi/matimati/matimati3.mdl");
+		mdlStage[3] = new Model("Data/Model/stage/machi/matimati/matimati4.mdl");
+	}
+	else if (stageType == SIMA)
+	{
+		stageNum = 7;
+
+		mdlStage[0] = new Model("Data/Model/stage/shima/simasima/simasima1.1.mdl");
+		mdlStage[1] = new Model("Data/Model/stage/shima/simasima/simasima1.2.mdl");
+		mdlStage[2] = new Model("Data/Model/stage/shima/simasima/simasima1.3.mdl");
+		mdlStage[3] = new Model("Data/Model/stage/shima/simasima/simasima1.mdl");
+		mdlStage[4] = new Model("Data/Model/stage/shima/simasima/simasima2.mdl");
+		mdlStage[5] = new Model("Data/Model/stage/shima/simasima/simasima3.mdl");
+		mdlStage[6] = new Model("Data/Model/stage/shima/simasima/simasima4.mdl");
+	}
 }
 
 //çXêVèàóù

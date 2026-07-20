@@ -2,37 +2,6 @@
   "targets": [
 
     {
-      "model": "Data/Model/target/foods/clock.mdl",
-      "sprite": "Data/Sprite/chain/foods/dish.png",
-      "name": "おさら",
-      "charCount": 3,
-      "startN": "お",
-      "endN": "ら",
-      "position": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "card": "Data/Model/target/card/foods/card.mdl",
-      "right": true
-    },
-    {
-      "model": "Data/Model/target/foods/radio.mdl",
-      "sprite": "Data/Sprite/chain/foods/radio.png",
-      "name": "ラジオ",
-      "charCount": 3,
-      "startN": "ら",
-      "endN": "お",
-      "position": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "card": "Data/Model/target/card/foods/card.mdl",
-      "right": true
-
-    },
-    {
       "model": "Data/Model/target/foods/tohu.mdl",
       "sprite": "Data/Sprite/chain/foods/tohu.png",
       "name": "とうふ",

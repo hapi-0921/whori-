@@ -25,7 +25,7 @@ public:
 
 	Sprite* sprShader = nullptr;
 	DirectX::XMFLOAT2 shadeSize = { 270,76 };
-	float texPosY =77.0f;
+	float texPosY = 77.0f;
 
 
 	DirectX::XMFLOAT2 mousePos = {};
@@ -38,9 +38,11 @@ public:
 	float comboTimer = 0.0f;
 	float scoreTimer = 0.0f;
 	DirectX::XMFLOAT2 comboPos = { 150 ,950 };
-	DirectX::XMFLOAT2 scorePos = {400,950};
+	DirectX::XMFLOAT2 scorePos = { 400,950 };
 	float comboScale = 1.5f;
 	float scoreScale = 1.5f;
+
+	float speed = 1.5f;
 
 	int chainCount = 0;//何連鎖中か
 	int conbo = 0;//コンボ数
@@ -68,5 +70,22 @@ public:
 	int maxCombo = 0;//最大コンボ
 	int maxChar = 0;//最大文字数
 
+	void ResetData()
+	{
+		chainCount = 0;//何連鎖中か
+		conbo = 0;//コンボ数
+		nowChain = 0;
 
+		score = 0;//一回一回のスコア
+		allCharCount = 0;//合計文字数
+
+		allScore = 0;//スコア
+		siritoriNum = 0;//しりとり数
+
+		getNum = 0;//見つけた数
+		targetNum = 0;//target合計
+
+		maxCombo = 0;//最大コンボ
+		maxChar = 0;//最大文字数
+	}
 };

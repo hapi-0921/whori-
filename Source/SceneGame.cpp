@@ -56,6 +56,7 @@ void SceneGame::Initialize()
 		cameraController->range = cameraController->GetMaxRanget();
 	}
 
+	stage.Initialize();
 
 	timer = new Font("Data/Sprite/number.png");
 	sprTimer = new Sprite("Data/Sprite/chain/UI/timer.png");
@@ -102,14 +103,26 @@ void SceneGame::Finalize()
 void SceneGame::Update(float elapsedTime)
 {
 	Tutorial& tutorial = Tutorial::Instance();
+
+	// ‰æ–Ê‘JˆÚ //
+	GamePad& gamePad = Input::Instance().GetGamePad();
+	OptionUI& optionUI = OptionUI::Instance();
+
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
+	{
+		optionUI.isOption = true;
+		optionUI.isHome = true;
+	}
+
+	optionUI.UpdateOption(elapsedTime);//Ý’è‰æ–Ê
+
+
 	tutorial.Update(elapsedTime);
 	if (tutorial.toGame)
 	{
 		tutorial.isTutorial = true;
 		tutorial.toGame = false;
 	}
-	OptionUI& optionUI = OptionUI::Instance();
-	optionUI.UpdateOption(elapsedTime);//Ý’è‰æ–Ê
 
 	targetManager->Update(elapsedTime);
 
@@ -149,17 +162,6 @@ void SceneGame::Update(float elapsedTime)
 	Stage& stage = Stage::Instance();
 	stage.Update(elapsedTime);
 
-
-
-	// ‰æ–Ê‘JˆÚ //
-	GamePad& gamePad = Input::Instance().GetGamePad();
-
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001) 
-	{
-		optionUI.isOption = true;
-		optionUI.homeOpen = true;
-		optionUI.isHome = true;
-	}
 
 
 	uiController->Update(elapsedTime);

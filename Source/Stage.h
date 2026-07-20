@@ -70,8 +70,7 @@ public:
 
 	//XVˆ—
 	void Update(float elapsedTime);
-
-	//•`‰æˆ—
+	
 	void Render(const RenderContext& rc, ModelRenderer* renderer, StageTransform* transform);
 
 	//void FrontWall();

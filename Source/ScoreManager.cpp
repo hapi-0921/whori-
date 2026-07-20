@@ -4,6 +4,8 @@
 #include"System/Input.h"
 #include<imgui.h>
 
+#include"tutorial.h"
+
 
 ScoreManager::ScoreManager()
 {
@@ -30,6 +32,12 @@ void ScoreManager::TargetUpload()
     if (stage.stageType == stage.MACHI)targetNum = 48;//foods
     else if (stage.stageType == stage.SIMA) targetNum = 41;//animals
 
+    Tutorial& tutorial = Tutorial::Instance();
+
+    if (tutorial.isTutorial)
+    {
+        if (tutorial.tutoType != 6)    return;
+    }
 
     DirectX::XMFLOAT2 pos = { 1626,932 };
     DirectX::XMFLOAT2 size = { 270,77 };
@@ -39,11 +47,17 @@ void ScoreManager::TargetUpload()
         pos.y  < mousePos.y &&//t
         pos.y + size.y  > mousePos.y)  //b
     {
-        texPosY -= 1.5f;
+        texPosY -= speed;
         if(texPosY<=0.0f)
         {
             upload = true;
-            texPosY += 1.5f;
+            if (tutorial.isTutorial)
+            {
+                tutorial.tuto6 = true;
+                return;
+            }
+
+            texPosY += speed;
             if (77.0f >= texPosY)  texPosY = 77.0f;
         }
     }
@@ -52,7 +66,7 @@ void ScoreManager::TargetUpload()
         if (texPosY < 77.0f)
         {
 
-            texPosY += 1.0f;
+            texPosY += speed;
             if (77.0f >= texPosY)  texPosY = 77.0f;
         }
     }
@@ -89,12 +103,12 @@ void ScoreManager::TargetUpload()
 }
 void ScoreManager::Render(const RenderContext& rc)
 {
-    DirectX::XMFLOAT2 pos = { 1626,935 ,};
+    DirectX::XMFLOAT2 pos = { 1626,935 };
 
     sprShader->Render(rc,
-        pos.x, pos.y, 0,
+        pos.x, pos.y+ texPosY, 0,
         shadeSize.x, shadeSize.y,
-        0, texPosY,					
+        0, texPosY,
         270, 77,				
         0, 1, 1, 1, 0.7f);
 
