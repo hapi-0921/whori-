@@ -230,48 +230,49 @@ void CameraController::Update(float elapsedTime)
 
 		// ================ ズームイン ================
 
-			if (wheel > 0.0f)
+		if (wheel > 0.0f)
+		{
+			//チュートリアル
+			if (tutorial.tutoType == 2)
 			{
-				//チュートリアル
-				if (tutorial.tutoType == 2)
+				tutorial.tuto2wheel += wheel;
+				if (tutorial.tuto2wheel >= 8.0f)	tutorial.tuto2 = true;
+			}
+
+			XMFLOAT3 hitDelta;
+			if (cursorRay(hitDelta))
+			{
+				XMVECTOR targetV = XMLoadFloat3(&target);
+				XMVECTOR deltaV = XMLoadFloat3(&hitDelta);
+
+				float distToHit = XMVectorGetX(XMVector3Length(deltaV));
+
+				if (distToHit > 0.05f)
 				{
-					tutorial.tuto2wheel += wheel;
-					if (tutorial.tuto2wheel >= 8.0f)	tutorial.tuto2 = true;
-				}
+					XMVECTOR dir = XMVector3Normalize(deltaV);
 
-				XMFLOAT3 hitDelta;
-				if (cursorRay(hitDelta))
-				{
-					XMVECTOR targetV = XMLoadFloat3(&target);
-					XMVECTOR deltaV = XMLoadFloat3(&hitDelta);
+					float strength = wheel * moveSpeed;
+					float maxMove = distToHit * 0.3f;
 
-					float distToHit = XMVectorGetX(XMVector3Length(deltaV));
+					float moveAmount = std::min(strength * distToHit, maxMove);
 
-					if (distToHit > 0.05f)
-					{
-						XMVECTOR dir = XMVector3Normalize(deltaV);
-
-						float strength = wheel * moveSpeed;
-						float maxMove = distToHit * 0.3f;
-
-						float moveAmount = std::min(strength * distToHit, maxMove);
-
-						XMVECTOR offset = XMVectorScale(dir, moveAmount);
-						XMVECTOR newTarget = targetV + offset;
-						XMStoreFloat3(&target, newTarget);
-					}
-				}
-				if (range > 0.0f)
-				{
-
-					if (!targetManager->canZoom)
-					{
-						// range調整
-						//range -= wheel * zoomSpeed;
-						range = std::max(range - wheel * zoomSpeed, 0.0f);
-					}
+					XMVECTOR offset = XMVectorScale(dir, moveAmount);
+					XMVECTOR newTarget = targetV + offset;
+					XMStoreFloat3(&target, newTarget);
 				}
 			}
+			if (range > 0.0f)
+			{
+
+				if (!targetManager->canZoom)
+				{
+					// range調整
+					//range -= wheel * zoomSpeed;
+					range = std::max(range - wheel * zoomSpeed, 0.0f);
+				}
+			}
+		}
+
 		// ================ ズームアウト（カーソル） ===============
 		else
 		{
@@ -295,56 +296,9 @@ void CameraController::Update(float elapsedTime)
 				}
 			}
 			range -= wheel * zoomSpeed;
-			
-
 		}
-
-
-		// ================ ズームアウト（中心） ===============
-		//else
-		//{
-		//	XMVECTOR targetV = XMLoadFloat3(&target);
-		//	XMVECTOR center = XMVectorZero();
-
-		//	XMVECTOR toCenter = center - targetV;
-		//	float dist = XMVectorGetX(XMVector3Length(toCenter));
-
-		//	if (dist > 0.2f)
-		//	{
-		//		XMVECTOR dir = XMVector3Normalize(toCenter);
-		//		float strength = std::abs(wheel) * 0.20f;
-		//		float moveDist = strength * dist * 0.1f;
-
-		//		XMVECTOR offset = XMVectorScale(dir, moveDist);
-		//		XMVECTOR newTarget = targetV + offset;
-		//		XMStoreFloat3(&target, newTarget);
-		//	}
-		//}
-
-			if (range < 0.0f)
-			{
-				// rangeが負になってもeyeの計算では「絶対距離」を使う
-				// かつ、最低限の距離を確保（0.1fくらい）
-				// range自体は負のまま保持して自由に動かせる
-			}
-
-			//if (!targetManager->canZoom)
-			//{
-			//	// range調整
-			//	range = std::clamp(range - wheel * zoomSpeed, minRange, maxRange);
-			//}
-			//if (range < 10.0f)
-			//{
-			//	range = std::max(range, 10.0f);
-			//}
 	}
-		//if (range > -minRange && range < minRange)
-		//{
-		//	if (range >= 0.0f)
-		//		range = minRange;
-		//	else
-		//		range = -minRange;
-		//}
+
 	// カメラ更新
 		float safeRange = std::max(range, 0.05f);
 
