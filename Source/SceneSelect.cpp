@@ -159,122 +159,14 @@ void SceneSelect::Update(float elapsedTime)
 		// ステージ１が選択されている状態
 		if (stageState == stageType::stage1)
 		{
-<<<<<<< HEAD
 			stageState = stageType::stage2;
 			arrowColorRight = 0.5f;
-=======
-			stage.stageType = Stage::StageType::MACHI;
-
-			// ステージ切り替え
-			selectStage.position.x += (10 - selectStage.position.x) * 0.02f;
-			selectStage.scale.x += (0.005f - selectStage.scale.x) * 0.13f;
-			selectStage.scale.y += (0.005f - selectStage.scale.y) * 0.13f;
-			selectStage.scale.z += (0.005f - selectStage.scale.z) * 0.13f;
-
-			// ステージ切り替え
-			selectStage2.position.x += (10 - selectStage2.position.x) * 0.05f;
-			selectStage2.scale.x += (0.003f - selectStage2.scale.x) * 0.05f;
-			selectStage2.scale.y += (0.003f - selectStage2.scale.y) * 0.05f;
-			selectStage2.scale.z += (0.003f - selectStage2.scale.z) * 0.05f;
-
-			if (selectStage.position.x > 0)
-			{
-				selectStage.position.x = 0;
-
-				selectStage.scale.x = 0.005f;
-				selectStage.scale.y = 0.005f;
-				selectStage.scale.z = 0.005f;
-			}
-			if (selectStage2.position.x > 10)
-			{
-				selectStage2.position.x = 10;
-
-				selectStage2.scale.x = 0.003f;
-				selectStage2.scale.y = 0.003f;
-				selectStage2.scale.z = 0.003f;
-			}
->>>>>>> yamamoto
 		}
 		// ステージ2が選択されている状態
 		if (stageState == stageType::stage2)
 		{
-<<<<<<< HEAD
 			stageState = stageType::stage1;
 			arrowColorLeft = 0.5f;
-=======
-			stage.stageType = Stage::StageType::SIMA;
-
-			// ステージ切り替え
-			selectStage.position.x += (-10 - selectStage.position.x) * 0.05f;
-			selectStage.scale.x += (0.003f - selectStage.scale.x) * 0.05f;
-			selectStage.scale.y += (0.003f - selectStage.scale.y) * 0.05f;
-			selectStage.scale.z += (0.003f - selectStage.scale.z) * 0.05f;
-
-			// ステージ切り替え
-			selectStage2.position.x += (-10 - selectStage2.position.x) * 0.02f;
-			selectStage2.scale.x += (0.005f - selectStage2.scale.x) * 0.13f;
-			selectStage2.scale.y += (0.005f - selectStage2.scale.y) * 0.13f;
-			selectStage2.scale.z += (0.005f - selectStage2.scale.z) * 0.13f;
-
-			if (selectStage.position.x <= -10)
-			{
-				selectStage.position.x = -10;
-
-				selectStage.scale.x = 0.003f;
-				selectStage.scale.y = 0.003f;
-				selectStage.scale.z = 0.003f;
-			}
-			if (selectStage2.position.x <= 0)
-			{
-				selectStage2.position.x = 0;
-
-				selectStage2.scale.x = 0.005f;
-				selectStage2.scale.y = 0.005f;
-				selectStage2.scale.z = 0.005f;
-			}
-		}
-
-		// 左クリックを押したら、
-		if (mouse.GetButtonDown() & mouseButton)
-		{
-
-			// stage1が選択されている状態　＋　ステージが選択された場合
-			if (stageState == stageType::stage1 &&
-				CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
-			{
-				optionUI.nowGameScene = true;
-
-				GameManager::Instance().CreateTargetManager();
-
-				//stage.Initialize();
-				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-			}
-			// stage2が選択されている状態　＋　ステージが選択された場合
-			if (stageState == stageType::stage2 &&
-				CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
-			{
-				optionUI.nowGameScene = true;
-
-				GameManager::Instance().CreateTargetManager();
-
-				//stage.Initialize();
-				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-			}
-			// stage1が選択されている状態　＋　右の矢印選択された場合
-			if (stageState == stageType::stage1 &&
-				CursorX > screenWidth - ArrowSize &&
-				CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
-			{
-				stageState = stageType::stage2;
-			}
-			// stage2が選択されている状態　＋　左の矢印選択された場合
-			if (stageState == stageType::stage2 &&
-				CursorX < ArrowSize &&
-				CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
-			{
-				stageState = stageType::stage1;
-			}
->>>>>>> yamamoto
 		}
 	}
 
@@ -355,38 +247,24 @@ void SceneSelect::Render()
 
 	// 2D
 	{
-<<<<<<< HEAD
 		if(stageState == stageType::stage1)
-=======
-		//矢印描画
-		if (stageState == stageType::stage1)
->>>>>>> yamamoto
 		{
 			sprArrowRight->Render(rc,
 				screenWidth - ArrowSize, ArrowH, 0, ArrowSize, ArrowSize,
 				0,
-<<<<<<< HEAD
 				arrowColorRight, arrowColorRight, arrowColorRight, 1);
-=======
-				1, 1, 1, 1);
->>>>>>> yamamoto
 		}
 		if (stageState == stageType::stage2)
 		{
 			sprArrowLeft->Render(rc,
 				0, ArrowH, 0, ArrowSize, ArrowSize,
 				0,
-<<<<<<< HEAD
 				arrowColorLeft, arrowColorLeft, arrowColorLeft, 1);
-		}
-=======
-				1, 1, 1, 1);
 		}
 
 		//設定画面
 		optionUI.RenderOption(rc, modelRenderer);
 		tutorial.Render(rc, modelRenderer);
->>>>>>> yamamoto
 	}
 
 	cameraController->Render(rc);
