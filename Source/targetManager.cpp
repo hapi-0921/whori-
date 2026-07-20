@@ -104,7 +104,7 @@ TargetManager::TargetManager()
 
     sprMiss = new Sprite("Data/Sprite/chain/UI/miss.png");
     number = new Font("Data/Sprite/number.png");
-
+    sprConbo= new Sprite("Data/Sprite/conbo.png");
 }
 
 TargetManager::~TargetManager()
@@ -867,13 +867,13 @@ void TargetManager::Render(const RenderContext& rc)
     if (scoreManager.nowCombo)
     {
         scoreManager.comboTimer++;
-        scoreManager.comboScale -= 10;
+        scoreManager.comboScale -= 0.2;
         number->DrawNumber(rc, scoreManager.conbo, scoreManager.comboPos.x, scoreManager.comboPos.y, scoreManager.comboScale);
-
-        if (scoreManager.comboTimer >= 100.0)
+        
+        if (scoreManager.comboScale < 0.7f)
         {
             scoreManager.nowCombo = false;
-            scoreManager.comboTimer = 0.0f;
+            scoreManager.comboScale = 4.0;
         }
     }
     if (scoreManager.nowScore)

@@ -10,7 +10,7 @@
 #include <imgui.h>
 #include"targetManager.h"
 #include <fstream>
-#include <GameManager.h>
+#include "GameManager.h"
 #include"SceneSelect.h"
 #include"SceneTitle.h"
 #include"save.h"
@@ -42,7 +42,7 @@ void SceneResult::Initialize()
 	file >> data;
 	font = new Font("Data/Font/font2.png");
 	Numberfont= new Font("Data/Sprite/number.png");
-	for (int i = 0; i < data["result"].size(); i++)
+	for (int i = 0; i < 3; i++)
 	{
 		sikaku[i].posx = data["result"][i]["position"]["x"];//初期x位置
 		sikaku[i].lastposy = data["result"][i]["position"]["y"];//めっちゃややこいけど上から降ってきた後の着地位置
@@ -56,6 +56,7 @@ void SceneResult::Initialize()
 	record[1].posy = 420;
 	record[2].posy = 540;
 	record[3].posy = 680;
+
 }
 
 // 終了化
@@ -63,6 +64,8 @@ void SceneResult::Finalize()
 {
 	delete font;
 	font = nullptr;
+	// アプリケーション終了時やタイトルに戻るとき
+	GameManager::Instance().ReleaseTargetManager();
 }
 
 // 更新処理
@@ -199,7 +202,12 @@ void SceneResult::Render()
 	
 	ScoreManager& scoreManager = ScoreManager::Instance();
 	Save& save = Save::Instance();
-
+	TargetManager* targetManager = GameManager::Instance().GetTargetManager();
+	if (targetManager)
+	{
+		ImGui::Text("targetManager = %p", targetManager);
+		ImGui::Text("size = %d", targetManager->GetKeepTargetSize());
+	}
 	// 2Dスプライト描画
 	{
 
@@ -209,14 +217,27 @@ void SceneResult::Render()
 				0, 0, 0,
 				1920, 1080, 0, 0,
 				1920, 1080, 0, 1, 1, 1, 1);
-
-			for (int i = 0;i < getDown;i++)	//おちてくるやつ
+			if (targetManager)
 			{
 
-				sprs->Render(rc,
-					sikaku[i].posx, sikaku[i].posy, 0,
-					225, 225, 0, 0,
-					750, 750, sikaku[i].angle, 1, 1, 1, 1);
+				int size = targetManager->GetKeepTargetSize();
+
+				for (int i = 0; i < size; i++)
+				{
+					targetManager->GetgetTargetSpri(i)->Render(
+						rc,
+						sikaku[i].posx,
+						sikaku[i].posy,
+						0,
+						225,
+						225,
+						0,
+						0,
+						750,
+						750,
+						sikaku[i].angle,
+						1, 1, 1, 1);
+				}
 			}
 			sprresultback2->Render(rc,
 				0, 0, 0,
@@ -341,13 +362,12 @@ void SceneResult::Render()
 
 			}
 
-			/*font->Draw(
+			font->Draw(
 				rc,
 				"Hello World!",
 				100,
 				100,
-				10.0f);*/
-				// デバッグ用
+				10.0f);
 #ifndef NDEBUG
 
 #endif // NDEBUG
@@ -368,20 +388,20 @@ void SceneResult::DrawGUI()
 	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
 	ImGui::Begin("Debug");
-	for (int i = 0;i < getDown;i++)
-	{
-		ImGui::PushID(i);
+	//for (int i = 0;i < getDown;i++)
+	//{
+	//	ImGui::PushID(i);
 
-		ImGui::Text("四角 %d", i);
+	//	ImGui::Text("四角 %d", i);
 
-		ImGui::DragInt("X", &sikaku[i].posx);
-		ImGui::DragInt("Y", &sikaku[i].posy);
-		ImGui::DragInt("Angle", &sikaku[i].angle);
+	//	ImGui::DragInt("X", &sikaku[i].posx);
+	//	ImGui::DragInt("Y", &sikaku[i].posy);
+	//	ImGui::DragInt("Angle", &sikaku[i].angle);
 
-		ImGui::Separator();
+	//	ImGui::Separator();
 
-		ImGui::PopID();
-	}
+	//	ImGui::PopID();
+	//}
 	
 	ImGui::End();
 }

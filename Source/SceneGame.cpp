@@ -76,11 +76,6 @@ void SceneGame::Finalize()
 		cameraController = nullptr;
 	}
 
-	// delete しない！ 所有権はGameManagerにある
-	targetManager = nullptr;
-
-	// アプリケーション終了時やタイトルに戻るとき
-	GameManager::Instance().ReleaseTargetManager();
 
 	//2D
 	if (uiController != nullptr)

@@ -37,10 +37,10 @@ public:
 	bool nowScore = false;//score
 	float comboTimer = 0.0f;
 	float scoreTimer = 0.0f;
-	DirectX::XMFLOAT2 comboPos = { 150 ,950 };
+	DirectX::XMFLOAT2 comboPos = { 1400 ,200 };
 	DirectX::XMFLOAT2 scorePos = { 400,950 };
-	float comboScale = 1.5f;
-	float scoreScale = 1.5f;
+	float comboScale = 4.0f;
+	float scoreScale = 0.8f;
 
 	float speed = 2.0f;
 
