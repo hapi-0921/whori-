@@ -69,12 +69,21 @@ void SceneTitle::Update(float elapsedTime)
 
 	titleStage->Update(elapsedTime);
 
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
+	{
+		HWND hWnd = GetActiveWindow();
+		PostMessage(hWnd, WM_CLOSE, 0, 0);
+	}
+
+
 	const MouseButton mouseButton =
 		Mouse::BTN_LEFT;
 	if (mouse.GetButtonDown() & mouseButton)
 	{
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
 	}
+
+
 
 	title_timer++;
 }

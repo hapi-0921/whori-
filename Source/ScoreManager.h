@@ -1,6 +1,7 @@
 #pragma once
 
 #include<DirectXMath.h>
+#include "System/Sprite.h"
 
 class ScoreManager
 {
@@ -10,6 +11,7 @@ public:
 	~ScoreManager();
 
 	void Update(float elapsedTime);
+	void Render(const RenderContext& rc);
 
 	void TargetUpload();//target‚ğ’ño
 
@@ -20,6 +22,10 @@ public:
 		static ScoreManager scoreManager;
 		return scoreManager;
 	}
+
+	Sprite* sprShader = nullptr;
+	DirectX::XMFLOAT2 shadeSize = { 270,76 };
+	float texPosY =77.0f;
 
 
 	DirectX::XMFLOAT2 mousePos = {};

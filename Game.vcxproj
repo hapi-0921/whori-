@@ -159,6 +159,7 @@
     <ClInclude Include="Source\System\Sprite.h" />
     <ClInclude Include="Source\targetManager.h" />
     <ClInclude Include="Source\TitleStage.h" />
+    <ClInclude Include="Source\Tutorial.h" />
     <ClInclude Include="Source\UIController.h" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +205,7 @@
     <ClCompile Include="Source\System\Sprite.cpp" />
     <ClCompile Include="Source\targetManager.cpp" />
     <ClCompile Include="Source\TitleStage.cpp" />
+    <ClCompile Include="Source\Tutorial.cpp" />
     <ClCompile Include="Source\UIController.cpp" />
   </ItemGroup>
   <ItemGroup>

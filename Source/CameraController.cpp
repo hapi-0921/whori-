@@ -13,6 +13,8 @@
 #include "System/ShapeRenderer.h"
 #include <cmath>
 
+#include"tutorial.h"
+
 #undef min
 #undef max
 
@@ -140,10 +142,18 @@ bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 void CameraController::Update(float elapsedTime)
 {
 	Mouse& mouse = Input::Instance().GetMouse();
+	Tutorial& tutorial = Tutorial::Instance();
 
 	//-------------中ドラッグで回転--------------------
-	if (mouse.GetButton() & Mouse::BTN_MIDDLE)
+	if (mouse.GetButton() & Mouse::BTN_MIDDLE
+		)
 	{
+		if (tutorial.isTutorial)
+		{
+			if (tutorial.tutoType < 3 || tutorial.tutoType > 4)
+				return;
+		}
+
 		float dx = static_cast<float>(mouse.GetPositionX() - mouse.GetOldPositionX());
 		float dy = static_cast<float>(mouse.GetPositionY() - mouse.GetOldPositionY());
 
@@ -167,6 +177,13 @@ void CameraController::Update(float elapsedTime)
 
 		angle.y += dx * mouseRotateSpeed;
 		angle.x += dy * mouseRotateSpeed;
+
+		//チュートリアル
+		if (tutorial.tutoType == 3)
+		{
+			tutorial.tuto3drag += angle.x;
+			if (tutorial.tuto3drag > 80.0f)	tutorial.tuto3 = true;
+		}
 	}
 	else
 	{
@@ -205,10 +222,23 @@ void CameraController::Update(float elapsedTime)
 
 	if (wheel != 0.0f)
 	{
+		if (tutorial.isTutorial)
+		{
+			if (tutorial.tutoType < 2 || tutorial.tutoType > 4)
+				return;
+		}
+
 		// ================ ズームイン ================
 
 			if (wheel > 0.0f)
 			{
+				//チュートリアル
+				if (tutorial.tutoType == 2)
+				{
+					tutorial.tuto2wheel += wheel;
+					if (tutorial.tuto2wheel >= 8.0f)	tutorial.tuto2 = true;
+				}
+
 				XMFLOAT3 hitDelta;
 				if (cursorRay(hitDelta))
 				{

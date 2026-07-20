@@ -24,6 +24,7 @@
 
 #include"SceneGame.h"
 
+#include"tutorial.h"
 
 std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::string& path)
 {
@@ -65,6 +66,7 @@ std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::str
 
 TargetManager::TargetManager()
 {
+    
     Stage& stage = Stage::Instance();
 
     //文字数
@@ -133,6 +135,7 @@ void TargetManager::TargetFocus(float elapsedTime)
     Stage& stage = Stage::Instance();
     Camera& camera = Camera::Instance();
     ScoreManager& scoreManager = ScoreManager::Instance();
+    Tutorial& tutorial = Tutorial::Instance();
 
     // 共通レイ
     DirectX::XMFLOAT3 rayStart = camera.GetEye();
@@ -169,6 +172,11 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
     }
 
+
+    if (tutorial.isTutorial)
+    {
+        if (tutorial.tutoType != 4)    return;
+    }
     // ---------- ヒット情報------------
     struct HitInfo {
         float distance = FLT_MAX;
@@ -242,6 +250,23 @@ void TargetManager::TargetFocus(float elapsedTime)
 
 
     //一番近いものの算出（stage,target含む）
+
+    if (hits.empty())
+    {
+        // フォーカスを解除
+        distance = FLT_MAX;
+        canZoom = false;
+        focusTimer = 0.0f;
+
+        // 必要なら全ターゲットのフォーカスも解除
+        for (auto& t : targets)
+        {
+            t.isFocus = false;
+        }
+
+        return;
+    }
+
     HitInfo closest = hits[0];
     distance = closest.distance;
     canZoom = (distance <= 200);
@@ -368,8 +393,10 @@ void TargetManager::TargetFocus(float elapsedTime)
         t.isFocus = false;
     }
 
-    if (t.isFocus)
+    if (t.isFocus)//フォーカス中
     {
+        GameManager::Instance().SetPlaying(false);
+
         DirectX::XMFLOAT3 targetPos;
         targetPos.x = camera.GetEye().x + front.x * 300.0f;
         targetPos.y = camera.GetEye().y + front.y * 300.0f;
@@ -440,7 +467,7 @@ void TargetManager::TargetFocus(float elapsedTime)
 
     }
 
-    // クリック処理（獲得）
+    // 獲得
     if (t.carsRen)
     {
         t.carsRen = false;
@@ -456,7 +483,8 @@ void TargetManager::TargetFocus(float elapsedTime)
             scoreManager.maxChar = t.charCount;
         }
 
-        if (t.endN == "n")
+
+        if (t.endN == "n"&& !tutorial.isTutorial)
         {
             toResult = true;
             return;
@@ -468,6 +496,12 @@ void TargetManager::TargetFocus(float elapsedTime)
 
         getTargets.push_back(&t);
         t.isChainRender = true;
+
+        if (tutorial.tutoType == 4)
+        {
+            tutorial.tuto4 = true;
+        }
+
 
         if (scoreManager.chainCount == 0)//最初の文字決定
         {
@@ -506,6 +540,8 @@ void TargetManager::TargetFocus(float elapsedTime)
                     target->shifted = false;
                 }
             }
+
+
         }
         else//しりとり失敗
         {
@@ -555,6 +591,8 @@ float Lerp(float a, float b, float t)
 
 void TargetManager::UpdateCardMove(float elapsedTime)
 {
+    Tutorial& tutorial = Tutorial::Instance();
+
     if (nonChain)//失敗
     {
         for (int i = 0; i < getTargets.size(); i++)
@@ -611,7 +649,10 @@ void TargetManager::UpdateCardMove(float elapsedTime)
 
         if (t->isMoveToChain)
         {
-            t->moveTimer += elapsedTime*1.8f;
+            float speed = 1.8f;
+            if (tutorial.isTutorial) speed = 0.4f;
+
+            t->moveTimer += elapsedTime* speed;
 
             float rate = std::min(t->moveTimer * 5.0f, 1.0f);
 
@@ -745,6 +786,9 @@ void TargetManager::Render(const RenderContext& rc, ModelRenderer* renderer)
 //2D
 void TargetManager::Render(const RenderContext& rc)
 {
+    ScoreManager& scoreManager = ScoreManager::Instance();
+
+
     float screenW = static_cast<float>(Graphics::Instance().GetScreenWidth());
     float screenH = static_cast<float>(Graphics::Instance().GetScreenHeight());
 
@@ -783,7 +827,6 @@ void TargetManager::Render(const RenderContext& rc)
         }
     }
 
-    ScoreManager& scoreManager = ScoreManager::Instance();
     if (scoreManager.nowCombo)
     {
         scoreManager.comboTimer++;
@@ -811,6 +854,7 @@ void TargetManager::Render(const RenderContext& rc)
 
     }
 
+    scoreManager.Render(rc);
 }
 
 

@@ -7,10 +7,16 @@
 
 ScoreManager::ScoreManager()
 {
+    sprShader = new Sprite("Data/Sprite/shade.png");
 }
 
 ScoreManager::~ScoreManager()
 {
+    if (sprShader != nullptr) {
+        delete sprShader;
+        sprShader = nullptr;
+    }
+
 }
 
 //íÒèo
@@ -33,9 +39,21 @@ void ScoreManager::TargetUpload()
         pos.y  < mousePos.y &&//t
         pos.y + size.y  > mousePos.y)  //b
     {
-        if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
+        texPosY -= 1.5f;
+        if(texPosY<=0.0f)
         {
             upload = true;
+            texPosY += 1.5f;
+            if (77.0f >= texPosY)  texPosY = 77.0f;
+        }
+    }
+    else
+    {
+        if (texPosY < 77.0f)
+        {
+
+            texPosY += 1.0f;
+            if (77.0f >= texPosY)  texPosY = 77.0f;
         }
     }
 
@@ -43,7 +61,7 @@ void ScoreManager::TargetUpload()
     {
         nowChain = chainCount;
         reset = true;
-
+        
         if (chainCount == 1 || chainCount == 0)
         {
             chainCount = 0;
@@ -67,6 +85,18 @@ void ScoreManager::TargetUpload()
 
     }
     upload = false;
+
+}
+void ScoreManager::Render(const RenderContext& rc)
+{
+    DirectX::XMFLOAT2 pos = { 1626,935 ,};
+
+    sprShader->Render(rc,
+        pos.x, pos.y, 0,
+        shadeSize.x, shadeSize.y,
+        0, texPosY,					
+        270, 77,				
+        0, 1, 1, 1, 0.7f);
 
 }
 void ScoreManager::DrawDebugGUI()
