@@ -66,6 +66,7 @@ public:
 
 	Stage();
 	~Stage()override;
+	void Initialize();
 
 	//更新処理
 	void Update(float elapsedTime);
@@ -82,7 +83,7 @@ public:
 public:
 	int stageNum = 0;//ステージの個数
 
-	int stageType = MACHI;
+	int stageType = SIMA;
 	enum StageType
 	{
 		MACHI = 1,

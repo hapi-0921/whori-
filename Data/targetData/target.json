@@ -155,7 +155,7 @@
       "position": {
         "x": 461.883,
         "y": 18.914,
-        "z": 710.293
+        "z": 800.293
       },
       "card": "Data/Model/target/card/foods/Burger.mdl",
       "right": true
@@ -169,7 +169,7 @@
       "startN": "き",
       "endN": "つ",
       "position": {
-        "x": 390.053,
+        "x": 440.053,
         "y": 230.0,
         "z": -532.936
       },
@@ -185,7 +185,7 @@
       "startN": "け",
       "endN": "き",
       "position": {
-        "x": -340.778,
+        "x": -370.778,
         "y": 254.436,
         "z": 0.000
       },
@@ -251,7 +251,7 @@
       "endN": "と",
       "position": {
         "x": -713.665,
-        "y": 210.0,
+        "y": 100.0,
         "z": 549.983
       },
       "card": "Data/Model/target/card/foods/ChocolateBar.mdl",
@@ -267,7 +267,7 @@
       "endN": "つ",
       "position": {
         "x": 740.799,
-        "y": 900.0,
+        "y": 120.0,
         "z": 86.475
       },
       "card": "Data/Model/target/card/foods/Coconut_Half.mdl",
@@ -282,7 +282,7 @@
       "startN": "こ",
       "endN": "ひ",
       "position": {
-        "x": -90.0,
+        "x": -140.0,
         "y": 73.149,
         "z": -530.292
       },
@@ -314,7 +314,7 @@
       "startN": "と",
       "endN": "し",
       "position": {
-        "x": -705.0,
+        "x": -755.0,
         "y": -5.204,
         "z": 722.872
       },
@@ -379,8 +379,8 @@
       "endN": "ひ",
       "position": {
         "x": -444.154,
-        "y": 160.0,
-        "z": -216.815
+        "y": 200.0,
+        "z": -206.815
       },
       "card": "Data/Model/target/card/foods/Eggplant.mdl",
       "right": true
@@ -412,7 +412,7 @@
       "position": {
         "x": -533.967,
         "y": 72.157,
-        "z": 454.163
+        "z": 654.163
       },
       "card": "Data/Model/target/card/foods/Fries.mdl",
       "right": true
@@ -427,7 +427,7 @@
       "endN": "く",
       "position": {
         "x": -31.428,
-        "y": 30.0,
+        "y": 60.0,
         "z": -746.639
       },
       "card": "Data/Model/target/card/foods/Hotdog.mdl",
@@ -491,7 +491,7 @@
       "endN": "む",
       "position": {
         "x": 7.8,
-        "y": 50.8,
+        "y":150.8,
         "z": 1.0
       },
       "card": "Data/Model/target/card/foods/Mushroom.mdl",
@@ -554,7 +554,7 @@
       "startN": "な",
       "endN": "し",
       "position": {
-        "x": 426.635,
+        "x": 326.635,
         "y": 146.273,
         "z": -766.426
       },
@@ -604,7 +604,7 @@
       "position": {
         "x": 411.234,
         "y": -2.816,
-        "z": -411.434
+        "z": -431.434
       },
       "card": "Data/Model/target/card/foods/Pizza.mdl",
       "right": true
@@ -683,7 +683,7 @@
       "endN": "ふ",
       "position": {
         "x": -236.650,
-        "y": 36.435,
+        "y": 66.435,
         "z": -525.052
       },
       "card": "Data/Model/target/card/foods/Tumip.mdl",
@@ -699,7 +699,7 @@
       "endN": "る",
       "position": {
         "x": 151.874,
-        "y": 88.904,
+        "y": 100.904,
         "z": -615.502
       },
       "card": "Data/Model/target/card/foods/waffle.mdl",
@@ -716,7 +716,7 @@
       "endN": "か",
       "position": {
         "x": 799.260,
-        "y": 7.862,
+        "y": 5.862,
         "z": -744.722
       },
       "card": "Data/Model/target/card/foods/Watermelon_0101.mdl",

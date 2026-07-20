@@ -1,6 +1,7 @@
 #pragma once
 
 #include<DirectXMath.h>
+#include "System/Sprite.h"
 
 class ScoreManager
 {
@@ -10,6 +11,7 @@ public:
 	~ScoreManager();
 
 	void Update(float elapsedTime);
+	void Render(const RenderContext& rc);
 
 	void TargetUpload();//targetを提出
 
@@ -21,11 +23,24 @@ public:
 		return scoreManager;
 	}
 
+	Sprite* sprShader = nullptr;
+	DirectX::XMFLOAT2 shadeSize = { 270,76 };
+	float texPosY =77.0f;
+
 
 	DirectX::XMFLOAT2 mousePos = {};
 	bool upload = false;
 	bool reset = false;
 
+
+	bool nowCombo = false;//conbo
+	bool nowScore = false;//score
+	float comboTimer = 0.0f;
+	float scoreTimer = 0.0f;
+	DirectX::XMFLOAT2 comboPos = { 150 ,950 };
+	DirectX::XMFLOAT2 scorePos = {400,950};
+	float comboScale = 1.5f;
+	float scoreScale = 1.5f;
 
 	int chainCount = 0;//何連鎖中か
 	int conbo = 0;//コンボ数

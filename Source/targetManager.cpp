@@ -24,6 +24,7 @@
 
 #include"SceneGame.h"
 
+#include"tutorial.h"
 
 std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::string& path)
 {
@@ -65,6 +66,7 @@ std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::str
 
 TargetManager::TargetManager()
 {
+    
     Stage& stage = Stage::Instance();
 
     //文字数
@@ -95,6 +97,7 @@ TargetManager::TargetManager()
     }
 
     sprMiss = new Sprite("Data/Sprite/chain/UI/miss.png");
+    number = new Font("Data/Sprite/number.png");
 
 }
 
@@ -132,6 +135,7 @@ void TargetManager::TargetFocus(float elapsedTime)
     Stage& stage = Stage::Instance();
     Camera& camera = Camera::Instance();
     ScoreManager& scoreManager = ScoreManager::Instance();
+    Tutorial& tutorial = Tutorial::Instance();
 
     // 共通レイ
     DirectX::XMFLOAT3 rayStart = camera.GetEye();
@@ -168,6 +172,11 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
     }
 
+
+    if (tutorial.isTutorial)
+    {
+        if (tutorial.tutoType != 4)    return;
+    }
     // ---------- ヒット情報------------
     struct HitInfo {
         float distance = FLT_MAX;
@@ -225,28 +234,52 @@ void TargetManager::TargetFocus(float elapsedTime)
             {
                 material.emissionColor = nonColor;
             }
+            //timer = 0.15f;
+            //lightTimer = 0.0f;
+
         }
     }
 
 
 
-    if (hits.empty())
-    {
-        focusTimer = 0.0f;
-        distance = FLT_MAX;
-        canZoom = false;
-        return;
-    }
 
     // 一番近いもの
     std::sort(hits.begin(), hits.end(), [](const HitInfo& a, const HitInfo& b) {
         return a.distance < b.distance;
         });
 
+
     //一番近いものの算出（stage,target含む）
+
+    if (hits.empty())
+    {
+        // フォーカスを解除
+        distance = FLT_MAX;
+        canZoom = false;
+        focusTimer = 0.0f;
+
+        // 必要なら全ターゲットのフォーカスも解除
+        for (auto& t : targets)
+        {
+            t.isFocus = false;
+        }
+
+        return;
+    }
+
     HitInfo closest = hits[0];
     distance = closest.distance;
     canZoom = (distance <= 200);
+
+    if (hits.empty() || closest.pTarget == nullptr || closest.distance > 1000.0f)
+    {
+        focusTimer = 0.0f;
+        // フォーカス対象がいないときだけリセット
+        timer = 0.15f;
+        lightTimer = 0.0f;
+        canZoom = false;
+        return;
+    }
 
     if (closest.pTarget == nullptr)
     {
@@ -360,8 +393,10 @@ void TargetManager::TargetFocus(float elapsedTime)
         t.isFocus = false;
     }
 
-    if (t.isFocus)
+    if (t.isFocus)//フォーカス中
     {
+        GameManager::Instance().SetPlaying(false);
+
         DirectX::XMFLOAT3 targetPos;
         targetPos.x = camera.GetEye().x + front.x * 300.0f;
         targetPos.y = camera.GetEye().y + front.y * 300.0f;
@@ -432,7 +467,7 @@ void TargetManager::TargetFocus(float elapsedTime)
 
     }
 
-    // クリック処理（獲得）
+    // 獲得
     if (t.carsRen)
     {
         t.carsRen = false;
@@ -448,7 +483,8 @@ void TargetManager::TargetFocus(float elapsedTime)
             scoreManager.maxChar = t.charCount;
         }
 
-        if (t.endN == "n")
+
+        if (t.endN == "n"&& !tutorial.isTutorial)
         {
             toResult = true;
             return;
@@ -460,6 +496,12 @@ void TargetManager::TargetFocus(float elapsedTime)
 
         getTargets.push_back(&t);
         t.isChainRender = true;
+
+        if (tutorial.tutoType == 4)
+        {
+            tutorial.tuto4 = true;
+        }
+
 
         if (scoreManager.chainCount == 0)//最初の文字決定
         {
@@ -480,7 +522,10 @@ void TargetManager::TargetFocus(float elapsedTime)
             //resultData
             scoreManager.siritoriNum++;
             scoreManager.chainCount++;
+            scoreManager.conbo = scoreManager.chainCount - 1;
             scoreManager.allCharCount += t.charCount;
+
+            scoreManager.nowCombo = true;//何コンボ中か表示
 
             endName = t.endN;
 
@@ -495,6 +540,8 @@ void TargetManager::TargetFocus(float elapsedTime)
                     target->shifted = false;
                 }
             }
+
+
         }
         else//しりとり失敗
         {
@@ -544,6 +591,8 @@ float Lerp(float a, float b, float t)
 
 void TargetManager::UpdateCardMove(float elapsedTime)
 {
+    Tutorial& tutorial = Tutorial::Instance();
+
     if (nonChain)//失敗
     {
         for (int i = 0; i < getTargets.size(); i++)
@@ -600,7 +649,10 @@ void TargetManager::UpdateCardMove(float elapsedTime)
 
         if (t->isMoveToChain)
         {
-            t->moveTimer += elapsedTime*1.8f;
+            float speed = 1.8f;
+            if (tutorial.isTutorial) speed = 0.4f;
+
+            t->moveTimer += elapsedTime* speed;
 
             float rate = std::min(t->moveTimer * 5.0f, 1.0f);
 
@@ -678,6 +730,7 @@ void TargetManager::Update(float elapsedTime)
 	//フォーカス判定
 	TargetFocus(elapsedTime);
     UpdateCardMove(elapsedTime);
+
 }
 
 
@@ -733,6 +786,9 @@ void TargetManager::Render(const RenderContext& rc, ModelRenderer* renderer)
 //2D
 void TargetManager::Render(const RenderContext& rc)
 {
+    ScoreManager& scoreManager = ScoreManager::Instance();
+
+
     float screenW = static_cast<float>(Graphics::Instance().GetScreenWidth());
     float screenH = static_cast<float>(Graphics::Instance().GetScreenHeight());
 
@@ -771,6 +827,34 @@ void TargetManager::Render(const RenderContext& rc)
         }
     }
 
+    if (scoreManager.nowCombo)
+    {
+        scoreManager.comboTimer++;
+        scoreManager.comboScale -= 10;
+        number->DrawNumber(rc, scoreManager.conbo, scoreManager.comboPos.x, scoreManager.comboPos.y, scoreManager.comboScale);
+
+        if (scoreManager.comboTimer >= 100.0)
+        {
+            scoreManager.nowCombo = false;
+            scoreManager.comboTimer = 0.0f;
+        }
+    }
+    if (scoreManager.nowScore)
+    {
+        scoreManager.scoreTimer++;
+        scoreManager.scoreScale -= 10;
+
+        number->DrawNumber(rc, scoreManager.score, scoreManager.scorePos.x, scoreManager.scorePos.y, scoreManager. scoreScale);
+
+        if (scoreManager.scoreTimer >= 100.0)
+        {
+            scoreManager.nowScore = false;
+            scoreManager.scoreTimer = 0.0f;
+        }
+
+    }
+
+    scoreManager.Render(rc);
 }
 
 
@@ -782,6 +866,7 @@ void TargetManager::DrawDebugGUI()
 	ImGui::SetNextWindowPos(ImVec2(pos.x + 10, pos.y), ImGuiCond_Once);
 
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
+    ScoreManager& scoreManager = ScoreManager::Instance();
 
 	//if (ImGui::Begin("targets", nullptr, ImGuiWindowFlags_None))
 	//{
@@ -796,11 +881,12 @@ void TargetManager::DrawDebugGUI()
  //           ImGui::InputFloat("t.cardTimer", &cardTimer);
  //           ImGui::InputFloat("t.timer", &timer);
             //ImGui::InputFloat("t.deltaTimer", &deltaTimer);
-            ImGui::Checkbox("isMoveToChain", &targets[2].isMoveToChain);
+            //ImGui::Checkbox("isMoveToChain", &targets[2].isMoveToChain);
  //           //ImGui::Checkbox("t.isFocus", &targets[4].isFocus);
  //           ImGui::Checkbox("toResult", &toResult);
  //           ImGui::InputFloat("lightTimer", &lightTimer);
- //           ImGui::InputInt("t.charCount", &targets[0].charCount);
+            ImGui::InputInt("conbo", &scoreManager.conbo);
+            ImGui::InputInt("score", &scoreManager.score);
  //           ImGui::InputInt("allCharCount", &resultData.allCharCount);
  //           //ImGui::Checkbox("canZoom", &canZoom);
  //       }

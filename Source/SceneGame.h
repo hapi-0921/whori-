@@ -29,6 +29,7 @@ public:
 
 	// GUI•`‰æ
 	void DrawGUI();
+	float debugElapsedTime = 0.0f;
 private:
 
 	UIController* uiController = nullptr;
