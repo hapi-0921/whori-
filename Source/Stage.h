@@ -82,7 +82,7 @@ public:
 public:
 	int stageNum = 0;//ステージの個数
 
-	int stageType = MACHI;
+	int stageType = SIMA;
 	enum StageType
 	{
 		MACHI = 1,

@@ -114,6 +114,7 @@ void SceneSelect::Update(float elapsedTime)
 	tutorial.Update(elapsedTime);
 
 	OptionUI& optionUI = OptionUI::Instance();
+	optionUI.nowGameScene = false;
 
 	Mouse& mouse = Input::Instance().GetMouse();
 	const MouseButton mouseButton = Mouse::BTN_LEFT;
@@ -144,8 +145,8 @@ void SceneSelect::Update(float elapsedTime)
 
 
 		}
-if (selectstart)
-{
+		if (selectstart)
+		{
 		if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
 		{
 			optionUI.isOption = true;
