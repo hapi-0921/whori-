@@ -37,6 +37,8 @@ public:
 		std::string endN;
 		int charCount = 0;
 
+		bool right = false;
+
 		DirectX::XMFLOAT3 position = { 0,0,0 };
 	};
 
@@ -61,6 +63,7 @@ private:
 		std::string endN;
 		int charCount = 0;
 		DirectX::XMFLOAT3 pos = { 0,0,0 };//ï∂éöêîóp
+		bool right = false;
 
 		DirectX::XMFLOAT3 position = { 0,0,0 };
 		DirectX::XMFLOAT3 angle = { 0,0,0 };
@@ -122,6 +125,7 @@ private:
 	DirectX::XMFLOAT4 maxColor = { 0.6f,0.6f,0.6f,1.0f };
 	DirectX::XMFLOAT4 minColor = { 0.3f,0.3f,0.3f,1.0f };
 	DirectX::XMFLOAT4 nonColor = {};
+	DirectX::XMFLOAT4 lightColor = { 0.2f,0.2f,0.2f,1.0f };
 	float timer = 0.15f;
 
 	float maxDistance = 500.0f;

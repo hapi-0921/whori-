@@ -313,12 +313,16 @@ void SceneResult::Render()
 
 					if (scoreManager.allScore == save.ranking[i])
 					{
-						if ((resultTimer / 40) % 2 == 0)
+						if (save.ranking[i] != 0)
 						{
-							sprnew->Render(rc,
-								1300, record[i].posy, 0,
-								157, 52, 0, 0,
-								225, 75, 0, 1, 1, 1, 1);
+							if ((resultTimer / 40) % 2 == 0)
+							{
+								sprnew->Render(rc,
+									1300, record[i].posy, 0,
+									157, 52, 0, 0,
+									225, 75, 0, 1, 1, 1, 1);
+
+							}
 
 						}
 					}

@@ -56,6 +56,10 @@ std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::str
                 data.position.y = t["position"]["y"];
                 data.position.z = t["position"]["z"];
             }
+            if (t.contains("right"))
+            {
+                data.right = t.value("right", false);
+            }
             data.cardPath = t.value("card", "");
 
             result.push_back(data);
@@ -93,6 +97,8 @@ TargetManager::TargetManager()
         targets[i].pos.z= data[i].position.z;
 
         targets[i].cardPath = data[i].cardPath;
+
+        targets[i].right = data[i].right;
 
     }
 
@@ -230,13 +236,21 @@ void TargetManager::TargetFocus(float elapsedTime)
         }
         else
         {
-            for (auto& material : t.model->GetResource()->GetMaterials())
+            if (t.right == true)
             {
-                material.emissionColor = nonColor;
+                for (auto& material : t.model->GetResource()->GetMaterials())
+                {
+                    material.emissionColor = lightColor;
+                }
             }
-            //timer = 0.15f;
-            //lightTimer = 0.0f;
+            else
+            {
+                for (auto& material : t.model->GetResource()->GetMaterials())
+                {
+                    material.emissionColor = nonColor;
+                }
 
+            }
         }
     }
 
@@ -384,9 +398,21 @@ void TargetManager::TargetFocus(float elapsedTime)
     }
     else
     {
-        for (auto& material : t.model->GetResource()->GetMaterials())
+
+        if (t.right == true)
         {
-            material.emissionColor = nonColor;
+            for (auto& material : t.model->GetResource()->GetMaterials())
+            {
+                material.emissionColor = lightColor;
+            }
+        }
+        else
+        {
+            for (auto& material : t.model->GetResource()->GetMaterials())
+            {
+                material.emissionColor = nonColor;
+            }
+
         }
 
         focusTimer = 0.0f;
@@ -473,9 +499,20 @@ void TargetManager::TargetFocus(float elapsedTime)
         t.carsRen = false;
 
 
-        for (auto& material : t.model->GetResource()->GetMaterials())
+        if (t.right == true)
         {
-            material.emissionColor = nonColor;
+            for (auto& material : t.model->GetResource()->GetMaterials())
+            {
+                material.emissionColor = lightColor;
+            }
+        }
+        else
+        {
+            for (auto& material : t.model->GetResource()->GetMaterials())
+            {
+                material.emissionColor = nonColor;
+            }
+
         }
 
         if (scoreManager.maxChar < t.charCount)
