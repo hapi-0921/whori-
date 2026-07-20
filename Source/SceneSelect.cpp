@@ -19,7 +19,8 @@ void SceneSelect::Initialize()
 	sprite = new Sprite("Data/Sprite/kumo.jpg"); // 背景のスプライト
 	sprArrowRight = new Sprite("Data/Sprite/arrowright.png"); // 矢印のスプライト
 	sprArrowLeft = new Sprite("Data/Sprite/arrowleft.png"); // 矢印のスプライト
-	sprfirst =new Sprite("Data/Sprite/tutorial//tutorialon.png");
+	sprfirst =new Sprite("Data/Sprite/tutorial/tutorialon.png");
+
 	// ステージ
 	Stage& stage = Stage::Instance();
 
@@ -123,7 +124,11 @@ void SceneSelect::Update(float elapsedTime)
 
 	if (first)
 	{
+<<<<<<< HEAD
 		if (selecttimer >= 300)
+=======
+		if (mouse.GetButtonUp() & mouseButton)
+>>>>>>> 008ffbfc886315d3007ad7bd8047668604aa3c65
 		{
 			if (mouse.GetButtonUp() & mouseButton)
 			{

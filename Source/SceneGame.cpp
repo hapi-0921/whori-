@@ -242,29 +242,29 @@ void SceneGame::DrawGUI()
 
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
-	if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
-	{
+	//if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
+	//{
 
-		// DrawGUI
-		ImGui::Text("elapsedTime = %.6f", debugElapsedTime);
-		ImGui::InputFloat("gameTimer", &gameTimer);
-		ImGui::InputInt("gameTimer", &GameTimer);
+	//	// DrawGUI
+	//	ImGui::Text("elapsedTime = %.6f", debugElapsedTime);
+	//	ImGui::InputFloat("gameTimer", &gameTimer);
+	//	ImGui::InputInt("gameTimer", &GameTimer);
 
-		ImGui::End();
-	}
+	//	ImGui::End();
+	//}
 
-	OptionUI& optionUI = OptionUI::Instance();
-	optionUI.DrawDebugGUI();
+	//OptionUI& optionUI = OptionUI::Instance();
+	//optionUI.DrawDebugGUI();
 
-	Tutorial& tutorial = Tutorial::Instance();
-	tutorial.DrawDebugGUI();
+	//Tutorial& tutorial = Tutorial::Instance();
+	//tutorial.DrawDebugGUI();
 
 	//Stage& stage = Stage::Instance();
 	//stage.DrawDebugGUI();
 
-	ScoreManager& scoreManager = ScoreManager::Instance();
-	scoreManager.DrawDebugGUI();
-	//cameraController->DrawDebugGUI();
-	targetManager->DrawDebugGUI();
+	//ScoreManager& scoreManager = ScoreManager::Instance();
+	//scoreManager.DrawDebugGUI();
+	cameraController->DrawDebugGUI();
+	//targetManager->DrawDebugGUI();
 	//uiController->DrawDebugGUI();
 }

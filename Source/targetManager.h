@@ -202,6 +202,7 @@ public:
 
 	int GetTargetSize() const { return static_cast<int>(targets.size()); }
 	std::vector<Target> GetTargets() const { return targets; }
+	std::vector<Target*> GetgetTargets() const { return getTargets; }
 
 
 
