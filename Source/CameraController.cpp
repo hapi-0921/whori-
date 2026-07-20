@@ -302,9 +302,9 @@ void CameraController::Update(float elapsedTime)
 	// ƒJƒƒ‰XV
 		float safeRange = std::max(range, 0.05f);
 
-	eye.x = target.x - front.x * safeRange;
-	eye.y = target.y - front.y * safeRange;
-	eye.z = target.z - front.z * safeRange;
+	eye.x = target.x - front.x * (safeRange- delta);
+	eye.y = target.y - front.y * (safeRange- delta);
+	eye.z = target.z - front.z * (safeRange- delta);
 
 	Camera::Instance().SetLookAt(
 		eye,

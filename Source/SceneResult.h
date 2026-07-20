@@ -5,6 +5,7 @@
 #include "Stage.h"
 #include <vector>
 #include"Font.h"
+#include"TargetManager.h"
 
 // セレクトシーン
 class SceneResult : public Scene
@@ -71,4 +72,7 @@ private:
 	Font* font=nullptr;
 	Font* Numberfont = nullptr;
 
+
+
+	int getSize = 0.0f;
 };

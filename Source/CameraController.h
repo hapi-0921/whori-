@@ -29,9 +29,9 @@ public:
 
 private:
 
-
+	float delta = 10000.0f;
 	//‹——£§ŒÀ
-	float maxRange = 2000.0f;
+	float maxRange = 2000.0f+ delta;
 	float minRange = 0.0f;
 	float minVec;
 

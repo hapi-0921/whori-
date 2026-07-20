@@ -79,8 +79,6 @@ void SceneGame::Finalize()
 	// delete しない！ 所有権はGameManagerにある
 	targetManager = nullptr;
 
-	// アプリケーション終了時やタイトルに戻るとき
-	GameManager::Instance().ReleaseTargetManager();
 
 	//2D
 	if (uiController != nullptr)
@@ -171,7 +169,7 @@ void SceneGame::Update(float elapsedTime)
 	
 	if (targetManager->toResult || GameTimer<=0.0f)
 	{
-		optionUI.nowGameScene = false;
+		//optionUI.nowGameScene = false;
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
 	}
 	// Update
@@ -264,7 +262,7 @@ void SceneGame::DrawGUI()
 
 	//ScoreManager& scoreManager = ScoreManager::Instance();
 	//scoreManager.DrawDebugGUI();
-	cameraController->DrawDebugGUI();
+	//cameraController->DrawDebugGUI();
 	//targetManager->DrawDebugGUI();
 	//uiController->DrawDebugGUI();
 }

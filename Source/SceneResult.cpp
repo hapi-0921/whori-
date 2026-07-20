@@ -63,6 +63,9 @@ void SceneResult::Finalize()
 {
 	delete font;
 	font = nullptr;
+	// アプリケーション終了時やタイトルに戻るとき
+	GameManager::Instance().ReleaseTargetManager();
+
 }
 
 // 更新処理
@@ -173,6 +176,10 @@ void SceneResult::Update(float elapsedTime)
 			rankTimer = 0;
 		}
 	}
+
+	TargetManager* targetManager = GameManager::Instance().GetTargetManager();
+	getSize = targetManager->GetKeepTargetSize();
+
 }
 
 // 描画処理
@@ -364,6 +371,8 @@ void SceneResult::DrawGUI()
 		ImGui::DragInt("X", &sikaku[i].posx);
 		ImGui::DragInt("Y", &sikaku[i].posy);
 		ImGui::DragInt("Angle", &sikaku[i].angle);
+
+		ImGui::DragInt("getSize", &getSize);
 
 		ImGui::Separator();
 

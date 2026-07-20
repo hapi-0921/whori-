@@ -164,8 +164,8 @@ void TargetManager::TargetFocus(float elapsedTime)
     scoreManager.mousePos.x = mouse.GetPositionX();
     scoreManager.mousePos.y = mouse.GetPositionY();
 
-    //提出
-    scoreManager.TargetUpload();
+    
+    scoreManager.TargetUpload();//提出
     if (scoreManager.reset)
     {
         getTargets.clear();
@@ -532,6 +532,7 @@ void TargetManager::TargetFocus(float elapsedTime)
         focusTimer = 0.0f;
 
         getTargets.push_back(&t);
+        getAllTargets.push_back(&t);
         t.isChainRender = true;
 
         if (tutorial.tutoType == 4)
@@ -927,7 +928,7 @@ void TargetManager::DrawDebugGUI()
  //           ImGui::InputInt("allCharCount", &resultData.allCharCount);
  //           //ImGui::Checkbox("canZoom", &canZoom);
  //       }
-	//	ImGui::Text("getTargets.size() = %zu", getTargets.size());
+		ImGui::Text("getTargets.size() = %zu", getTargets.size());
 	//	ImGui::InputInt("t.chainCount", &chainCount);
 
 	//}
