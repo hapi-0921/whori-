@@ -1,4 +1,4 @@
-#include "System/Graphics.h"
+ï»¿#include "System/Graphics.h"
 #include "SceneSelect.h"
 #include "System/Input.h"
 #include "System/Mouse.h"
@@ -10,18 +10,18 @@
 #include "GameManager.h"  
 #include"Tutorial.h"
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void SceneSelect::Initialize()
 {
-	// ƒXƒvƒ‰ƒCƒg‰Šú‰»
-	sprite = new Sprite("Data/Sprite/kumo.jpg"); // ”wŒi‚ÌƒXƒvƒ‰ƒCƒg
-	sprArrowRight = new Sprite("Data/Sprite/arrowright.png"); // –îˆó‚ÌƒXƒvƒ‰ƒCƒg
-	sprArrowLeft = new Sprite("Data/Sprite/arrowleft.png"); // –îˆó‚ÌƒXƒvƒ‰ƒCƒg
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆåˆæœŸåŒ–
+	sprite = new Sprite("Data/Sprite/kumo.jpg"); // èƒŒæ™¯ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	sprArrowRight = new Sprite("Data/Sprite/arrowright.png"); // çŸ¢å°ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	sprArrowLeft = new Sprite("Data/Sprite/arrowleft.png"); // çŸ¢å°ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 
-	// ƒXƒe[ƒW
+	// ã‚¹ãƒ†ãƒ¼ã‚¸
 	Stage& stage = Stage::Instance();
 
-	//ƒJƒƒ‰‰Šúİ’è
+	//ã‚«ãƒ¡ãƒ©åˆæœŸè¨­å®š
 	Graphics& graphics = Graphics::Instance();
 	Camera& camera = Camera::Instance();
 	camera.SetLookAt(
@@ -54,7 +54,7 @@ void SceneSelect::Initialize()
 
 	//stageTransform
 	{
-		//‚±‚±‚ÅƒXƒe[ƒW‚ÌƒTƒCƒY•Ï‚¦‚é
+		//ã“ã“ã§ã‚¹ãƒ†ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚ºå¤‰ãˆã‚‹
 		selectStage.position = { 0, 0, 0 };
 		selectStage.angle = { 0, 0, 0 };
 		selectStage.scale = { 0.005f, 0.005f, 0.005f };
@@ -63,7 +63,7 @@ void SceneSelect::Initialize()
 		selectStage2.angle = { 0, 0, 0 };
 		selectStage2.scale = { 0.003f, 0.003f, 0.003f };
 
-		//‚±‚±‚ÅƒJƒƒ‰‚Æ‚Ì‹——£‚ğ•Ï‚¦‚é
+		//ã“ã“ã§ã‚«ãƒ¡ãƒ©ã¨ã®è·é›¢ã‚’å¤‰ãˆã‚‹
 		cameraController->range = 0.0f;
 	}
 
@@ -74,10 +74,10 @@ void SceneSelect::Initialize()
 	arrowColorLeft = 1.0f;
 }
 
-// I—¹‰»
+// çµ‚äº†åŒ–
 void SceneSelect::Finalize()
 {
-	// ƒXƒvƒ‰ƒCƒgI—¹‰»
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆçµ‚äº†åŒ–
 	if (sprite != nullptr)
 	{
 		delete sprite;
@@ -94,7 +94,7 @@ void SceneSelect::Finalize()
 		sprArrowLeft = nullptr;
 	}
 
-	// ƒJƒƒ‰ƒRƒ“ƒgƒ[ƒ‰[I—¹‰»
+	// ã‚«ãƒ¡ãƒ©ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼çµ‚äº†åŒ–
 	if (cameraController != nullptr) {
 		delete cameraController;
 		cameraController = nullptr;
@@ -102,7 +102,7 @@ void SceneSelect::Finalize()
 
 }
 
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 void SceneSelect::Update(float elapsedTime)
 {
 	Stage& stage = Stage::Instance();
@@ -129,7 +129,7 @@ void SceneSelect::Update(float elapsedTime)
 		optionUI.homeOpen = true;
 		optionUI.isHome = true;
 	}
-	optionUI.UpdateOption(elapsedTime);//İ’è‰æ–Ê
+	optionUI.UpdateOption(elapsedTime);//è¨­å®šç”»é¢
 
 	Mouse& mouse = Input::Instance().GetMouse();
 	const MouseButton mouseButton = Mouse::BTN_LEFT;
@@ -146,32 +146,129 @@ void SceneSelect::Update(float elapsedTime)
 		return;
 	}
 
-	if (!optionUI.isOption)//İ’è‚ğŠJ‚¢‚Ä‚È‚¢
+	if (!optionUI.isOption)//è¨­å®šã‚’é–‹ã„ã¦ãªã„
 	{
 		stage.SetCamera(cameraController);
 		stage.Update(elapsedTime);
 
-		// ƒXƒe[ƒW‚ğ‰ñ“]‚³‚¹‚é
+		// ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’å›è»¢ã•ã›ã‚‹
 		selectStage.angle.y += 0.005f;
 		selectStage2.angle.y += 0.005f;
 
-		// ƒXƒe[ƒW•ÏŠ· //
-		// ƒXƒe[ƒW‚P‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚éó‘Ô
+		// ã‚¹ãƒ†ãƒ¼ã‚¸å¤‰æ› //
+		// ã‚¹ãƒ†ãƒ¼ã‚¸ï¼‘ãŒé¸æŠã•ã‚Œã¦ã„ã‚‹çŠ¶æ…‹
 		if (stageState == stageType::stage1)
 		{
-			stageState = stageType::stage2;
+			//stageState = stageType::stage2;
 			arrowColorRight = 0.5f;
+			stage.stageType = Stage::StageType::MACHI;
+
+			selectStage.position.x += (10 - selectStage.position.x) * 0.02f;
+			selectStage.scale.x += (0.005f - selectStage.scale.x) * 0.13f;
+			selectStage.scale.y += (0.005f - selectStage.scale.y) * 0.13f;
+			selectStage.scale.z += (0.005f - selectStage.scale.z) * 0.13f;
+
+			// ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ø‚ï¿½Ö‚ï¿½
+			selectStage2.position.x += (10 - selectStage2.position.x) * 0.05f;
+			selectStage2.scale.x += (0.003f - selectStage2.scale.x) * 0.05f;
+			selectStage2.scale.y += (0.003f - selectStage2.scale.y) * 0.05f;
+			selectStage2.scale.z += (0.003f - selectStage2.scale.z) * 0.05f;
+
+			if (selectStage.position.x > 0)
+			{
+				selectStage.position.x = 0;
+
+				selectStage.scale.x = 0.005f;
+				selectStage.scale.y = 0.005f;
+				selectStage.scale.z = 0.005f;
+			}
+			if (selectStage2.position.x > 10)
+			{
+				selectStage2.position.x = 10;
+
+				selectStage2.scale.x = 0.003f;
+				selectStage2.scale.y = 0.003f;
+				selectStage2.scale.z = 0.003f;
+			}
 		}
-		// ƒXƒe[ƒW2‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚éó‘Ô
+		// ã‚¹ãƒ†ãƒ¼ã‚¸2ãŒé¸æŠã•ã‚Œã¦ã„ã‚‹çŠ¶æ…‹
 		if (stageState == stageType::stage2)
 		{
-			stageState = stageType::stage1;
+			//stageState = stageType::stage1;
 			arrowColorLeft = 0.5f;
+			stage.stageType = Stage::StageType::SIMA;
+
+			// ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ø‚ï¿½Ö‚ï¿½
+			selectStage.position.x += (-10 - selectStage.position.x) * 0.05f;
+			selectStage.scale.x += (0.003f - selectStage.scale.x) * 0.05f;
+			selectStage.scale.y += (0.003f - selectStage.scale.y) * 0.05f;
+			selectStage.scale.z += (0.003f - selectStage.scale.z) * 0.05f;
+
+			// ï¿½Xï¿½eï¿½[ï¿½Wï¿½Ø‚ï¿½Ö‚ï¿½
+			selectStage2.position.x += (-10 - selectStage2.position.x) * 0.02f;
+			selectStage2.scale.x += (0.005f - selectStage2.scale.x) * 0.13f;
+			selectStage2.scale.y += (0.005f - selectStage2.scale.y) * 0.13f;
+			selectStage2.scale.z += (0.005f - selectStage2.scale.z) * 0.13f;
+
+			if (selectStage.position.x <= -10)
+			{
+				selectStage.position.x = -10;
+
+				selectStage.scale.x = 0.003f;
+				selectStage.scale.y = 0.003f;
+				selectStage.scale.z = 0.003f;
+			}
+			if (selectStage2.position.x <= 0)
+			{
+				selectStage2.position.x = 0;
+
+				selectStage2.scale.x = 0.005f;
+				selectStage2.scale.y = 0.005f;
+				selectStage2.scale.z = 0.005f;
+			}
+		}
+
+		if (mouse.GetButtonDown() & mouseButton)
+		{
+
+			if (stageState == stageType::stage1 &&
+				CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
+			{
+				optionUI.nowGameScene = true;
+
+				GameManager::Instance().CreateTargetManager();
+
+				//stage.Initialize();
+				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+			}
+			if (stageState == stageType::stage2 &&
+				CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
+			{
+				optionUI.nowGameScene = true;
+
+				GameManager::Instance().CreateTargetManager();
+
+				//stage.Initialize();
+				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+			}
+
+			if (stageState == stageType::stage1 &&
+				CursorX > screenWidth - ArrowSize &&
+				CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
+			{
+				stageState = stageType::stage2;
+			}
+			if (stageState == stageType::stage2 &&
+				CursorX < ArrowSize &&
+				CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
+			{
+				stageState = stageType::stage1;
+			}
 		}
 	}
 
-	// ƒJ[ƒ\ƒ‹‚ª“–‚½‚é‚Æ–îˆó‚ÌF‚ğ•Ï‚¦‚é
-	// ‰E‚Ì–îˆó
+	// ã‚«ãƒ¼ã‚½ãƒ«ãŒå½“ãŸã‚‹ã¨çŸ¢å°ã®è‰²ã‚’å¤‰ãˆã‚‹
+	// å³ã®çŸ¢å°
 	if (CursorX > screenWidth - ArrowSize &&
 		CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 	{
@@ -181,7 +278,7 @@ void SceneSelect::Update(float elapsedTime)
 	{
 		arrowColorRight = 1.0f;
 	}
-	// ¶‚Ì–îˆó
+	// å·¦ã®çŸ¢å°
 	if (CursorX < ArrowSize &&
 		CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
 	{
@@ -193,10 +290,10 @@ void SceneSelect::Update(float elapsedTime)
 	}
 }
 
-// •`‰æˆ—
+// æç”»å‡¦ç†
 void SceneSelect::Render()
 {
-	// •`‰æ€”õ
+	// æç”»æº–å‚™
 	ID3D11DeviceContext* dc = graphics.GetDeviceContext();
 	RenderState* renderState = graphics.GetRenderState();
 	ModelRenderer* modelRenderer = graphics.GetModelRenderer();
@@ -210,33 +307,33 @@ void SceneSelect::Render()
 	OptionUI& optionUI = OptionUI::Instance();
 	Tutorial& tutorial = Tutorial::Instance();
 
-	// 2DƒXƒvƒ‰ƒCƒg•`‰æ
+	// 2Dã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	{
 		sprite->Render(rc,
 			0, 0, 0, screenWidth, screenHeight,
 			0,
 			1, 1, 1, 1);
 
-		// ƒfƒoƒbƒO—p
+		// ãƒ‡ãƒãƒƒã‚°ç”¨
 #ifndef NDEBUG
 		
 #endif // NDEBUG
 
 	}
 
-	// 3Dƒ‚ƒfƒ‹•`‰æ
+	// 3Dãƒ¢ãƒ‡ãƒ«æç”»
 	{
 		int MachiNum = 4;
 		int ShimaNum = 7;
 
-		// ƒXƒe[ƒW‚P‚ğ•`‰æ
+		// ã‚¹ãƒ†ãƒ¼ã‚¸ï¼‘ã‚’æç”»
 		freeUpdateTransform(selectStage.scale, selectStage.angle, selectStage.position, selectStage.transform);
 		for (int i = 0; i < MachiNum; i++)
 		{
 			modelRenderer->Render(rc, selectStage.transform, mdlMachi[i], ShaderId::Lambert);
 		}
 
-		// ƒXƒe[ƒW‚Q‚ğ•`‰æ
+		// ã‚¹ãƒ†ãƒ¼ã‚¸ï¼’ã‚’æç”»
 		freeUpdateTransform(selectStage2.scale, selectStage2.angle, selectStage2.position, selectStage2.transform);
 		for (int i = 0; i < ShimaNum; i++)
 		{
@@ -262,7 +359,7 @@ void SceneSelect::Render()
 				arrowColorLeft, arrowColorLeft, arrowColorLeft, 1);
 		}
 
-		//İ’è‰æ–Ê
+		//è¨­å®šç”»é¢
 		optionUI.RenderOption(rc, modelRenderer);
 		tutorial.Render(rc, modelRenderer);
 	}
@@ -270,7 +367,7 @@ void SceneSelect::Render()
 	cameraController->Render(rc);
 }
 
-// GUI•`‰æ
+// GUIæç”»
 void SceneSelect::DrawGUI()
 {
 	OptionUI& optionUI = OptionUI::Instance();
