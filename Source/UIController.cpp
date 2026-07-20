@@ -7,6 +7,14 @@
 #include"GameManager.h"
 
 #include"tutorial.h"
+#include"ScoreManager.h"
+#include <SceneManager.h>
+
+#include"SceneLoading.h"
+#include"SceneTitle.h"
+#include"SceneSelect.h"
+#include"SceneGame.h"
+
 
 #undef min
 #undef max
@@ -204,7 +212,9 @@ bool escape = false;
 void OptionUI::UpdateOption(float elapsedTime)
 {
 	Tutorial& tutorial = Tutorial::Instance();
-	
+	ScoreManager& scoreManager = ScoreManager::Instance();
+	OptionUI& optionUI = OptionUI::Instance();
+
 	
 	Mouse& mouse = Input::Instance().GetMouse();
 	mousePos.x = mouse.GetPositionX();
@@ -276,6 +286,7 @@ void OptionUI::UpdateOption(float elapsedTime)
 		//ホームボタン
 		if ((isCircleJubge(mousePos.x, mousePos.y, homePos.x, homePos.y, homeSize) &&
 			mouse.GetButtonDown() & Mouse::BTN_LEFT))
+<<<<<<< HEAD
 		{
 			if (isHome)	isHome = false;
 			else  isHome = true;
@@ -283,6 +294,13 @@ void OptionUI::UpdateOption(float elapsedTime)
 		}
 		if (isHome)
 		{
+=======
+		{
+			isHome = true;
+		}
+		if (isHome)
+		{
+>>>>>>> yamamoto
 
 			if (!nowGameScene)//シーンセレクトの時
 			{
@@ -293,7 +311,16 @@ void OptionUI::UpdateOption(float elapsedTime)
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
+<<<<<<< HEAD
 
+=======
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
+>>>>>>> yamamoto
 					}
 				}
 				//ゲームをやめる
@@ -303,35 +330,71 @@ void OptionUI::UpdateOption(float elapsedTime)
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
+<<<<<<< HEAD
 						HWND hWnd = GetActiveWindow();
 						PostMessage(hWnd, WM_CLOSE, 0, 0);
 
+=======
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						HWND hWnd = GetActiveWindow();
+						PostMessage(hWnd, WM_CLOSE, 0, 0);
+>>>>>>> yamamoto
 					}
 				}
 			}
 			else
 			{
+<<<<<<< HEAD
 				//もう一度
+=======
+				//セレクトへ
+>>>>>>> yamamoto
 				{
 					DirectX::XMFLOAT2 pos = { 1256,142 };
 					DirectX::XMFLOAT2 size = { 389,92 };
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
+<<<<<<< HEAD
 
+=======
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
+>>>>>>> yamamoto
 
 					}
 				}
 
+<<<<<<< HEAD
 				//セレクトへ
+=======
+				//もう一度
+>>>>>>> yamamoto
 				{
 					DirectX::XMFLOAT2 pos = { 1256,317 };
 					DirectX::XMFLOAT2 size = { 389,123 };
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
+<<<<<<< HEAD
 
 
+=======
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+>>>>>>> yamamoto
 					}
 				}
 
@@ -342,6 +405,14 @@ void OptionUI::UpdateOption(float elapsedTime)
 					if (isRectJubge(mousePos.x, mousePos.y, pos.x, pos.y, size.x, size.y) &&
 						mouse.GetButtonDown() & Mouse::BTN_LEFT)
 					{
+<<<<<<< HEAD
+=======
+						scoreManager.ResetData();
+
+						optionUI.isOption = false;
+						optionUI.isHome = false;
+
+>>>>>>> yamamoto
 						HWND hWnd = GetActiveWindow();
 						PostMessage(hWnd, WM_CLOSE, 0, 0);
 
@@ -349,10 +420,14 @@ void OptionUI::UpdateOption(float elapsedTime)
 				}
 
 			}
+<<<<<<< HEAD
 
 			//if ((isCircleJubge(mousePos.x, mousePos.y, homePos.x, homePos.y, homeSize) &&
 			//	mouse.GetButtonDown() & Mouse::BTN_LEFT))
 			//{
+=======
+		}
+>>>>>>> yamamoto
 
 			//	isHome = false;
 			//}

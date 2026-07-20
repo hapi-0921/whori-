@@ -1,0 +1,9 @@
+diff a/Source/SceneGame.cpp b/Source/SceneGame.cpp	(rejected hunks)
+@@ -164,6 +164,7 @@
+ 
+ 
+ 
++<<<<<<< HEAD
+ =======
+ 	// ��ʑJ�� //
+ 	GamePad& gamePad = Input::Instance().GetGamePad();
