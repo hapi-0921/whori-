@@ -183,12 +183,14 @@ void TargetManager::TargetFocus(float elapsedTime)
     {
         if (tutorial.tutoType != 4)    return;
     }
+
     // ---------- ヒット情報------------
     struct HitInfo {
         float distance = FLT_MAX;
         Target* pTarget = nullptr;
     };
 
+    float closestStageDistance = FLT_MAX;
     std::vector<HitInfo> hits;
 
     for (int i = 0; i < 4; i++)
@@ -203,10 +205,16 @@ void TargetManager::TargetFocus(float elapsedTime)
             float dx = stageHitPos.x - rayStart.x;
             float dy = stageHitPos.y - rayStart.y;
             float dz = stageHitPos.z - rayStart.z;
-            distance = sqrtf(dx * dx + dy * dy + dz * dz);
+            float dist = sqrtf(dx * dx + dy * dy + dz * dz);
 
-            hits.push_back({ distance, nullptr });
+            if (dist < closestStageDistance)
+                closestStageDistance = dist;
         }
+    }
+    //ステージ内の一番近いもの
+    if (closestStageDistance < FLT_MAX)
+    {
+        hits.push_back({ closestStageDistance, nullptr });
     }
 
     // ターゲット全部
@@ -215,7 +223,6 @@ void TargetManager::TargetFocus(float elapsedTime)
         t.preFocus = t.isFocus;
         t.isFocus = false;
         t.isRayHit = false;
-        //t.carsRen = false;
 
 
         if (t.isChainRender) continue;
@@ -280,10 +287,12 @@ void TargetManager::TargetFocus(float elapsedTime)
 
         return;
     }
-    canZoom = (distance <= 200);
 
     HitInfo closest = hits[0];
     distance = closest.distance;
+
+    canZoom = (distance <= 200);
+
 
     if (hits.empty() || closest.pTarget == nullptr || closest.distance > 1000.0f)
     {
@@ -291,12 +300,14 @@ void TargetManager::TargetFocus(float elapsedTime)
         // フォーカス対象がいないときだけリセット
         timer = 0.15f;
         lightTimer = 0.0f;
-        canZoom = false;
+        //canZoom = false;
         return;
     }
 
     if (closest.pTarget == nullptr)
     {
+        canZoom = (distance <= 200.0f);
+
         // ステージが近い
         focusTimer = 0.0f;
         return;
@@ -923,12 +934,13 @@ void TargetManager::DrawDebugGUI()
  //           //ImGui::Checkbox("t.isFocus", &targets[4].isFocus);
  //           ImGui::Checkbox("toResult", &toResult);
  //           ImGui::InputFloat("lightTimer", &lightTimer);
-            ImGui::InputInt("conbo", &scoreManager.conbo);
-            ImGui::InputInt("score", &scoreManager.score);
+            //ImGui::InputInt("conbo", &scoreManager.conbo);
+            //ImGui::InputInt("score", &scoreManager.score);
  //           ImGui::InputInt("allCharCount", &resultData.allCharCount);
  //           //ImGui::Checkbox("canZoom", &canZoom);
  //       }
-		ImGui::Text("getTargets.size() = %zu", getTargets.size());
+            ImGui::Text("Closest Distance: %.2f", distance);
+		//ImGui::Text("getTargets.size() = %zu", getTargets.size());
 	//	ImGui::InputInt("t.chainCount", &chainCount);
 
 	//}
