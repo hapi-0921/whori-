@@ -194,8 +194,8 @@ void CameraController::Update(float elapsedTime)
 	//x軸
 	angle.x = std::clamp(
 		angle.x,
-		-DirectX::XM_PIDIV2 + 0.01f,
-		DirectX::XM_PIDIV2 - 0.01f
+		DirectX::XMConvertToRadians(-45.0f),
+		DirectX::XM_PIDIV2 - 0.001f
 	);
 	//ｙ軸
 	if (angle.y < -DirectX::XM_PI) {
@@ -300,11 +300,20 @@ void CameraController::Update(float elapsedTime)
 	}
 
 	// カメラ更新
-		float safeRange = std::max(range, 0.05f);
 
-	eye.x = target.x - front.x * safeRange;
-	eye.y = target.y - front.y * safeRange;
-	eye.z = target.z - front.z * safeRange;
+	float safeRange = std::max(range, 0.05f);
+
+	
+	//カメラの制限
+	float deltaRnage = safeRange - delta;
+	if (deltaRnage >= 5000)
+	{
+		deltaRnage = 5000;
+	}
+
+	eye.x = target.x - front.x * (safeRange- delta);
+	eye.y = target.y - front.y * (safeRange- delta);
+	eye.z = target.z - front.z * (safeRange- delta);
 
 	Camera::Instance().SetLookAt(
 		eye,

@@ -155,6 +155,7 @@ private:
 
 	std::vector<Target> targets;//全ての対象物
 	std::vector<Target*> getTargets;//獲得したもの保存
+	std::vector<Target*> getAllTargets;//獲得したもの保存
 
 	//文字数
 	Target tfCharCount;
@@ -190,7 +191,7 @@ public:
 	//}
 
 
-	int GetKeepTargetSize() { return static_cast<int>(getTargets.size()); }//獲得したtargetの大きさ
+	int GetKeepTargetSize() { return static_cast<int>(getAllTargets.size()); }//獲得したtargetの大きさ
 	Sprite* GetgetTargetSpri(int index) { return getTargets[index]->sprite; }//獲得したカード（スプライト）
 	//*****
 
@@ -202,7 +203,7 @@ public:
 
 	int GetTargetSize() const { return static_cast<int>(targets.size()); }
 	std::vector<Target> GetTargets() const { return targets; }
-	std::vector<Target*> GetgetTargets() const { return getTargets; }
+	std::vector<Target*> GetgetTargets() const { return getAllTargets; }
 
 
 

@@ -28,7 +28,7 @@ void SceneGame::Initialize()
 		DirectX::XMConvertToRadians(45),//fovY
 		graphics.GetScreenWidth() / graphics.GetScreenHeight(),//aspect
 		0.1f,//nearZ
-		3000.0f//farZ
+		10000.0f//farZ
 	);
 
 	cameraController = new CameraController();
@@ -75,6 +75,9 @@ void SceneGame::Finalize()
 		delete cameraController;
 		cameraController = nullptr;
 	}
+
+	// delete ‚µ‚È‚¢I Š—LŒ ‚ÍGameManager‚É‚ ‚é
+	targetManager = nullptr;
 
 
 	//2D
@@ -166,7 +169,7 @@ void SceneGame::Update(float elapsedTime)
 	
 	if (targetManager->toResult || GameTimer<=0.0f)
 	{
-		optionUI.nowGameScene = false;
+		//optionUI.nowGameScene = false;
 		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneResult));
 	}
 	// Update
