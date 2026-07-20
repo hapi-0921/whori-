@@ -27,7 +27,7 @@ void Save::SaveGame()
         // ‰‰ñ‹N“®
         for (int i = 0; i < 4; i++)
         {
-            data.ranking[i] = 0;
+            data.ranking[i] = -1;
         }
     }
 

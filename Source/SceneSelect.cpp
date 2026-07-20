@@ -9,6 +9,8 @@
 #include"Camera.h"
 #include "GameManager.h"  
 #include"Tutorial.h"
+bool SceneSelect::selectstart = false;
+bool SceneSelect::first = true;
 
 // 初期化
 void SceneSelect::Initialize()
@@ -17,7 +19,7 @@ void SceneSelect::Initialize()
 	sprite = new Sprite("Data/Sprite/kumo.jpg"); // 背景のスプライト
 	sprArrowRight = new Sprite("Data/Sprite/arrowright.png"); // 矢印のスプライト
 	sprArrowLeft = new Sprite("Data/Sprite/arrowleft.png"); // 矢印のスプライト
-
+	sprfirst =new Sprite("Data/Sprite/tutorial//tutorialon.png");
 	// ステージ
 	Stage& stage = Stage::Instance();
 
@@ -105,187 +107,217 @@ void SceneSelect::Finalize()
 // 更新処理
 void SceneSelect::Update(float elapsedTime)
 {
+
 	Stage& stage = Stage::Instance();
 
 	Tutorial& tutorial = Tutorial::Instance();
 	tutorial.Update(elapsedTime);
 
 	OptionUI& optionUI = OptionUI::Instance();
-		
-	if (tutorial.toSelect)
-	{
-		stage.stageType = Stage::StageType::MACHI;
-		//stage.Initialize();
-
-		tutorial.isTutorial = false;
-		tutorial.toSelect = false;
-		optionUI.nowGameScene = false;
-
-	}
-
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
-	{
-		optionUI.isOption = true;
-		optionUI.isHome = true;
-	}
-	optionUI.UpdateOption(elapsedTime);//設定画面
 
 	Mouse& mouse = Input::Instance().GetMouse();
 	const MouseButton mouseButton = Mouse::BTN_LEFT;
 	CursorX = mouse.GetPositionX();
 	CursorY = mouse.GetPositionY();
 
-
-	if (tutorial.toGame)
+	if (first)
 	{
-		optionUI.nowGameScene = true;
-		stage.stageType = Stage::StageType::MACHI;
-		GameManager::Instance().CreateTargetManager();
-		SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-		return;
-	}
-
-	if (!optionUI.isOption)//設定を開いてない
-	{
-		stage.SetCamera(cameraController);
-		stage.Update(elapsedTime);
-
-		// ステージを回転させる
-		selectStage.angle.y += 0.005f;
-		selectStage2.angle.y += 0.005f;
-
-		// ステージ変換 //
-		// ステージ１が選択されている状態
-		if (stageState == stageType::stage1)
-		{
-			//stageState = stageType::stage2;
-			arrowColorRight = 0.5f;
-			stage.stageType = Stage::StageType::MACHI;
-
-
-			selectStage.position.x += (10 - selectStage.position.x) * 0.02f;
-			selectStage.scale.x += (0.005f - selectStage.scale.x) * 0.13f;
-			selectStage.scale.y += (0.005f - selectStage.scale.y) * 0.13f;
-			selectStage.scale.z += (0.005f - selectStage.scale.z) * 0.13f;
-
-			// �X�e�[�W�؂�ւ�
-			selectStage2.position.x += (10 - selectStage2.position.x) * 0.05f;
-			selectStage2.scale.x += (0.003f - selectStage2.scale.x) * 0.05f;
-			selectStage2.scale.y += (0.003f - selectStage2.scale.y) * 0.05f;
-			selectStage2.scale.z += (0.003f - selectStage2.scale.z) * 0.05f;
-
-			if (selectStage.position.x > 0)
-			{
-				selectStage.position.x = 0;
-
-				selectStage.scale.x = 0.005f;
-				selectStage.scale.y = 0.005f;
-				selectStage.scale.z = 0.005f;
-			}
-			if (selectStage2.position.x > 10)
-			{
-				selectStage2.position.x = 10;
-
-				selectStage2.scale.x = 0.003f;
-				selectStage2.scale.y = 0.003f;
-				selectStage2.scale.z = 0.003f;
-			}
-		}
-		// ステージ2が選択されている状態
-		if (stageState == stageType::stage2)
-		{
-			//stageState = stageType::stage1;
-			arrowColorLeft = 0.5f;
-			stage.stageType = Stage::StageType::SIMA;
-
-			selectStage.position.x += (-10 - selectStage.position.x) * 0.05f;
-			selectStage.scale.x += (0.003f - selectStage.scale.x) * 0.05f;
-			selectStage.scale.y += (0.003f - selectStage.scale.y) * 0.05f;
-			selectStage.scale.z += (0.003f - selectStage.scale.z) * 0.05f;
-
-			selectStage2.position.x += (-10 - selectStage2.position.x) * 0.02f;
-			selectStage2.scale.x += (0.005f - selectStage2.scale.x) * 0.13f;
-			selectStage2.scale.y += (0.005f - selectStage2.scale.y) * 0.13f;
-			selectStage2.scale.z += (0.005f - selectStage2.scale.z) * 0.13f;
-
-			if (selectStage.position.x <= -10)
-			{
-				selectStage.position.x = -10;
-
-				selectStage.scale.x = 0.003f;
-				selectStage.scale.y = 0.003f;
-				selectStage.scale.z = 0.003f;
-			}
-			if (selectStage2.position.x <= 0)
-			{
-				selectStage2.position.x = 0;
-
-				selectStage2.scale.x = 0.005f;
-				selectStage2.scale.y = 0.005f;
-				selectStage2.scale.z = 0.005f;
-			}
-		}
-
 		if (mouse.GetButtonDown() & mouseButton)
 		{
-
-			if (stageState == stageType::stage1 &&
-				CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
-			{
-				optionUI.nowGameScene = true;
-
-				GameManager::Instance().CreateTargetManager();
-
-				//stage.Initialize();
-				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-			}
-			if (stageState == stageType::stage2 &&
-				CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
-			{
-				optionUI.nowGameScene = true;
-
-				GameManager::Instance().CreateTargetManager();
-
-				//stage.Initialize();
-				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-			}
-
-			if (stageState == stageType::stage1 &&
-				CursorX > screenWidth - ArrowSize &&
-				CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
-			{
-				stageState = stageType::stage2;
-			}
-			if (stageState == stageType::stage2 &&
-				CursorX < ArrowSize &&
-				CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
-			{
-				stageState = stageType::stage1;
-			}
+			selectstart = true;
 		}
 	}
 
-	// カーソルが当たると矢印の色を変える
-	// 右の矢印
-	if (CursorX > screenWidth - ArrowSize &&
-		CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
-	{
-		arrowColorRight = 0.5f;
+	
+		if (tutorial.toSelect)
+		{
+			stage.stageType = Stage::StageType::MACHI;
+			//stage.Initialize();
+
+			tutorial.isTutorial = false;
+			tutorial.toSelect = false;
+			optionUI.nowGameScene = false;
+			if (first)
+			{
+				first = false;
+			}
+
+
+		}
+if (selectstart)
+{
+		if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
+		{
+			optionUI.isOption = true;
+			optionUI.isHome = true;
+		}
+		optionUI.UpdateOption(elapsedTime);//設定画面
+
+
+
+		if (tutorial.toGame)
+		{
+			optionUI.nowGameScene = true;
+			stage.stageType = Stage::StageType::MACHI;
+			GameManager::Instance().CreateTargetManager();
+			SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+			return;
+		}
+
+		if (!optionUI.isOption)//設定を開いてない
+		{
+			stage.SetCamera(cameraController);
+			stage.Update(elapsedTime);
+
+			// ステージを回転させる
+			selectStage.angle.y += 0.005f;
+			selectStage2.angle.y += 0.005f;
+
+			// ステージ変換 //
+			// ステージ１が選択されている状態
+			if (stageState == stageType::stage1)
+			{
+				//stageState = stageType::stage2;
+				arrowColorRight = 0.5f;
+				stage.stageType = Stage::StageType::MACHI;
+
+
+				selectStage.position.x += (10 - selectStage.position.x) * 0.02f;
+				selectStage.scale.x += (0.005f - selectStage.scale.x) * 0.13f;
+				selectStage.scale.y += (0.005f - selectStage.scale.y) * 0.13f;
+				selectStage.scale.z += (0.005f - selectStage.scale.z) * 0.13f;
+
+				// �X�e�[�W�؂�ւ�
+				selectStage2.position.x += (10 - selectStage2.position.x) * 0.05f;
+				selectStage2.scale.x += (0.003f - selectStage2.scale.x) * 0.05f;
+				selectStage2.scale.y += (0.003f - selectStage2.scale.y) * 0.05f;
+				selectStage2.scale.z += (0.003f - selectStage2.scale.z) * 0.05f;
+
+				if (selectStage.position.x > 0)
+				{
+					selectStage.position.x = 0;
+
+					selectStage.scale.x = 0.005f;
+					selectStage.scale.y = 0.005f;
+					selectStage.scale.z = 0.005f;
+				}
+				if (selectStage2.position.x > 10)
+				{
+					selectStage2.position.x = 10;
+
+					selectStage2.scale.x = 0.003f;
+					selectStage2.scale.y = 0.003f;
+					selectStage2.scale.z = 0.003f;
+				}
+			}
+			// ステージ2が選択されている状態
+			if (stageState == stageType::stage2)
+			{
+				//stageState = stageType::stage1;
+				arrowColorLeft = 0.5f;
+				stage.stageType = Stage::StageType::SIMA;
+
+				selectStage.position.x += (-10 - selectStage.position.x) * 0.05f;
+				selectStage.scale.x += (0.003f - selectStage.scale.x) * 0.05f;
+				selectStage.scale.y += (0.003f - selectStage.scale.y) * 0.05f;
+				selectStage.scale.z += (0.003f - selectStage.scale.z) * 0.05f;
+
+				selectStage2.position.x += (-10 - selectStage2.position.x) * 0.02f;
+				selectStage2.scale.x += (0.005f - selectStage2.scale.x) * 0.13f;
+				selectStage2.scale.y += (0.005f - selectStage2.scale.y) * 0.13f;
+				selectStage2.scale.z += (0.005f - selectStage2.scale.z) * 0.13f;
+
+				if (selectStage.position.x <= -10)
+				{
+					selectStage.position.x = -10;
+
+					selectStage.scale.x = 0.003f;
+					selectStage.scale.y = 0.003f;
+					selectStage.scale.z = 0.003f;
+				}
+				if (selectStage2.position.x <= 0)
+				{
+					selectStage2.position.x = 0;
+
+					selectStage2.scale.x = 0.005f;
+					selectStage2.scale.y = 0.005f;
+					selectStage2.scale.z = 0.005f;
+				}
+			}
+
+			if (mouse.GetButtonDown() & mouseButton)
+			{
+
+				if (stageState == stageType::stage1 &&
+					CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
+				{
+					optionUI.nowGameScene = true;
+
+					GameManager::Instance().CreateTargetManager();
+
+					//stage.Initialize();
+					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+					if (first)
+					{
+						first = false;
+					}
+
+				}
+				if (stageState == stageType::stage2 &&
+					CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
+				{
+					optionUI.nowGameScene = true;
+
+					GameManager::Instance().CreateTargetManager();
+
+					//stage.Initialize();
+					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+					if (first)
+					{
+						first = false;
+					}
+
+				}
+
+				if (stageState == stageType::stage1 &&
+					CursorX > screenWidth - ArrowSize &&
+					CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
+				{
+					stageState = stageType::stage2;
+				}
+				if (stageState == stageType::stage2 &&
+					CursorX < ArrowSize &&
+					CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
+				{
+					stageState = stageType::stage1;
+				}
+			}
+		}
+
+		// カーソルが当たると矢印の色を変える
+		// 右の矢印
+		if (CursorX > screenWidth - ArrowSize &&
+			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
+		{
+			arrowColorRight = 0.5f;
+		}
+		else
+		{
+			arrowColorRight = 1.0f;
+		}
+		// 左の矢印
+		if (CursorX < ArrowSize &&
+			CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
+		{
+			arrowColorLeft = 0.5f;
+		}
+		else
+		{
+			arrowColorLeft = 1.0f;
+		}
+
 	}
-	else
-	{
-		arrowColorRight = 1.0f;
-	}
-	// 左の矢印
-	if (CursorX < ArrowSize &&
-		CursorY < screenHeight / 2 + ArrowSize / 2 && CursorY > screenHeight / 2 - ArrowSize / 2)
-	{
-		arrowColorLeft = 0.5f;
-	}
-	else
-	{
-		arrowColorLeft = 1.0f;
-	}
+
 }
 
 // 描画処理
@@ -360,8 +392,20 @@ void SceneSelect::Render()
 		//設定画面
 		optionUI.RenderOption(rc, modelRenderer);
 		tutorial.Render(rc, modelRenderer);
-	}
+		if (first)
+		{
+			if (!selectstart)
+			{
+				sprfirst->Render(rc,
+					0, 0, 0,
+					1920, 1080, 0, 0,
+					1920, 1080, 0, 1, 1, 1, 1);
+			}
 
+		}
+
+	}
+		
 	cameraController->Render(rc);
 }
 

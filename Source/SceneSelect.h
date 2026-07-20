@@ -32,7 +32,7 @@ private:
 	Sprite* sprite = nullptr;
 	Sprite* sprArrowRight = nullptr;
 	Sprite* sprArrowLeft = nullptr;
-
+	Sprite* sprfirst = nullptr;
 	// カメラ
 	CameraController* cameraController = nullptr;
 	ShapeRenderer* shapeRenderer = nullptr;
@@ -62,7 +62,8 @@ private:
 		stage1 = 0,
 		stage2 = 1
 	};
-
+	static bool selectstart;
+	static bool first;
 	// 描画関数以外でも使いたいのでヘッダーに移動させる
 	Graphics& graphics = Graphics::Instance();
 	float screenWidth = static_cast<float>(graphics.GetScreenWidth());

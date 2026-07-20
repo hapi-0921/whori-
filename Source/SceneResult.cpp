@@ -304,14 +304,14 @@ void SceneResult::Render()
 					1920, 1080, 0, 1, 1, 1, 1);
 				for (int i = 0;i < 4;i++)
 				{
-					if (save.ranking[i] != 0)
+					if (save.ranking[i] != -1)
 					{
 						Numberfont->DrawNumber(rc, save.ranking[i], record[i].posx, record[i].posy, 1.5f);
 					}
 
 					if (scoreManager.allScore == save.ranking[i])
 					{
-						if (save.ranking[i] != 0)
+						if (save.ranking[i] != -1)
 						{
 							if ((resultTimer / 40) % 2 == 0)
 							{
