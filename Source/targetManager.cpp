@@ -104,7 +104,7 @@ TargetManager::TargetManager()
 
     sprMiss = new Sprite("Data/Sprite/chain/UI/miss.png");
     number = new Font("Data/Sprite/number.png");
-    sprConbo= new Sprite("Data/Sprite/conbo.png");
+    //sprConbo= new Sprite("Data/Sprite/conbo.png");
 }
 
 TargetManager::~TargetManager()

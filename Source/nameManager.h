@@ -6,6 +6,10 @@
 #include "System/Sprite.h"
 #include "System/Graphics.h"
 
+#include <string>
+#include "Font.h"
+#include "System/GamePad.h"
+
 class NameManagger
 {
 public:
@@ -13,9 +17,11 @@ public:
 	~NameManagger();
 
 	void Initialize();
-	bool Update(float elapsedTime);
+	void Update(float elapsedTime);
 	void Render(const RenderContext& rc, ModelRenderer* renderer);
 	void DrawDebugGUI();
+	bool IsKeyTrigger(int vk);
+	void Reset();
 
 	static NameManagger& Instance()
 	{
@@ -23,10 +29,30 @@ public:
 		return nameManagger;
 	}
 
+	bool nameYet = false;//älìæçœÇ›
+
+	static const int MAX_LENGTH = 17;
+
+
 private:
 	Sprite* sprNamePlate = nullptr;
 	Sprite* sprNowTyping = nullptr;
 	Sprite* sprBar = nullptr;
+
+	DirectX::XMFLOAT2 mousePos{};
+
+	std::string name;
+	bool isChar = false;   // ï∂éöÇ™Ç†ÇÈÇ©
+	bool nowName = false;     // ì¸óÕíÜ
+	int  cursorBlink = 0;
+
+	Font* fName = nullptr;
+
+
+public:
+
+	const std::string& GetName() const { return name; }
+	bool IsConfirmed() const { return nameYet; }
 };
 
 //#include"nameManager.h"

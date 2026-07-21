@@ -126,11 +126,10 @@ void SceneSelect::Update(float elapsedTime)
 	CursorY = mouse.GetPositionY();
 
 	NameManagger& nameManagger = NameManagger::Instance();
+	nameManagger.Update(elapsedTime);
 
-
-	if (!name)
+	if (!nameManagger.nameYet)
 	{
-		name=nameManagger.Update(elapsedTime);
 		return;
 	}
 
@@ -354,6 +353,8 @@ void SceneSelect::Render()
 
 	OptionUI& optionUI = OptionUI::Instance();
 	Tutorial& tutorial = Tutorial::Instance();
+	NameManagger& nameManagger = NameManagger::Instance();
+
 
 	// 2Dスプライト描画
 	{
@@ -410,7 +411,7 @@ void SceneSelect::Render()
 		//設定画面
 		optionUI.RenderOption(rc, modelRenderer);
 		tutorial.Render(rc, modelRenderer);
-		if (first)
+		if (first && nameManagger.nameYet)
 		{
 			if (!selectstart)
 			{
@@ -421,7 +422,7 @@ void SceneSelect::Render()
 			}
 
 		}
-
+		nameManagger.Render(rc, modelRenderer);
 	}
 		
 	cameraController->Render(rc);

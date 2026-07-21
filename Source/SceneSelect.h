@@ -28,7 +28,6 @@ public:
 	void DrawGUI() override;
 
 private:
-	bool name = false;
 
 	// スプライト
 	Sprite* sprite = nullptr;
