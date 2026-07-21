@@ -1,6 +1,7 @@
 //SceneTitle.h
 #pragma once
 #include "System/Sprite.h"
+#include "System/AudioSource.h"
 #include "Scene.h"
 #include "TitleStage.h"
 #include "CameraController.h"
@@ -23,4 +24,6 @@ private:
 	Sprite* sprite = nullptr;
 	Sprite* titlelogo = nullptr;
 	Sprite* clicklogo = nullptr;
+
+	AudioSource* hitSE = nullptr;
 };

@@ -3,6 +3,7 @@
 #include<imgui.h>
 #include <System/Input.h>
 #include "System/Graphics.h"
+#include "System/Audio.h"
 #include "SceneSelect.h"
 #include "SceneTitle.h"
 #include "SceneManager.h"
@@ -38,11 +39,17 @@ void SceneTitle::Initialize()
 	title_timer = 0;
 	Save::Instance().LoadGame();
 
+	hitSE = Audio::Instance().LoadAudioSource("Data/Music/title.wav");
+	hitSE->Play(true);
+
 }
 
 // 終了化
 void SceneTitle::Finalize()
 {
+	delete hitSE;
+	hitSE = nullptr;
+
 	// スプライト終了化
 	if (sprite != nullptr)
 	{
