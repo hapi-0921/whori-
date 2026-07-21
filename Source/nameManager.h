@@ -31,7 +31,7 @@ public:
 
 	bool nameYet = false;//Šl“¾Ï‚İ
 
-	static const int MAX_LENGTH = 17;
+	static const int MAX_LENGTH = 13;
 
 
 private:
