@@ -300,12 +300,11 @@ void CameraController::Update(float elapsedTime)
 	}
 
 	// カメラ更新
-
-	float safeRange = std::max(range, 0.05f);
+	safeRange = std::max(range, 0.05f);
 
 	
 	//カメラの制限
-	float deltaRnage = safeRange - delta;
+	 deltaRnage = safeRange - delta;
 	if (deltaRnage >= 5000)
 	{
 		deltaRnage = 5000;
@@ -344,8 +343,10 @@ void CameraController::DrawDebugGUI()
 			//ImGui::InputFloat3("rayStart", &rayStart.x);
 			////ズーム
 			ImGui::InputFloat("range", &range);
+			ImGui::InputFloat("safeRange", &safeRange);
+			ImGui::InputFloat("deltaRnage", &deltaRnage);
 			//ImGui::Checkbox("hitRay", &hitRay);
-			ImGui::Checkbox("targetManager->canZoom", &targetManager->canZoom);
+			//ImGui::Checkbox("targetManager->canZoom", &targetManager->canZoom);
 			////回転
 			//DirectX::XMFLOAT3 a;
 			//a.x = DirectX::XMConvertToDegrees(angle.x);

@@ -671,7 +671,7 @@ void TargetManager::UpdateCardMove(float elapsedTime)
                     t->drawScale = 1.0f;
                     getTargets.clear();
                     nonChain = false;
-                    getTargets.clear();
+                    //getTargets.clear();
 
                 }
             }

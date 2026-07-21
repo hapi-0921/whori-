@@ -106,7 +106,7 @@ void Stage::Render(const RenderContext& rc, ModelRenderer* renderer,StageTransfo
 	{
 		renderer->Render(rc, stage->transform, mdlStage[i], ShaderId::Lambert);
 	}
-	renderer->Render(rc, back.transform, mdlBack, ShaderId::Lambert);
+	//renderer->Render(rc, back.transform, mdlBack, ShaderId::Lambert);
 
 
 	//ƒY[ƒ€—p”»’è•Ç
