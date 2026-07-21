@@ -50,8 +50,9 @@ private:
 
 
 public:
+	//std::vector<std::string> targets;//‘S‚Ä‚Ì‘ÎÛ•¨
 
-	const std::string& GetName() const { return name; }
+	//const std::string& GetName() const { return name; }
 	bool IsConfirmed() const { return nameYet; }
 };
 

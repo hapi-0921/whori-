@@ -58,7 +58,7 @@ void Font::Draw(
 
             0,
 
-            1, 1, 1, 1);
+           0.7,0.7,0.7, 1);
 
         drawX += CHAR_W * scale;
 

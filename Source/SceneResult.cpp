@@ -14,6 +14,9 @@
 #include"SceneSelect.h"
 #include"SceneTitle.h"
 #include"save.h"
+
+#include"nameManager.h"
+
 // 初期化
 void SceneResult::Initialize()
 {
@@ -64,6 +67,7 @@ void SceneResult::Finalize()
 {
 	delete font;
 	font = nullptr;
+
 	// アプリケーション終了時やタイトルに戻るとき
 	GameManager::Instance().ReleaseTargetManager();
 }
