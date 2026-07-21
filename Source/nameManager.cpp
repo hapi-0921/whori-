@@ -153,8 +153,8 @@ void NameManagger::Render(const RenderContext& rc, ModelRenderer* renderer)
 
 
 			float baseX = 960.0f - 280.0f;   
-			float baseY = 540.0f + 50.0f;
-			float scale = 1.0f;
+			float baseY = 540.0f+60;
+			float scale = 1.4f;
 
 			// •¶Žš•`‰æ
 			fName->Draw(rc, name.c_str(), baseX, baseY, scale);
@@ -166,7 +166,7 @@ void NameManagger::Render(const RenderContext& rc, ModelRenderer* renderer)
 				sprBar->Render(rc,
 					(name.length() * char_w * scale),
 					0,
-				0,
+					0,
 					1920, 1080,
 					0, 1, 1, 1, 1);
 

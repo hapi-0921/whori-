@@ -298,10 +298,6 @@ void CameraController::Update(float elapsedTime)
 	// カメラ更新
 	safeRange = std::max(range, 0.05f);
 
-	
-	//カメラの制限
-
-
 	if (wheel > 0.0f)
 	{
 		if (safeRange <= 0.05f)
@@ -313,11 +309,16 @@ void CameraController::Update(float elapsedTime)
 		}
 	}
 
+	//カメラの制限
+	float maxRange = 5000;
+	if (safeRange >= maxRange)
+	{
+		safeRange = maxRange;
+	}
 
-
-	eye.x = target.x - front.x * (safeRange/*- delta*/);
-	eye.y = target.y - front.y * (safeRange/*- delta*/);
-	eye.z = target.z - front.z * (safeRange/*- delta*/);
+	eye.x = target.x - front.x * safeRange;
+	eye.y = target.y - front.y * safeRange;
+	eye.z = target.z - front.z * safeRange;
 
 	Camera::Instance().SetLookAt(
 		eye,
