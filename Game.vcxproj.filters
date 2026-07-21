@@ -168,6 +168,9 @@
     <ClCompile Include="Source\Tutorial.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\nameManager.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\Audio.h">
@@ -321,6 +324,9 @@
       <Filter>Source\h</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tutorial.h">
+      <Filter>Source\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\nameManager.h">
       <Filter>Source\h</Filter>
     </ClInclude>
   </ItemGroup>

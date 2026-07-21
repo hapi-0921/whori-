@@ -28,6 +28,7 @@ public:
 	void DrawGUI() override;
 
 private:
+
 	// スプライト
 	Sprite* sprite = nullptr;
 	Sprite* sprArrowRight = nullptr;
