@@ -80,6 +80,7 @@ void Stage::Update(float elapsedTime)
 	DirectX::XMFLOAT3 front = mainCamera.GetFront();
 	DirectX::XMFLOAT3 target = camera->GetCameraTarget();
 
+
 	//‰œs‚«”»’è—p•Ç
 	float length_d = 2000;//far‚Ì”¼•ª‚É‡‚í‚¹‚é
 	centerWall[DEPTH].position.x = mainCamera.GetEye().x+(front.x * length_d);

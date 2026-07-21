@@ -87,7 +87,6 @@ bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 
 	XMFLOAT3 realHit;
 	bool hitReal = false;
-	float nearest = FLT_MAX;
 
 	Stage& stage = Stage::Instance();
 
@@ -98,12 +97,8 @@ bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 	{
 		float distSq = XMVectorGetX(XMVector3LengthSq(//
 			XMLoadFloat3(&hit) - XMLoadFloat3(&rayStart)));
-		if (distSq < nearest)
-		{
-			nearest = distSq;
 			realHit = hit;
 			hitReal = true;
-		}
 	}
 
 	if (!hitReal) return false;
@@ -252,7 +247,7 @@ void CameraController::Update(float elapsedTime)
 					XMVECTOR dir = XMVector3Normalize(deltaV);
 
 					float strength = wheel * moveSpeed;
-					float maxMove = distToHit * 0.3f;
+					float maxMove = distToHit * 0.5f;
 
 					float moveAmount = std::min(strength * distToHit, maxMove);
 
@@ -292,6 +287,7 @@ void CameraController::Update(float elapsedTime)
 
 					XMVECTOR offset = XMVectorScale(dir, moveAmount);  
 
+
 					XMStoreFloat3(&target, targetV + offset);
 				}
 			}
@@ -304,15 +300,24 @@ void CameraController::Update(float elapsedTime)
 
 	
 	//カメラの制限
-	 deltaRnage = safeRange - delta;
-	if (deltaRnage >= 5000)
+
+
+	if (wheel > 0.0f)
 	{
-		deltaRnage = 5000;
+		if (safeRange <= 0.05f)
+		{
+			float s = 15;
+			target.x += front.x * s;
+			target.y += front.y * s;
+			target.z += front.z * s;
+		}
 	}
 
-	eye.x = target.x - front.x * (safeRange- delta);
-	eye.y = target.y - front.y * (safeRange- delta);
-	eye.z = target.z - front.z * (safeRange- delta);
+
+
+	eye.x = target.x - front.x * (safeRange/*- delta*/);
+	eye.y = target.y - front.y * (safeRange/*- delta*/);
+	eye.z = target.z - front.z * (safeRange/*- delta*/);
 
 	Camera::Instance().SetLookAt(
 		eye,
@@ -327,6 +332,8 @@ void CameraController::Render(const RenderContext& rc)
 
 void CameraController::DrawDebugGUI()
 {
+	Camera& mainCamera = Camera::Instance();
+	DirectX::XMFLOAT3 cameraPos = mainCamera.GetEye();
 
 	//ウィンドウの位置
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
@@ -339,12 +346,13 @@ void CameraController::DrawDebugGUI()
 		//折り畳みメニュー
 		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
 			//位置
-			//ImGui::InputFloat3("target", &target.x);
-			//ImGui::InputFloat3("rayStart", &rayStart.x);
+			ImGui::InputFloat3("target", &target.x);
+			ImGui::InputFloat3("eye", &cameraPos.x);
 			////ズーム
 			ImGui::InputFloat("range", &range);
-			ImGui::InputFloat("safeRange", &safeRange);
-			ImGui::InputFloat("deltaRnage", &deltaRnage);
+			//ImGui::InputFloat("safeRange", &safeRange);
+			//ImGui::InputFloat("delta", &delta);
+			//ImGui::InputFloat("deltaRnage", &deltaRnage);
 			//ImGui::Checkbox("hitRay", &hitRay);
 			//ImGui::Checkbox("targetManager->canZoom", &targetManager->canZoom);
 			////回転
