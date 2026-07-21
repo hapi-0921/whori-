@@ -56,6 +56,9 @@ private:
 
 	TargetManager* targetManager = nullptr;
 
+	float safeRange = 0.0f;
+	float deltaRnage = 0.0f;
+
 public:
 	void SetTargetManager(TargetManager* manager)
 	{

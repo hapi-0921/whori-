@@ -20,7 +20,7 @@ NameManagger::NameManagger()
 void NameManagger::Reset()
 {
 	//ƒŠƒUƒ‹ƒg‚Å•Û‘¶‚µ‚Ä‚©‚çdelete
-	//name.clear();
+	name.clear();
 	isChar = false;
 	nameYet = false;
 	nowName = false;
@@ -119,7 +119,8 @@ void NameManagger::Update(float elapsedTime)
 	//Œˆ’è
 	if (!name.empty())
 	{
-		if (isRectJubge(mousePos.x, mousePos.y, 867, 707, 264, 69))
+		if (isRectJubge(mousePos.x, mousePos.y, 867, 707, 264, 69)||
+			IsKeyTrigger(VK_SPACE))
 		{
 			if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
 			{
