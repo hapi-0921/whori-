@@ -71,4 +71,6 @@ private:
 	json data;
 	Font* font=nullptr;
 	Font* Numberfont = nullptr;
+
+	int size = 0;
 };

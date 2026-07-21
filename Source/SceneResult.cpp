@@ -2,18 +2,19 @@
 #include "SceneResult.h"
 #include "System/Input.h"
 #include "System/Mouse.h"
-#include "SceneGame.h"
 #include "SceneManager.h"
 #include "SceneLoading.h"
 #include "Stage.h"
 #include"Camera.h"
 #include <imgui.h>
-#include"targetManager.h"
 #include <fstream>
-#include "GameManager.h"
 #include"SceneSelect.h"
 #include"SceneTitle.h"
 #include"save.h"
+#include "SceneGame.h"
+#include"targetManager.h"
+#include "GameManager.h"
+
 // 初期化
 void SceneResult::Initialize()
 {
@@ -42,7 +43,7 @@ void SceneResult::Initialize()
 	file >> data;
 	font = new Font("Data/Font/font2.png");
 	Numberfont= new Font("Data/Sprite/number.png");
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		sikaku[i].posx = data["result"][i]["position"]["x"];//初期x位置
 		sikaku[i].lastposy = data["result"][i]["position"]["y"];//めっちゃややこいけど上から降ってきた後の着地位置
@@ -56,6 +57,9 @@ void SceneResult::Initialize()
 	record[1].posy = 420;
 	record[2].posy = 540;
 	record[3].posy = 680;
+
+	TargetManager* targetManager = GameManager::Instance().GetTargetManager();
+	size= targetManager->GetKeepTargetSize();
 
 }
 
@@ -118,10 +122,12 @@ void SceneResult::Update(float elapsedTime)
 
 					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 				}
-				//タイトルへ
+				//ゲーム終了
 				else if (CursorX >= 1216 && CursorX <= 1681)
 				{
-					SceneManager::Instance().ChangeScene((new SceneTitle));
+					scoreManager.ResetData();
+					HWND hWnd = GetActiveWindow();
+					PostMessage(hWnd, WM_CLOSE, 0, 0);
 				}
 
 			}
@@ -130,13 +136,13 @@ void SceneResult::Update(float elapsedTime)
 
 	}
 
-	if (scoreManager.getNum > 10)
+	if (size > 10)
 	{
 		getDown = 10;
 	}
 	else
 	{
-		getDown = scoreManager.getNum;
+		getDown = size;
 	}
 	if (nowCard < getDown)
 	{
@@ -203,6 +209,7 @@ void SceneResult::Render()
 	ScoreManager& scoreManager = ScoreManager::Instance();
 	Save& save = Save::Instance();
 	TargetManager* targetManager = GameManager::Instance().GetTargetManager();
+
 	if (targetManager)
 	{
 		ImGui::Text("targetManager = %p", targetManager);
@@ -220,9 +227,8 @@ void SceneResult::Render()
 			if (targetManager)
 			{
 
-				int size = targetManager->GetKeepTargetSize();
 
-				for (int i = 0; i < size; i++)
+				for (int i = 0; i < getDown; i++)
 				{
 					targetManager->GetgetTargetSpri(i)->Render(
 						rc,

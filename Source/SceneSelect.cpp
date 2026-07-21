@@ -135,7 +135,7 @@ void SceneSelect::Update(float elapsedTime)
 
 	if (first)
 	{
-		if (selecttimer >= 300)
+		if (selecttimer >= 200)
 		{
 			if (mouse.GetButtonUp() & mouseButton)
 			{

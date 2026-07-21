@@ -49,6 +49,10 @@ void Stage::Initialize()
 		mdlStage[1] = new Model("Data/Model/stage/machi/matimati/matimati2.mdl");
 		mdlStage[2] = new Model("Data/Model/stage/machi/matimati/matimati3.mdl");
 		mdlStage[3] = new Model("Data/Model/stage/machi/matimati/matimati4.mdl");
+		for (auto& material : mdlStage[1]->GetResource()->GetMaterials())
+		{
+			material.emissionColor = {0.3,0.3,0.3,1.0};
+		}
 	}
 	else if (stageType == SIMA)
 	{
@@ -61,6 +65,10 @@ void Stage::Initialize()
 		mdlStage[4] = new Model("Data/Model/stage/shima/simasima/simasima2.mdl");
 		mdlStage[5] = new Model("Data/Model/stage/shima/simasima/simasima3.mdl");
 		mdlStage[6] = new Model("Data/Model/stage/shima/simasima/simasima4.mdl");
+		for (auto& material : mdlStage[5]->GetResource()->GetMaterials())
+		{
+			material.emissionColor = { 0.3,0.3,0.3,1.0 };
+		}
 	}
 }
 

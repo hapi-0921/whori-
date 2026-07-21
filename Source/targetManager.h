@@ -192,7 +192,7 @@ public:
 
 
 	int GetKeepTargetSize() { return static_cast<int>(getAllTargets.size()); }//獲得したtargetの大きさ
-	Sprite* GetgetTargetSpri(int index) { return getTargets[index]->sprite; }//獲得したカード（スプライト）
+	Sprite* GetgetTargetSpri(int index) { return getAllTargets[index]->sprite; }//獲得したカード（スプライト）
 	//*****
 
 	bool GetCarsRen(int index) { return targets[index].carsRen; }
@@ -209,7 +209,7 @@ public:
 
 	Sprite* GetTargetSpri(int index)  { return targets[index].sprite; }
 
-
+	Sprite* sprConbo = nullptr;
 	//void TargetManager::SetUIController(UIController* pUI)
 	//{
 	//	uiController = pUI;
