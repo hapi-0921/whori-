@@ -2,20 +2,18 @@
 #include "SceneResult.h"
 #include "System/Input.h"
 #include "System/Mouse.h"
-#include "SceneGame.h"
 #include "SceneManager.h"
 #include "SceneLoading.h"
 #include "Stage.h"
 #include"Camera.h"
 #include <imgui.h>
-#include"targetManager.h"
 #include <fstream>
-#include "GameManager.h"
 #include"SceneSelect.h"
 #include"SceneTitle.h"
 #include"save.h"
-
-#include"nameManager.h"
+#include "SceneGame.h"
+#include"targetManager.h"
+#include "GameManager.h"
 
 // 初期化
 void SceneResult::Initialize()
@@ -24,6 +22,7 @@ void SceneResult::Initialize()
 	sprresultback= new Sprite("Data/Sprite/resultback.png");
 	sprresultback2 = new Sprite("Data/Sprite/resultback2.png");
 	sprranking= new Sprite("Data/Sprite/ranking.png");
+	sprsubranking= new Sprite("Data/Sprite/ranking2.png");
 	for (int i = 0; i < 5; i++)
 	{
 		std::string path = "Data/Sprite/rank" + std::to_string(i + 1) + ".png";
@@ -45,7 +44,7 @@ void SceneResult::Initialize()
 	file >> data;
 	font = new Font("Data/Font/font2.png");
 	Numberfont= new Font("Data/Sprite/number.png");
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		sikaku[i].posx = data["result"][i]["position"]["x"];//初期x位置
 		sikaku[i].lastposy = data["result"][i]["position"]["y"];//めっちゃややこいけど上から降ってきた後の着地位置
@@ -55,10 +54,9 @@ void SceneResult::Initialize()
 	}
 	Save::Instance().SaveGame();
 	Save::Instance().LoadGame();
-	record[0].posy = 290;
-	record[1].posy = 420;
-	record[2].posy = 540;
-	record[3].posy = 680;
+
+	TargetManager* targetManager = GameManager::Instance().GetTargetManager();
+	size= targetManager->GetKeepTargetSize();
 
 }
 
@@ -67,7 +65,6 @@ void SceneResult::Finalize()
 {
 	delete font;
 	font = nullptr;
-
 	// アプリケーション終了時やタイトルに戻るとき
 	GameManager::Instance().ReleaseTargetManager();
 }
@@ -76,10 +73,58 @@ void SceneResult::Finalize()
 void SceneResult::Update(float elapsedTime)
 {
 	Mouse& mouse = Input::Instance().GetMouse();
+
 	const MouseButton mouseButton = Mouse::BTN_LEFT;
 	CursorX = mouse.GetPositionX();
 	CursorY = mouse.GetPositionY();
 	ScoreManager& scoreManager = ScoreManager::Instance();
+	Stage& stage = Stage::Instance();
+
+	if (stage.stageType == Stage::StageType::MACHI)
+	{
+		record[0].posx = 960;
+		record[1].posx = 960;
+		record[2].posx = 960;
+		record[3].posx = 960;
+
+		record[0].posy = 365;
+		record[1].posy = 520;
+		record[2].posy = 666;
+		record[3].posy = 810;
+
+		simarecord[0].posx = 1530;
+		simarecord[1].posx = 1530;
+		simarecord[2].posx = 1530;
+		simarecord[3].posx = 1530;
+
+		simarecord[0].posy = 433;
+		simarecord[1].posy = 546;
+		simarecord[2].posy = 646;
+		simarecord[3].posy = 746;
+
+	}
+	else if(stage.stageType == Stage::StageType::SIMA)
+	{
+		simarecord[0].posx= 960;
+		simarecord[1].posx= 960;
+		simarecord[2].posx= 960;
+		simarecord[3].posx= 960;
+
+		simarecord[0].posy= 365;
+		simarecord[1].posy= 520;
+		simarecord[2].posy= 666;
+		simarecord[3].posy= 810;
+
+		record[0].posx = 1530;
+		record[1].posx = 1530;
+		record[2].posx = 1530;
+		record[3].posx = 1530;
+
+		record[0].posy = 433;
+		record[1].posy = 546;
+		record[2].posy = 646;
+		record[3].posy = 746;
+	}
 	if (scoreManager.allScore <= 1000)
 	{
 		rankset = 0;
@@ -116,16 +161,18 @@ void SceneResult::Update(float elapsedTime)
 					SceneManager::Instance().ChangeScene( (new SceneSelect));
 				}
 				//もう一度
-				else if (CursorX >= 667 && CursorX <=1157)
-				{
-					GameManager::Instance().CreateTargetManager();
+				//else if (CursorX >= 667 && CursorX <=1157)
+				//{
+				//	//GameManager::Instance().CreateTargetManager();
 
-					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-				}
-				//タイトルへ
+				//	SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+				//}
+				//ゲーム終了
 				else if (CursorX >= 1216 && CursorX <= 1681)
 				{
-					SceneManager::Instance().ChangeScene((new SceneTitle));
+					scoreManager.ResetData();
+					HWND hWnd = GetActiveWindow();
+					PostMessage(hWnd, WM_CLOSE, 0, 0);
 				}
 
 			}
@@ -133,14 +180,16 @@ void SceneResult::Update(float elapsedTime)
 		
 
 	}
+	
 
-	if (scoreManager.getNum > 10)
+
+	if (size > 10)
 	{
 		getDown = 10;
 	}
 	else
 	{
-		getDown = scoreManager.getNum;
+		getDown = size;
 	}
 	if (nowCard < getDown)
 	{
@@ -203,10 +252,15 @@ void SceneResult::Render()
 
 	rc.deviceContext = dc;
 	rc.renderState = graphics.GetRenderState();
-	
+
 	ScoreManager& scoreManager = ScoreManager::Instance();
 	Save& save = Save::Instance();
 	TargetManager* targetManager = GameManager::Instance().GetTargetManager();
+	Stage& stage = Stage::Instance();
+	ImGui::Begin("Debug");
+
+	ImGui::End();
+
 	if (targetManager)
 	{
 		ImGui::Text("targetManager = %p", targetManager);
@@ -224,9 +278,8 @@ void SceneResult::Render()
 			if (targetManager)
 			{
 
-				int size = targetManager->GetKeepTargetSize();
 
-				for (int i = 0; i < size; i++)
+				for (int i = 0; i < getDown; i++)
 				{
 					targetManager->GetgetTargetSpri(i)->Render(
 						rc,
@@ -252,7 +305,7 @@ void SceneResult::Render()
 				0, 0, 0,
 				1920, 1080, 0, 0,
 				1920, 1080, 0, 1, 1, 1, 1);
-				
+
 			if (resultTimer >= 400)						//ランク表示b
 			{
 				float w = 1920 * rankScale;
@@ -270,7 +323,7 @@ void SceneResult::Render()
 						1920, 1080,
 						0, 1, 1, 1, 1);
 				}
-				
+
 			}
 			if (rank == rankset && rankScale == 1)		//一言メッセージ
 			{
@@ -295,7 +348,7 @@ void SceneResult::Render()
 				350,
 				580,
 				1.0f);
-			Numberfont->DrawNumber(            //見つけたもの総数後で変えるにょん
+			Numberfont->DrawNumber(            //見つけたもの総数
 				rc,
 				scoreManager.targetNum,
 				470,
@@ -330,21 +383,49 @@ void SceneResult::Render()
 					scorescale);
 			}
 		}
-			else                               //ランキング
+
+		else                               //ランキング
+		{
+			sprresultback->Render(rc,
+				0, 0, 0,
+				1920, 1080, 0, 0,
+				1920, 1080, 0, 1, 1, 1, 1);
+			sprsubranking->Render(rc,
+				0, 0, 0,
+				1920, 1080, 0, 0,
+				1920, 1080, 0, 1, 1, 1, 1);
+			for (int i = 0;i < 4;i++)
+
 			{
-				sprresultback->Render(rc,
-					0, 0, 0,
-					1920, 1080, 0, 0,
-					1920, 1080, 0, 1, 1, 1, 1);
-				sprranking->Render(rc,
-					0, 0, 0,
-					1920, 1080, 0, 0,
-					1920, 1080, 0, 1, 1, 1, 1);
-				for (int i = 0;i < 4;i++)
+				if (stage.stageType == Stage::StageType::MACHI)
+				{
+					if (save.simaranking[i] != -1)
+					{
+						Numberfont->DrawNumber(rc, save.simaranking[i], simarecord[i].posx, simarecord[i].posy, 1.5f);
+					}
+
+				}
+				else if (stage.stageType == Stage::StageType::SIMA)
+				{
+					if (save.simaranking[i] != -1)
+					{
+						Numberfont->DrawNumber(rc, save.ranking[i], record[i].posx, record[i].posy, 1.5f);
+					}
+				}
+
+			}
+
+			sprranking->Render(rc,
+				0, 0, 0,
+				1920, 1080, 0, 0,
+				1920, 1080, 0, 1, 1, 1, 1);
+		for (int i = 0;i < 4;i++)
+			{
+				if (stage.stageType == Stage::StageType::MACHI)
 				{
 					if (save.ranking[i] != -1)
 					{
-						Numberfont->DrawNumber(rc, save.ranking[i], record[i].posx, record[i].posy, 1.5f);
+						Numberfont->DrawNumber(rc, save.ranking[i], record[i].posx, record[i].posy, 2.0f);
 					}
 
 					if (scoreManager.allScore == save.ranking[i])
@@ -354,7 +435,7 @@ void SceneResult::Render()
 							if ((resultTimer / 40) % 2 == 0)
 							{
 								sprnew->Render(rc,
-									1300, record[i].posy, 0,
+									1450, record[i].posy, 0,
 									157, 52, 0, 0,
 									225, 75, 0, 1, 1, 1, 1);
 
@@ -364,14 +445,43 @@ void SceneResult::Render()
 					}
 				}
 
+					else if (stage.stageType == Stage::StageType::SIMA)
+
+
+					{
+						if (save.simaranking[i] != -1)
+						{
+							Numberfont->DrawNumber(rc, save.simaranking[i], simarecord[i].posx, simarecord[i].posy, 2.0f);
+						}
+
+						if (scoreManager.allScore == save.simaranking[i])
+						{
+							if (save.simaranking[i] != -1)
+							{
+								if ((resultTimer / 40) % 2 == 0)
+								{
+									sprnew->Render(rc,
+										1450, simarecord[i].posy, 0,
+										157, 52, 0, 0,
+										225, 75, 0, 1, 1, 1, 1);
+
+								}
+
+							}
+						}
+					}
+
+					/*font->Draw(
+					rc,
+					"Hello World!",
+					100,
+					100,
+					10.0f);*/
+				
+
 			}
 
-			font->Draw(
-				rc,
-				"Hello World!",
-				100,
-				100,
-				10.0f);
+
 #ifndef NDEBUG
 
 #endif // NDEBUG
@@ -384,7 +494,7 @@ void SceneResult::Render()
 		}
 
 	}
-
+}
 
 // GUI描画
 void SceneResult::DrawGUI()
@@ -400,6 +510,8 @@ void SceneResult::DrawGUI()
 
 	//	ImGui::DragInt("X", &sikaku[i].posx);
 	//	ImGui::DragInt("Y", &sikaku[i].posy);
+		ImGui::DragInt("X", &CursorX);
+		ImGui::DragInt("Y", &CursorY);
 	//	ImGui::DragInt("Angle", &sikaku[i].angle);
 
 	//	ImGui::Separator();

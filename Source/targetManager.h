@@ -52,6 +52,8 @@ private:
 
 	int displayIndex = 0;
 
+	float timeOverTimer = 0.0f;
+
 	struct Target
 	{
 		Model* mdlCard = nullptr;
@@ -192,7 +194,7 @@ public:
 
 
 	int GetKeepTargetSize() { return static_cast<int>(getAllTargets.size()); }//獲得したtargetの大きさ
-	Sprite* GetgetTargetSpri(int index) { return getTargets[index]->sprite; }//獲得したカード（スプライト）
+	Sprite* GetgetTargetSpri(int index) { return getAllTargets[index]->sprite; }//獲得したカード（スプライト）
 	//*****
 
 	bool GetCarsRen(int index) { return targets[index].carsRen; }
@@ -209,6 +211,8 @@ public:
 
 	Sprite* GetTargetSpri(int index)  { return targets[index].sprite; }
 
+	Sprite* sprConbo = nullptr;
+	float conbowordScale = 2.0f;
 
 	//void TargetManager::SetUIController(UIController* pUI)
 	//{

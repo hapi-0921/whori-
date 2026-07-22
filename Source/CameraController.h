@@ -29,9 +29,9 @@ public:
 
 private:
 
-	float delta = 20000.0f;
+	//float delta = 20000.0f;
 	//‹——£§ŒÀ
-	float maxRange = 2000.0f+ delta;
+	float maxRange = 2000.0f/*+ delta*/;
 	float minRange = 0.0f;
 	float minVec;
 
@@ -55,6 +55,9 @@ private:
 	DirectX::XMVECTOR HitPosition = XMLoadFloat3(&hitDelta);
 
 	TargetManager* targetManager = nullptr;
+
+	float safeRange = 0.0f;
+	float deltaRnage = 0.0f;
 
 public:
 	void SetTargetManager(TargetManager* manager)

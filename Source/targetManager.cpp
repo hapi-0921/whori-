@@ -25,6 +25,7 @@
 #include"SceneGame.h"
 
 #include"tutorial.h"
+#include"ParticleManager.h"
 
 std::vector<TargetManager::TargetData> TargetManager::LoadTargets(const std::string& path)
 {
@@ -104,7 +105,8 @@ TargetManager::TargetManager()
 
     sprMiss = new Sprite("Data/Sprite/chain/UI/miss.png");
     number = new Font("Data/Sprite/number.png");
-    //sprConbo= new Sprite("Data/Sprite/conbo.png");
+    sprConbo= new Sprite("Data/Sprite/conbo.png");
+
 }
 
 TargetManager::~TargetManager()
@@ -132,6 +134,8 @@ TargetManager::~TargetManager()
     }
 
     targets.clear();
+    getTargets.clear();
+    getAllTargets.clear();
 }
 
 
@@ -508,7 +512,7 @@ void TargetManager::TargetFocus(float elapsedTime)
     if (t.carsRen)
     {
         t.carsRen = false;
-
+        
 
         if (t.right == true)
         {
@@ -531,10 +535,18 @@ void TargetManager::TargetFocus(float elapsedTime)
             scoreManager.maxChar = t.charCount;
         }
 
-
+        //ここで'ん'がついたらリザルトへ
         if (t.endN == "n"&& !tutorial.isTutorial)
         {
-            toResult = true;
+            timeOverTimer += elapsedTime;
+            if (timeOverTimer >= 0.3f)
+            {
+                scoreManager.nowCombo = true;
+                timeOverTimer = 0.3f;
+                toResult = true;
+
+            }
+
             return;
         }
 
@@ -671,7 +683,7 @@ void TargetManager::UpdateCardMove(float elapsedTime)
                     t->drawScale = 1.0f;
                     getTargets.clear();
                     nonChain = false;
-                    getTargets.clear();
+                    //getTargets.clear();
 
                 }
             }
@@ -878,27 +890,51 @@ void TargetManager::Render(const RenderContext& rc)
 
     if (scoreManager.nowCombo)
     {
-        scoreManager.comboTimer++;
-        scoreManager.comboScale -= 0.2;
-        number->DrawNumber(rc, scoreManager.conbo, scoreManager.comboPos.x, scoreManager.comboPos.y, scoreManager.comboScale);
-        
-        if (scoreManager.comboScale < 0.7f)
+        scoreManager.comboScale += (1.0f - scoreManager.comboScale) * 0.10f;
+        conbowordScale += (1.0f - conbowordScale) * 0.15f;
+
+        number->DrawNumber(
+            rc,
+            scoreManager.conbo,
+            scoreManager.comboPos.x,
+            scoreManager.comboPos.y,
+            scoreManager.comboScale);
+
+        sprConbo->Render(
+            rc,
+            scoreManager.comboPos.x+20,
+            scoreManager.comboPos.y+20,
+            0,
+            225 * conbowordScale,
+            75 * conbowordScale,
+            0,
+            0,
+            225,
+            75,
+            0,
+            1, 1, 1, 1.0f);
+
+        if (conbowordScale <= 1.01f)
         {
             scoreManager.nowCombo = false;
-            scoreManager.comboScale = 4.0;
+            scoreManager.comboScale = 3.0f;
+            conbowordScale = 3.0f;
+
         }
+
     }
     if (scoreManager.nowScore)
     {
         scoreManager.scoreTimer++;
-        scoreManager.scoreScale -= 10;
+        scoreManager.scoreScale += (1.0f - scoreManager.scoreScale) * 0.10f;
 
         number->DrawNumber(rc, scoreManager.score, scoreManager.scorePos.x, scoreManager.scorePos.y, scoreManager. scoreScale);
 
-        if (scoreManager.scoreTimer >= 100.0)
+        if (scoreManager.scoreScale < 0.7f)
         {
             scoreManager.nowScore = false;
-            scoreManager.scoreTimer = 0.0f;
+            scoreManager.scoreScale = 6.0;
+        
         }
 
     }

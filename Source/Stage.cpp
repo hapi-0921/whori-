@@ -9,10 +9,10 @@ Stage::Stage()
 {
 
 	mdlBack = new Model("Data/Model/back/back.mdl");
-	back.scale.x = 3.0f;
-	back.scale.y = 3.0f;
-	back.scale.z = 3.0f;
-	back.position.y = -1000.0f;
+	back.scale.x = 6.0f;
+	back.scale.y = 6.0f;
+	back.scale.z = 6.0f;
+	back.position.y = -1500.0f;
 	freeUpdateTransform(back.scale, back.angle, back.position, back.transform);
 
 	mdlCenterWall = new Model("Data/Model/wall/wall.mdl");
@@ -49,6 +49,10 @@ void Stage::Initialize()
 		mdlStage[1] = new Model("Data/Model/stage/machi/matimati/matimati2.mdl");
 		mdlStage[2] = new Model("Data/Model/stage/machi/matimati/matimati3.mdl");
 		mdlStage[3] = new Model("Data/Model/stage/machi/matimati/matimati4.mdl");
+		for (auto& material : mdlStage[1]->GetResource()->GetMaterials())
+		{
+			material.emissionColor = {0.3,0.3,0.3,1.0};
+		}
 	}
 	else if (stageType == SIMA)
 	{
@@ -61,6 +65,10 @@ void Stage::Initialize()
 		mdlStage[4] = new Model("Data/Model/stage/shima/simasima/simasima2.mdl");
 		mdlStage[5] = new Model("Data/Model/stage/shima/simasima/simasima3.mdl");
 		mdlStage[6] = new Model("Data/Model/stage/shima/simasima/simasima4.mdl");
+		for (auto& material : mdlStage[5]->GetResource()->GetMaterials())
+		{
+			material.emissionColor = { 0.3,0.3,0.3,1.0 };
+		}
 	}
 }
 
@@ -71,6 +79,7 @@ void Stage::Update(float elapsedTime)
 	DirectX::XMFLOAT3 cameraPos = mainCamera.GetEye();
 	DirectX::XMFLOAT3 front = mainCamera.GetFront();
 	DirectX::XMFLOAT3 target = camera->GetCameraTarget();
+
 
 	//奥行き判定用壁
 	float length_d = 2000;//farの半分に合わせる
@@ -110,10 +119,10 @@ void Stage::Render(const RenderContext& rc, ModelRenderer* renderer,StageTransfo
 
 
 	//ズーム用判定壁
-		//renderer->Render(rc, centerWall[CENTER].transform, mdlCenterWall, ShaderId::Lambert);
+	//renderer->Render(rc, centerWall[CENTER].transform, mdlCenterWall, ShaderId::Lambert);
 		
-		//奥行き判定用壁
-		//renderer->Render(rc, centerWall[DEPTH].transform, mdlCenterWall, ShaderId::Lambert);
+	//奥行き判定用壁
+	//renderer->Render(rc, centerWall[DEPTH].transform, mdlCenterWall, ShaderId::Lambert);
 		 
 
 	
@@ -128,7 +137,7 @@ void Stage::DrawDebugGUI()
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
 	if (ImGui::Begin("stage", nullptr, ImGuiWindowFlags_None)) {
-		//折り畳みメ
+		//折り畳み
 		//if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) 
 		{
 			//for (int i = 0; i < 6; i++)

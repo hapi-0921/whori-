@@ -34,7 +34,7 @@ private:
 	Sprite* sprresultback2 = nullptr;
 
 	Sprite* sprranking = nullptr;
-
+	Sprite* sprsubranking = nullptr;
 	Sprite* sprs = nullptr;
 	Sprite* sprrank[5] = {};
 	Sprite* sprrankword[5] = {};
@@ -55,10 +55,19 @@ private:
 	};
 	struct Record
 	{
-		int posx = 1000;
+		int posx = 0;
 		int posy = 0;
 	};
+	struct SimaRecord
+	{
+		int posx = 0;
+		int posy = 0;
+	};
+
+
 	Record record[4];
+	SimaRecord simarecord[4];
+
 	float scorescale = 2;
 	float rankScale = 1.0f;
 
@@ -66,9 +75,11 @@ private:
 	bool rankScaleAnim = false;
 	bool rankFinish = false;   
 	bool next = false;
-	iti  sikaku[30];
+	iti  sikaku[10];
 	int nowCard = 0;
 	json data;
 	Font* font=nullptr;
 	Font* Numberfont = nullptr;
+
+	int size = 0;
 };

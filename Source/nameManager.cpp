@@ -7,6 +7,7 @@
 
 #include"UIController.h"
 
+
 NameManagger::NameManagger()
 {
 	sprNamePlate = new Sprite("Data/Sprite/name/namePlate.png");
@@ -60,6 +61,7 @@ void NameManagger::Update(float elapsedTime)
 	mousePos.x = mouse.GetPositionX();
 	mousePos.y = mouse.GetPositionY();
 
+	GamePad& gamePad = Input::Instance().GetGamePad();
 
 	//ƒNƒŠƒbƒN‚µ‚Ä‚Ë
 	if (isRectJubge(mousePos.x, mousePos.y, 654,570, 669, 98))
@@ -119,14 +121,13 @@ void NameManagger::Update(float elapsedTime)
 	//Œˆ’è
 	if (!name.empty())
 	{
-		if (isRectJubge(mousePos.x, mousePos.y, 867, 707, 264, 69)||
-			IsKeyTrigger(VK_SPACE))
+		if ((isRectJubge(mousePos.x, mousePos.y, 867, 707, 264, 69)&&
+			(mouse.GetButtonDown() & Mouse::BTN_LEFT))||
+			(gamePad.GetButtonDown() & GamePad::BTN_A))
 		{
-			if (mouse.GetButtonDown() & Mouse::BTN_LEFT)
-			{
-				nameYet = true;
-			}
+			nameYet = true;
 		}
+
 	}
 }
 
@@ -153,20 +154,20 @@ void NameManagger::Render(const RenderContext& rc, ModelRenderer* renderer)
 
 
 			float baseX = 960.0f - 280.0f;   
-			float baseY = 540.0f + 50.0f;
-			float scale = 1.0f;
+			float baseY = 540.0f+60;
+			float scale = 1.4f;
 
 			// •¶Žš•`‰æ
 			fName->Draw(rc, name.c_str(), baseX, baseY, scale);
 
-			int char_w = 5;
+			int char_w = 15;
 			if ((cursorBlink / 20) % 2 == 0)
 			{
 
 				sprBar->Render(rc,
 					(name.length() * char_w * scale),
 					0,
-				0,
+					0,
 					1920, 1080,
 					0, 1, 1, 1, 1);
 

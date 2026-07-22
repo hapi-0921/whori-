@@ -59,7 +59,7 @@ public:
 
 	float tuto2wheel = 0.0f;
 	bool tuto2 = false;
-	float tuto3drag = 0.0f;
+	DirectX::XMFLOAT2 tuto3drag {};
 	bool tuto3 = false;
 
 	bool tuto4 = false;

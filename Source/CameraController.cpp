@@ -87,7 +87,6 @@ bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 
 	XMFLOAT3 realHit;
 	bool hitReal = false;
-	float nearest = FLT_MAX;
 
 	Stage& stage = Stage::Instance();
 
@@ -98,12 +97,8 @@ bool CameraController::cursorRay(DirectX::XMFLOAT3& hitDelta)
 	{
 		float distSq = XMVectorGetX(XMVector3LengthSq(//
 			XMLoadFloat3(&hit) - XMLoadFloat3(&rayStart)));
-		if (distSq < nearest)
-		{
-			nearest = distSq;
 			realHit = hit;
 			hitReal = true;
-		}
 	}
 
 	if (!hitReal) return false;
@@ -181,8 +176,10 @@ void CameraController::Update(float elapsedTime)
 		//チュートリアル
 		if (tutorial.tutoType == 3)
 		{
-			tutorial.tuto3drag += angle.x;
-			if (tutorial.tuto3drag > 60.0f)	tutorial.tuto3 = true;
+			float max = 20.0f;
+			tutorial.tuto3drag.x += angle.x;
+			tutorial.tuto3drag.y += angle.x;
+			if ((tutorial.tuto3drag.x > max)|| (tutorial.tuto3drag.y > max))	tutorial.tuto3 = true;
 		}
 	}
 	else
@@ -252,7 +249,7 @@ void CameraController::Update(float elapsedTime)
 					XMVECTOR dir = XMVector3Normalize(deltaV);
 
 					float strength = wheel * moveSpeed;
-					float maxMove = distToHit * 0.3f;
+					float maxMove = distToHit * 0.5f;
 
 					float moveAmount = std::min(strength * distToHit, maxMove);
 
@@ -292,6 +289,7 @@ void CameraController::Update(float elapsedTime)
 
 					XMVECTOR offset = XMVectorScale(dir, moveAmount);  
 
+
 					XMStoreFloat3(&target, targetV + offset);
 				}
 			}
@@ -300,20 +298,29 @@ void CameraController::Update(float elapsedTime)
 	}
 
 	// カメラ更新
+	safeRange = std::max(range, 0.05f);
 
-	float safeRange = std::max(range, 0.05f);
-
-	
-	//カメラの制限
-	float deltaRnage = safeRange - delta;
-	if (deltaRnage >= 5000)
+	if (wheel > 0.0f)
 	{
-		deltaRnage = 5000;
+		if (safeRange <= 0.05f)
+		{
+			float s = 15;
+			target.x += front.x * s;
+			target.y += front.y * s;
+			target.z += front.z * s;
+		}
 	}
 
-	eye.x = target.x - front.x * (safeRange- delta);
-	eye.y = target.y - front.y * (safeRange- delta);
-	eye.z = target.z - front.z * (safeRange- delta);
+	//カメラの制限
+	float maxRange = 3500;
+	if (safeRange > maxRange)
+	{
+		safeRange = maxRange;
+	}
+
+	eye.x = target.x - front.x * safeRange;
+	eye.y = target.y - front.y * safeRange;
+	eye.z = target.z - front.z * safeRange;
 
 	Camera::Instance().SetLookAt(
 		eye,
@@ -328,6 +335,8 @@ void CameraController::Render(const RenderContext& rc)
 
 void CameraController::DrawDebugGUI()
 {
+	Camera& mainCamera = Camera::Instance();
+	DirectX::XMFLOAT3 cameraPos = mainCamera.GetEye();
 
 	//ウィンドウの位置
 	ImVec2 pos = ImGui::GetMainViewport()->GetWorkPos();
@@ -340,12 +349,15 @@ void CameraController::DrawDebugGUI()
 		//折り畳みメニュー
 		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
 			//位置
-			//ImGui::InputFloat3("target", &target.x);
-			//ImGui::InputFloat3("rayStart", &rayStart.x);
+			ImGui::InputFloat3("target", &target.x);
+			ImGui::InputFloat3("eye", &cameraPos.x);
 			////ズーム
 			ImGui::InputFloat("range", &range);
+			ImGui::InputFloat("safeRange", &safeRange);
+			//ImGui::InputFloat("delta", &delta);
+			//ImGui::InputFloat("deltaRnage", &deltaRnage);
 			//ImGui::Checkbox("hitRay", &hitRay);
-			ImGui::Checkbox("targetManager->canZoom", &targetManager->canZoom);
+			//ImGui::Checkbox("targetManager->canZoom", &targetManager->canZoom);
 			////回転
 			//DirectX::XMFLOAT3 a;
 			//a.x = DirectX::XMConvertToDegrees(angle.x);

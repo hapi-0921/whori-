@@ -136,6 +136,7 @@ void SceneSelect::Update(float elapsedTime)
 	CursorY = mouse.GetPositionY();
 
 	NameManagger& nameManagger = NameManagger::Instance();
+	ScoreManager& scoreManager = ScoreManager::Instance();
 	nameManagger.Update(elapsedTime);
 
 	if (!nameManagger.nameYet)
@@ -145,7 +146,7 @@ void SceneSelect::Update(float elapsedTime)
 
 	if (first)
 	{
-		if (selecttimer >= 300)
+		if (selecttimer >= 40)
 		{
 			if (mouse.GetButtonUp() & mouseButton)
 			{
@@ -157,8 +158,9 @@ void SceneSelect::Update(float elapsedTime)
 	
 		if (tutorial.toSelect)
 		{
-			stage.stageType = Stage::StageType::MACHI;
-			//stage.Initialize();
+			//GameManager::Instance().ReleaseTargetManager();
+			//stage.stageType = Stage::StageType::MACHI;
+			//GameManager::Instance().CreateTargetManager();
 
 			tutorial.isTutorial = false;
 			tutorial.toSelect = false;
@@ -182,12 +184,19 @@ void SceneSelect::Update(float elapsedTime)
 
 
 
-			if (tutorial.toGame)
+			if (tutorial.toGame)//チュートリアル始める
 			{
-				optionUI.nowGameScene = true;
+				optionUI.nowGameScene = true;//ゲームシーンか
+				scoreManager.texPosY = 77.0f;//提出の影
+				scoreManager.ResetData();//スコアリセット
+
+				//ステージ、targetのリセットと生成
 				stage.stageType = Stage::StageType::MACHI;
-				GameManager::Instance().CreateTargetManager();
+				GameManager::Instance().ReleaseTargetManager();
+				GameManager::Instance().CreateTargetManager();	
+
 				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+
 				return;
 			}
 
@@ -240,6 +249,7 @@ void SceneSelect::Update(float elapsedTime)
 				// ステージ2が選択されている状態
 				if (stageState == stageType::stage2)
 				{
+
 					//stageState = stageType::stage1;
 					arrowColorLeft = 0.5f;
 					stage.stageType = Stage::StageType::SIMA;
@@ -279,9 +289,11 @@ void SceneSelect::Update(float elapsedTime)
 						CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
 					{
 						optionUI.nowGameScene = true;
+						scoreManager.texPosY = 77.0f;//提出の影
 
+						scoreManager.ResetData();
+						GameManager::Instance().ReleaseTargetManager();
 						GameManager::Instance().CreateTargetManager();
-
 						//stage.Initialize();
 						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 						if (first)
@@ -294,9 +306,11 @@ void SceneSelect::Update(float elapsedTime)
 						CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
 					{
 						optionUI.nowGameScene = true;
+						scoreManager.texPosY = 77.0f;//提出の影
 
+						scoreManager.ResetData();
+						GameManager::Instance().ReleaseTargetManager();
 						GameManager::Instance().CreateTargetManager();
-
 						//stage.Initialize();
 						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 						if (first)
