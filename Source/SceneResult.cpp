@@ -161,12 +161,12 @@ void SceneResult::Update(float elapsedTime)
 					SceneManager::Instance().ChangeScene( (new SceneSelect));
 				}
 				//‚à‚¤ˆê“x
-				else if (CursorX >= 667 && CursorX <=1157)
-				{
-					//GameManager::Instance().CreateTargetManager();
+				//else if (CursorX >= 667 && CursorX <=1157)
+				//{
+				//	//GameManager::Instance().CreateTargetManager();
 
-					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-				}
+				//	SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
+				//}
 				//ƒQ[ƒ€I—¹
 				else if (CursorX >= 1216 && CursorX <= 1681)
 				{
@@ -180,7 +180,7 @@ void SceneResult::Update(float elapsedTime)
 		
 
 	}
-
+	
 
 
 	if (size > 10)

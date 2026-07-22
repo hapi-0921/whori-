@@ -101,7 +101,7 @@ void SceneGame::Finalize()
 void SceneGame::Update(float elapsedTime)
 {
 	Tutorial& tutorial = Tutorial::Instance();
-
+	
 	// ‰æ–Ê‘JˆÚ //
 	GamePad& gamePad = Input::Instance().GetGamePad();
 	OptionUI& optionUI = OptionUI::Instance();
@@ -262,9 +262,12 @@ void SceneGame::DrawGUI()
 
 	
 	
-	//ScoreManager& scoreManager = ScoreManager::Instance();
-	//scoreManager.DrawDebugGUI();
-	cameraController->DrawDebugGUI();
+	Tutorial& tutorial = Tutorial::Instance();
+	tutorial.DrawDebugGUI();
+
+	ScoreManager& scoreManager = ScoreManager::Instance();
+	scoreManager.DrawDebugGUI();
+	//cameraController->DrawDebugGUI();
 
 
 	//targetManager->DrawDebugGUI();

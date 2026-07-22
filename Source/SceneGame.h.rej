@@ -1,0 +1,9 @@
+diff a/Source/SceneGame.h b/Source/SceneGame.h	(rejected hunks)
+@@ -46,6 +46,7 @@
+ <<<<<<< HEAD
+ 	int GameTimer = 60*1.5;//�{���^�C�}�[
+ =======
++	int GameTimer = 60 * 10;//�{���^�C�}�[
+ >>>>>>> yamamoto
+ 
+ 	int sec = 0;

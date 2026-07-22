@@ -31,7 +31,7 @@ Tutorial::Tutorial()
 
 		tuto2wheel = 0.0f;
 		tuto2 = false;
-		tuto3drag = 0.0f;
+		tuto3drag = {};
 		tuto3 = false;
 
 		tuto4 = false;
@@ -148,7 +148,7 @@ void Tutorial::NowTutorial(float elapsedTime)
 		}
 		break;
 	case 4:
-		tuto3drag = 0.0f;
+		tuto3drag = {};
 		tuto3 = false;
 
 		if (tuto4)
@@ -277,7 +277,8 @@ void Tutorial::	DrawDebugGUI()
 	if (ImGui::Begin("timer", nullptr, ImGuiWindowFlags_None))
 	{
 		ImGui::InputFloat2("mousePos", &mousePos.x);
-		ImGui::Checkbox("isTutorial", &isTutorial);
+		ImGui::InputFloat2("tuto3drag", &tuto3drag.x);
+		//ImGui::Checkbox("isTutorial", &isTutorial);
 
 	}
 	ImGui::End();

@@ -41,6 +41,14 @@ void ScoreManager::TargetUpload()
 
     DirectX::XMFLOAT2 pos = { 1626,932 };
     DirectX::XMFLOAT2 size = { 270,77 };
+    if (tutorial.isTutorial)
+    {
+        speed = 1.0f;
+    }
+    else
+    {
+        speed = 3.0f;
+    }
 
     if (chainCount > 0)
     {
@@ -49,21 +57,17 @@ void ScoreManager::TargetUpload()
             pos.y  < mousePos.y &&//t
             pos.y + size.y  > mousePos.y)  //b
         {
-            if (tutorial.isTutorial)
-            {
-                speed = 0.5f;
-            }
-            else
-            {
-                speed = 3.0f;
-            }
 
             texPosY -= speed;
 
             if (texPosY <= 0.0f)
             {
                 upload = true;
-                tutorial.tuto6 = true;
+
+                if (tutorial.isTutorial)
+                {
+                    tutorial.tuto6 = true;
+                }
 
                 texPosY += speed;
                 if (77.0f >= texPosY)  texPosY = 77.0f;
@@ -142,7 +146,7 @@ void ScoreManager::DrawDebugGUI()
         //ImGui::InputInt("maxChar", &maxChar);
         //ImGui::InputInt("allScore", &allScore);
         ImGui::InputInt("getNum", &getNum);
-        ImGui::InputFloat("speed", &speed);
+        ImGui::InputFloat("texPosY", &texPosY);
 
         ImGui::Checkbox("reset", &reset);
     }

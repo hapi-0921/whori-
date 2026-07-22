@@ -456,46 +456,46 @@ void TargetManager::TargetFocus(float elapsedTime)
         cardTimer += elapsedTime;
     }
 
-if (t.isFocus)
-{
-    DirectX::XMFLOAT3 targetPos = {
-        camera.GetEye().x + front.x * 300.0f,
-        camera.GetEye().y + front.y * 300.0f,
-        camera.GetEye().z + front.z * 300.0f
-    };
-
-    float moveSpeed = 10.0f * elapsedTime;
-    tfCard.position.x += (targetPos.x - tfCard.position.x) * moveSpeed;
-    tfCard.position.y += (targetPos.y - tfCard.position.y) * moveSpeed;
-    tfCard.position.z += (targetPos.z - tfCard.position.z) * moveSpeed;
-
-    cardSpinAngle += elapsedTime * 5.0f;
-
-    // ==================== 調整しやすい版 ====================
-    DirectX::XMVECTOR eye = DirectX::XMLoadFloat3(&camera.GetEye());
-    DirectX::XMVECTOR pos = DirectX::XMLoadFloat3(&tfCard.position);
-    DirectX::XMVECTOR lookDir = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(eye, pos));
-
-    DirectX::XMVECTOR up = DirectX::XMVectorSet(0, 1, 0, 0);
-
-    DirectX::XMMATRIX billboard = DirectX::XMMatrixLookToLH(DirectX::XMVectorZero(), lookDir, up);
-    billboard = DirectX::XMMatrixInverse(nullptr, billboard);
-
-    // 自転
-    DirectX::XMMATRIX spin = DirectX::XMMatrixRotationY(cardSpinAngle);
-
-    DirectX::XMMATRIX baseRotation = DirectX::XMMatrixRotationY(DirectX::XM_PI) *
-        DirectX::XMMatrixRotationX(DirectX::XM_PI * 0.15f); 
-
-     DirectX::XMMATRIX S = DirectX::XMMatrixScaling(tfCard.scale.x, tfCard.scale.y, tfCard.scale.z);
-    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(tfCard.position.x, tfCard.position.y, tfCard.position.z);
-
-    DirectX::XMMATRIX world = S * spin * baseRotation * billboard * T;
-
-    DirectX::XMStoreFloat4x4(&tfCard.transform, world);
-
-    cardTimer += elapsedTime;
-}
+//if (t.isFocus)
+//{
+//    DirectX::XMFLOAT3 targetPos = {
+//        camera.GetEye().x + front.x * 300.0f,
+//        camera.GetEye().y + front.y * 300.0f,
+//        camera.GetEye().z + front.z * 300.0f
+//    };
+//
+//    float moveSpeed = 10.0f * elapsedTime;
+//    tfCard.position.x += (targetPos.x - tfCard.position.x) * moveSpeed;
+//    tfCard.position.y += (targetPos.y - tfCard.position.y) * moveSpeed;
+//    tfCard.position.z += (targetPos.z - tfCard.position.z) * moveSpeed;
+//
+//    cardSpinAngle += elapsedTime * 5.0f;
+//
+//    // ==================== 調整しやすい版 ====================
+//    DirectX::XMVECTOR eye = DirectX::XMLoadFloat3(&camera.GetEye());
+//    DirectX::XMVECTOR pos = DirectX::XMLoadFloat3(&tfCard.position);
+//    DirectX::XMVECTOR lookDir = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(eye, pos));
+//
+//    DirectX::XMVECTOR up = DirectX::XMVectorSet(0, 1, 0, 0);
+//
+//    DirectX::XMMATRIX billboard = DirectX::XMMatrixLookToLH(DirectX::XMVectorZero(), lookDir, up);
+//    billboard = DirectX::XMMatrixInverse(nullptr, billboard);
+//
+//    // 自転
+//    DirectX::XMMATRIX spin = DirectX::XMMatrixRotationY(cardSpinAngle);
+//
+//    DirectX::XMMATRIX baseRotation = DirectX::XMMatrixRotationY(DirectX::XM_PI) *
+//        DirectX::XMMatrixRotationX(DirectX::XM_PI * 0.15f); 
+//
+//     DirectX::XMMATRIX S = DirectX::XMMatrixScaling(tfCard.scale.x, tfCard.scale.y, tfCard.scale.z);
+//    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(tfCard.position.x, tfCard.position.y, tfCard.position.z);
+//
+//    DirectX::XMMATRIX world = S * spin * baseRotation * billboard * T;
+//
+//    DirectX::XMStoreFloat4x4(&tfCard.transform, world);
+//
+//    cardTimer += elapsedTime;
+//}
 
     if (cardTimer > 0.2f)
     {
@@ -535,10 +535,18 @@ if (t.isFocus)
             scoreManager.maxChar = t.charCount;
         }
 
-
+        //ここで'ん'がついたらリザルトへ
         if (t.endN == "n"&& !tutorial.isTutorial)
         {
-            toResult = true;
+            timeOverTimer += elapsedTime;
+            if (timeOverTimer >= 0.3f)
+            {
+                scoreManager.nowCombo = true;
+                timeOverTimer = 0.3f;
+                toResult = true;
+
+            }
+
             return;
         }
 

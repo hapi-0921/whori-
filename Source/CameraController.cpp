@@ -176,8 +176,10 @@ void CameraController::Update(float elapsedTime)
 		//チュートリアル
 		if (tutorial.tutoType == 3)
 		{
-			tutorial.tuto3drag += angle.x;
-			if (tutorial.tuto3drag > 20.0f)	tutorial.tuto3 = true;
+			float max = 20.0f;
+			tutorial.tuto3drag.x += angle.x;
+			tutorial.tuto3drag.y += angle.x;
+			if ((tutorial.tuto3drag.x > max)|| (tutorial.tuto3drag.y > max))	tutorial.tuto3 = true;
 		}
 	}
 	else

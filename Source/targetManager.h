@@ -52,6 +52,8 @@ private:
 
 	int displayIndex = 0;
 
+	float timeOverTimer = 0.0f;
+
 	struct Target
 	{
 		Model* mdlCard = nullptr;
