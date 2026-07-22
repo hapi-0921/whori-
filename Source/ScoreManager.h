@@ -39,8 +39,8 @@ public:
 	float scoreTimer = 0.0f;
 	DirectX::XMFLOAT2 comboPos = { 1400 ,200 };
 	DirectX::XMFLOAT2 scorePos = { 400,950 };
-	float comboScale = 4.0f;
-	float scoreScale = 0.8f;
+	float comboScale = 7.0f;
+	float scoreScale = 6.0f;
 
 	float speed = 2.0f;
 

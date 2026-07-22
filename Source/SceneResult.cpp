@@ -297,7 +297,7 @@ void SceneResult::Render()
 				350,
 				580,
 				1.0f);
-			Numberfont->DrawNumber(            //Œ©‚Â‚¯‚½‚à‚Ì‘”Œã‚Å•Ï‚¦‚é‚É‚å‚ñ
+			Numberfont->DrawNumber(            //Œ©‚Â‚¯‚½‚à‚Ì‘”
 				rc,
 				scoreManager.targetNum,
 				470,
@@ -368,12 +368,12 @@ void SceneResult::Render()
 
 			}
 
-			font->Draw(
+			/*font->Draw(
 				rc,
 				"Hello World!",
 				100,
 				100,
-				10.0f);
+				10.0f);*/
 #ifndef NDEBUG
 
 #endif // NDEBUG

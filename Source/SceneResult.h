@@ -55,7 +55,7 @@ private:
 	};
 	struct Record
 	{
-		int posx = 1000;
+		int posx = 1200;
 		int posy = 0;
 	};
 	Record record[4];
@@ -66,7 +66,7 @@ private:
 	bool rankScaleAnim = false;
 	bool rankFinish = false;   
 	bool next = false;
-	iti  sikaku[30];
+	iti  sikaku[10];
 	int nowCard = 0;
 	json data;
 	Font* font=nullptr;

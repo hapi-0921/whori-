@@ -210,6 +210,8 @@ public:
 	Sprite* GetTargetSpri(int index)  { return targets[index].sprite; }
 
 	Sprite* sprConbo = nullptr;
+	float conbowordScale = 2.0f;
+
 	//void TargetManager::SetUIController(UIController* pUI)
 	//{
 	//	uiController = pUI;
