@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 
 #include"UIController.h"
+#include"GameManager.h"
 
 Tutorial::Tutorial()
 {
@@ -114,11 +115,13 @@ void Tutorial::NowTutorial(float elapsedTime)
 
 	blinkTimer += elapsedTime;
 
-	if (blinkTimer >= 0.7f) 
+	if (blinkTimer >= 0.3f) 
 	{
 		blinkTimer = 0.0f;
 		showClick = !showClick;
 	}
+
+
 	if (showClick)	arrowMove += 1.0f;
 	else  arrowMove -= 1.0f;
 		
@@ -182,6 +185,10 @@ void Tutorial::NowTutorial(float elapsedTime)
 
 	case 10://チュートリアル終了
 		scoreManager.ResetData();
+
+		//GameManager::Instance().ReleaseTargetManager();
+		//GameManager::Instance().CreateTargetManager();
+
 		toSelect = true;
 		break;
 

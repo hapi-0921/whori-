@@ -51,7 +51,7 @@ void ScoreManager::TargetUpload()
         {
             if (tutorial.isTutorial)
             {
-                speed = 0.3f;
+                speed = 0.5f;
             }
             else
             {
