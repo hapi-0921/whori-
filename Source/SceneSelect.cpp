@@ -24,7 +24,7 @@ void SceneSelect::Initialize()
 	sprArrowLeft = new Sprite("Data/Sprite/arrowleft.png"); // 矢印のスプライト
 	sprfirst =new Sprite("Data/Sprite/tutorial/tutorialon.png");
 
-	// ステージ
+	// ステージのインスタンスを取得
 	Stage& stage = Stage::Instance();
 
 	//カメラ初期設定
@@ -98,6 +98,16 @@ void SceneSelect::Finalize()
 	{
 		delete sprArrowLeft;
 		sprArrowLeft = nullptr;
+	}
+
+	// 3Dモデル終了化
+	for (int i = 0; i < 4; i++)
+	{
+		delete mdlMachi[i];
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		delete mdlShima[i];
 	}
 
 	// カメラコントローラー終了化

@@ -5,6 +5,7 @@
 #include <thread>
 
 #include "targetManager.h"
+#include <CameraController.h>
 
 // ローディングシーン
 class SceneLoading : public Scene
@@ -31,35 +32,67 @@ public:
 
 	struct LoadingTarget  
 	{
-		Model* model = nullptr;
-		DirectX::XMFLOAT3 position = { 0,0,0 };
-		DirectX::XMFLOAT3 angle = { 0,0,0 };
-		DirectX::XMFLOAT3 scale = { 1,1,1 };
-		DirectX::XMFLOAT4X4 transform = {
-			1,0,0,0,
-			0,1,0,0,
-			0,0,1,0,
-			0,0,0,1
-		};
+		int pos_x;
+		int pos_y;
+		std::string path;
+		Sprite* sprite;
 	};
 
 private:
 
 
 	Sprite* sprite = nullptr;
-	float angle = 0.0f;
+	
+	// ローディング中のオブジェクト用配列
+	// LoadingTarget LoadItemFood[40] = {};
+	// LoadingTarget LoadItemAnimal[40] = {};
+	Sprite* LoadItemFood[45];
+	Sprite* LoadItemAnimal[41];
+	int ItemNum[4]; // ランダムに出すアイテム番号
+	float ItemNumPosY[4]; // ランダムに出すアイテムの描画位置(高さだけ)
+	bool MoveUp[4];
+	bool MoveDown[4];
+	bool MoveEnd[4];
+	float MotonoPosition;
+	int MoveState;
+	int MoveNum;
+
+	enum ItemMoveState
+	{
+		Up = 0,
+		Down,
+		Finish
+	};
+
+	int ItemSize = 250;
+	int HarfItemSize = ItemSize / 2;
+
+	// アイテムの位置
+	float ItemPositionX = 1920 / 2;
+	float ItemPositionY = 1080 / 2 - ItemSize / 2;
+
+	float angle = 0.0f; // 右下で回転するやつの角度
 	Scene* nextScene = nullptr;
 	std::thread* thread = nullptr;
 	float LoadTimer = 4000;
 	Sprite* sprFadeRect = nullptr;
 
-	int ItemNum = {};
+	// カメラ
+	CameraController* cameraController = nullptr;
+
+	//int ItemNum = {};
 
 	// 3Dモデル
-	Model* mdlApple = nullptr;
+	//Model* mdlApple = nullptr;
+	//Model* Loadmdl = nullptr;
 
-	TargetManager* targetManager = nullptr;
-	std::vector<LoadingTarget> loadingTargets;
+	// モデル用行列
+	//LoadingTarget LoadTofu;
+	
+
+
+	//TargetManager* targetManager = nullptr;
+	//std::vector<LoadingTarget> loadingTargets;
 
 
 	// ローディングスレッド
