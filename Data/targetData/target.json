@@ -459,9 +459,9 @@
       "startN": "ま",
       "endN": "む",
       "position": {
-        "x": 7.8,
-        "y":150.8,
-        "z": 1.0
+        "x": 780.799,
+        "y": 120.0,
+        "z": 456.475
       },
       "card": "Data/Model/target/card/foods/Mushroom.mdl",
       "right": true

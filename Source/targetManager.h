@@ -52,7 +52,6 @@ private:
 
 	int displayIndex = 0;
 
-	float timeOverTimer = 0.0f;
 
 	struct Target
 	{
@@ -89,7 +88,9 @@ private:
 
 
 		//カード
-		bool carsRen = false;//正面にはる
+		bool carsRen = false;//正面にはる（獲得した）
+		bool preCarsRen = false;//前フレームで獲得したか
+
 		bool isMoveToChain = false;//カードをチェーンに
 		float moveTimer = 0.0f;//カード移動時間（成功時）
 		float cardX = 1920 * 0.5f - 740* 0.5f;
@@ -114,9 +115,14 @@ private:
 	};
 	void UpdateCardMove(float elapsedTime);
 
+	//---失敗の時----
 	Sprite* sprMiss = nullptr;
-	bool nonChain = false;//しりとり失敗
-	float stayTime = 0.0f;//失敗時
+	bool nonChain = false;//失敗してるか
+	float stayTime = 0.0f;//失敗時の止まる時間
+
+	//---'ん'の時----
+	bool  failChain= false;//'ん'がついてるか
+	float timeOverTimer = 0.0f;//ついた時の止まる時間
 
 
 	Target tfCard;
@@ -158,6 +164,8 @@ private:
 	std::vector<Target> targets;//全ての対象物
 	std::vector<Target*> getTargets;//獲得したもの保存
 	std::vector<Target*> getAllTargets;//獲得したもの保存
+	std::vector<Target*> failTargets;//'ン'がついたもの保存←失敗してるのにgetしたことになる
+
 
 	//文字数
 	Target tfCharCount;

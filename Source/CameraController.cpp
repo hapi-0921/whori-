@@ -168,7 +168,7 @@ void CameraController::Update(float elapsedTime)
 		}
 
 		//＊＊回転速度＊＊
-		float mouseRotateSpeed = 0.002f;
+		float mouseRotateSpeed =  0.002f;
 
 		angle.y += dx * mouseRotateSpeed;
 		angle.x += dy * mouseRotateSpeed;
@@ -176,9 +176,9 @@ void CameraController::Update(float elapsedTime)
 		//チュートリアル
 		if (tutorial.tutoType == 3)
 		{
-			float max = 20.0f;
-			tutorial.tuto3drag.x += angle.x;
-			tutorial.tuto3drag.y += angle.x;
+			float max = 350.0f;
+			tutorial.tuto3drag.x += std::abs(dx);
+			tutorial.tuto3drag.y += std::abs(dy);
 			if ((tutorial.tuto3drag.x > max)|| (tutorial.tuto3drag.y > max))	tutorial.tuto3 = true;
 		}
 	}

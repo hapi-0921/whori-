@@ -43,7 +43,7 @@ void ScoreManager::TargetUpload()
     DirectX::XMFLOAT2 size = { 270,77 };
     if (tutorial.isTutorial)
     {
-        speed = 1.0f;
+        speed = 0.6f;
     }
     else
     {
@@ -136,17 +136,16 @@ void ScoreManager::DrawDebugGUI()
     if (ImGui::Begin("socore", nullptr, ImGuiWindowFlags_None))
     {
         //ImGui::InputInt("chainCount", &chainCount);
-
         //ImGui::InputInt("score", &score);
-        //ImGui::InputInt("siritoriNum", &siritoriNum);
-
         //ImGui::InputInt("allCharCount", &allCharCount);
         //ImGui::InputInt("conbo", &conbo);
-        //ImGui::InputInt("maxCombo", &maxCombo);
-        //ImGui::InputInt("maxChar", &maxChar);
-        //ImGui::InputInt("allScore", &allScore);
+
         ImGui::InputInt("getNum", &getNum);
-        ImGui::InputFloat("texPosY", &texPosY);
+        ImGui::InputInt("targetNum", &targetNum);
+        ImGui::InputInt("siritoriNum", &siritoriNum);
+        ImGui::InputInt("maxCombo", &maxCombo);
+        ImGui::InputInt("maxChar", &maxChar);
+        ImGui::InputInt("allScore", &allScore);
 
         ImGui::Checkbox("reset", &reset);
     }

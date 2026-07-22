@@ -32,7 +32,6 @@ public:
 	bool upload = false;
 	bool reset = false;
 
-	bool nonCatch = false;
 
 
 	bool nowCombo = false;//conbo
@@ -91,3 +90,6 @@ public:
 		maxChar = 0;//Å‘å•¶š”
 	}
 };
+
+
+//scoreManager.getNum++;

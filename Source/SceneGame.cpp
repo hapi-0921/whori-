@@ -262,8 +262,8 @@ void SceneGame::DrawGUI()
 
 	
 	
-	Tutorial& tutorial = Tutorial::Instance();
-	tutorial.DrawDebugGUI();
+	//Tutorial& tutorial = Tutorial::Instance();
+	//tutorial.DrawDebugGUI();
 
 	ScoreManager& scoreManager = ScoreManager::Instance();
 	scoreManager.DrawDebugGUI();
