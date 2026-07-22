@@ -108,13 +108,13 @@ void SceneLoading::Initialize()
 	LoadItemAnimal[38] = new Sprite("Data/Sprite/chain/animals/Whale.png");
 	LoadItemAnimal[39] = new Sprite("Data/Sprite/chain/animals/wolf.png");
 	LoadItemAnimal[40] = new Sprite("Data/Sprite/chain/animals/Zebra.png");
-
-
-
+	
+	
+	
 	// 描画するアイテム番号をランダムに設定
 	srand((unsigned int)time(NULL)); //乱数種の初期化
 
-	if (stage.stageType = Stage::StageType::MACHI)
+	if(stage.stageType = Stage::StageType::MACHI)
 	{
 		ItemNum[0] = rand() % 45;
 		ItemNum[1] = rand() % 45;
@@ -158,7 +158,7 @@ void SceneLoading::Initialize()
 
 	// 動くアイテムの順番
 	MoveNum = 0;
-
+	
 	// スレッド開始
 	thread = new std::thread(LoadingThread, this);
 
@@ -202,7 +202,7 @@ void SceneLoading::Finalize()
 		delete sprFadeRect;
 		sprFadeRect = nullptr;
 	}
-	for (int i = 0; i < 45; i++)
+	for(int i = 0; i < 45; i++)
 	{
 		if (LoadItemFood[i] != nullptr)
 		{
@@ -248,7 +248,7 @@ void SceneLoading::Update(float elapsedTime)
 
 
 	// ロード中のアイテムカードの動き
-	if (MoveNum < 4)
+	if(MoveNum < 4)
 	{
 		MoveUp[MoveNum] = true;
 		if (MoveEnd[MoveNum] == false)
@@ -297,7 +297,7 @@ void SceneLoading::Update(float elapsedTime)
 		MoveDown[3] = false;
 		MoveEnd[3] = false;
 	}
-
+	
 }
 
 // 描画処理
@@ -343,8 +343,8 @@ void SceneLoading::Render()
 			angle,
 			1, 1, 1, 1);*/
 
-
-		if (stage.stageType = Stage::StageType::MACHI)
+		
+		if(stage.stageType = Stage::StageType::MACHI)
 		{
 			// カード１
 			LoadItemFood[ItemNum[0]]->Render(rc,
@@ -396,7 +396,7 @@ void SceneLoading::Render()
 	//3D
 	{
 
-
+		
 	}
 
 	cameraController->Render(rc);
@@ -409,7 +409,7 @@ void SceneLoading::DrawGUI()
 
 	ImGui::Text("Loading Scene Debug");
 
-
+	
 	ImGui::InputFloat("ItemPosY", &ItemNumPosY[0]);
 
 	ImGui::Separator();
