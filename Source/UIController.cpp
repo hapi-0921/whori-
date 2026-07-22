@@ -103,23 +103,23 @@ void UIController::Render(const RenderContext& rc, ModelRenderer* renderer)
 	float screenHeight = static_cast<float>(graphics.GetScreenHeight());
 	ScoreManager& scoreManager = ScoreManager::Instance();
 
-	{//しりとり表示
-		if (scoreManager.chainCount <= 5)
-		{
-			sprChain->Render(rc,
-				0, 0, 0,
-				1920, 1080, 0,
-				1, 1, 1, 1.0f);
-		}
-		else
-		{
-			sprChainOver->Render(rc,
-				0, 0, 0,
-				1920, 1080, 0,
-				1, 1, 1, 1.0f);
-
-		}
+	//しりとり表示（チェーンの背景）
+	if (scoreManager.chainCount <= 5)
+	{
+		sprChain->Render(rc,
+			0, 0, 0,
+			1920, 1080, 0,
+			1, 1, 1, 1.0f);
 	}
+	else
+	{
+		sprChainOver->Render(rc,
+			0, 0, 0,
+			1920, 1080, 0,
+			1, 1, 1, 1.0f);
+	}
+		
+	
 	
 	if (targetManager == nullptr) return;
 	//中央カーソル

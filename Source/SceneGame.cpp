@@ -107,10 +107,13 @@ void SceneGame::Update(float elapsedTime)
 	OptionUI& optionUI = OptionUI::Instance();
 	optionUI.nowGameScene = true;
 
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
+	if (tutorial.isTutorial)
 	{
-		optionUI.isOption = true;
-		optionUI.isHome = true;
+		if (GetAsyncKeyState(VK_ESCAPE) & 0x0001)
+		{
+			optionUI.isOption = true;
+			optionUI.isHome = true;
+		}
 	}
 
 	optionUI.UpdateOption(elapsedTime);//ê›íËâÊñ 
@@ -262,8 +265,8 @@ void SceneGame::DrawGUI()
 
 	
 	
-	Tutorial& tutorial = Tutorial::Instance();
-	tutorial.DrawDebugGUI();
+	//Tutorial& tutorial = Tutorial::Instance();
+	//tutorial.DrawDebugGUI();
 
 	ScoreManager& scoreManager = ScoreManager::Instance();
 	scoreManager.DrawDebugGUI();

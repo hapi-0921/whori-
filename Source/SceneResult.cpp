@@ -510,8 +510,11 @@ void SceneResult::DrawGUI()
 
 	//	ImGui::DragInt("X", &sikaku[i].posx);
 	//	ImGui::DragInt("Y", &sikaku[i].posy);
-		ImGui::DragInt("X", &CursorX);
-		ImGui::DragInt("Y", &CursorY);
+		//ImGui::DragInt("X", &CursorX);
+		//ImGui::DragInt("Y", &CursorY);
+		ScoreManager& scoreManager = ScoreManager::Instance();
+		scoreManager.DrawDebugGUI();
+
 	//	ImGui::DragInt("Angle", &sikaku[i].angle);
 
 	//	ImGui::Separator();

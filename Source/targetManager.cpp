@@ -376,6 +376,7 @@ void TargetManager::TargetFocus(float elapsedTime)
         {
             GameManager::Instance().SetPlaying(false);
 
+                //scoreManager.getNum++;
 
             for (auto& material : t.model->GetResource()->GetMaterials())
             {
@@ -501,7 +502,7 @@ void TargetManager::TargetFocus(float elapsedTime)
     {
         t.carsRen = true;
 
-        scoreManager.getNum++;
+        //scoreManager.getNum++;
 
         delete t.mdlCard;
         t.mdlCard = nullptr;
@@ -511,8 +512,13 @@ void TargetManager::TargetFocus(float elapsedTime)
     // 獲得
     if (t.carsRen)
     {
-        t.carsRen = false;
-        
+        if (t.carsRen && !t.preCarsRen)
+        {
+            scoreManager.getNum++;
+            t.preCarsRen = true;
+        }        
+
+        t.preCarsRen = false;
 
         if (t.right == true)
         {
@@ -535,17 +541,24 @@ void TargetManager::TargetFocus(float elapsedTime)
             scoreManager.maxChar = t.charCount;
         }
 
+
         //ここで'ん'がついたらリザルトへ
         if (t.endN == "n"&& !tutorial.isTutorial)
         {
+
+            failTargets.push_back(&t);
+            failChain = true;
             timeOverTimer += elapsedTime;
-            if (timeOverTimer >= 0.3f)
+
+            if (timeOverTimer >= 0.1f)
             {
-                scoreManager.nowCombo = true;
+                failChain = false;
+
                 timeOverTimer = 0.3f;
                 toResult = true;
-
             }
+            t.carsRen = false;
+
 
             return;
         }
@@ -574,6 +587,7 @@ void TargetManager::TargetFocus(float elapsedTime)
             scoreManager.allCharCount += t.charCount;
 
             t.isMoveToChain = true;
+            t.carsRen = false;
 
         }
         else if (t.startN == endName)//しりとり成功
@@ -587,6 +601,7 @@ void TargetManager::TargetFocus(float elapsedTime)
             scoreManager.allCharCount += t.charCount;
 
             scoreManager.nowCombo = true;//何コンボ中か表示
+            t.carsRen = false;
 
             endName = t.endN;
 
@@ -619,6 +634,7 @@ void TargetManager::TargetFocus(float elapsedTime)
                 t.carsRen = false;
 
             }
+            t.carsRen = false;
 
             nonChain = true;
             t.failTimer = 0.0f;
@@ -853,6 +869,18 @@ void TargetManager::Render(const RenderContext& rc)
     float screenW = static_cast<float>(Graphics::Instance().GetScreenWidth());
     float screenH = static_cast<float>(Graphics::Instance().GetScreenHeight());
 
+    //'ん'がついた時用のスプライト
+    for (int i = 0; i < failTargets.size(); i++)
+    {
+        if (!failTargets[i]->sprite) continue;
+
+        failTargets[i]->sprite->Render(rc,
+            1920*0.5f-750*0.5f,1080*0.5f-750*0.5f,0,
+            750, 750,
+            0, 0, 750, 750,
+            0, 1, 1, 1, 1);
+    }
+
     for (int i = 0; i < getTargets.size(); i++)
     {
         Target* t = getTargets[i];
@@ -865,17 +893,11 @@ void TargetManager::Render(const RenderContext& rc)
         float drawX = t->cardX + (t->cardW - drawW) * 0.5f;
         float drawY = t->cardY + (t->cardH - drawH) * 0.5f;
 
-        t->sprite->Render(
-            rc,
-            drawX,
-            drawY,
-            0,
-            drawW,
-            drawH,
-            0, 0,
-            750, 750,
-            0,
-            1, 1, 1, 1);
+        t->sprite->Render( rc,
+            drawX, drawY, 0,
+            drawW,drawH,
+            0, 0, 750, 750,
+            0,1, 1, 1, 1);
 
         if (t->stayTimer >= stayTime&& nonChain)
         {
@@ -897,7 +919,7 @@ void TargetManager::Render(const RenderContext& rc)
             rc,
             scoreManager.conbo,
             scoreManager.comboPos.x,
-            scoreManager.comboPos.y,
+            scoreManager.comboPos.y+30,
             scoreManager.comboScale);
 
         sprConbo->Render(
