@@ -176,12 +176,15 @@ void SceneSelect::Update(float elapsedTime)
 
 			if (tutorial.toGame)//チュートリアル始める
 			{
-				optionUI.nowGameScene = true;
+				optionUI.nowGameScene = true;//ゲームシーンか
+				scoreManager.texPosY = 77.0f;//提出の影
+				scoreManager.ResetData();//スコアリセット
 
+				//ステージ、targetのリセットと生成
 				stage.stageType = Stage::StageType::MACHI;
 				GameManager::Instance().ReleaseTargetManager();
-				scoreManager.ResetData();
-				GameManager::Instance().CreateTargetManager();				
+				GameManager::Instance().CreateTargetManager();	
+
 				SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 
 				return;
@@ -275,6 +278,7 @@ void SceneSelect::Update(float elapsedTime)
 						CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
 					{
 						optionUI.nowGameScene = true;
+						scoreManager.texPosY = 77.0f;//提出の影
 
 						scoreManager.ResetData();
 						GameManager::Instance().ReleaseTargetManager();
@@ -291,6 +295,7 @@ void SceneSelect::Update(float elapsedTime)
 						CursorX < screenWidth / 2 + screenWidth / 4 && CursorX > screenWidth / 2 - screenWidth / 4)
 					{
 						optionUI.nowGameScene = true;
+						scoreManager.texPosY = 77.0f;//提出の影
 
 						scoreManager.ResetData();
 						GameManager::Instance().ReleaseTargetManager();

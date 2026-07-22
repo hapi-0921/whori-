@@ -32,6 +32,8 @@ public:
 	bool upload = false;
 	bool reset = false;
 
+	bool nonCatch = false;
+
 
 	bool nowCombo = false;//conbo
 	bool nowScore = false;//score
