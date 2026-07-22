@@ -221,6 +221,7 @@ void OptionUI::UpdateOption(float elapsedTime)
 	mousePos.x = mouse.GetPositionX();
 	mousePos.y = mouse.GetPositionY();
 
+	Stage& stage = Stage::Instance();
 
 
 	if (!nowGameScene)//シーンセレクトの時
@@ -309,6 +310,9 @@ void OptionUI::UpdateOption(float elapsedTime)
 						optionUI.isOption = false;
 						optionUI.isHome = false;
 
+						//GameManager::Instance().ReleaseTargetManager();
+						//GameManager::Instance().CreateTargetManager();
+
 						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneTitle));
 					}
 				}
@@ -323,6 +327,8 @@ void OptionUI::UpdateOption(float elapsedTime)
 
 						optionUI.isOption = false;
 						optionUI.isHome = false;
+
+						GameManager::Instance().ReleaseTargetManager();
 
 						HWND hWnd = GetActiveWindow();
 						PostMessage(hWnd, WM_CLOSE, 0, 0);
@@ -343,6 +349,10 @@ void OptionUI::UpdateOption(float elapsedTime)
 						optionUI.isOption = false;
 						optionUI.isHome = false;
 
+						//GameManager::Instance().ReleaseTargetManager();
+						//stage.stageType = Stage::StageType::MACHI;
+						//GameManager::Instance().CreateTargetManager();
+
 						SceneManager::Instance().ChangeScene(new SceneLoading(new SceneSelect));
 
 					}
@@ -359,6 +369,8 @@ void OptionUI::UpdateOption(float elapsedTime)
 
 						optionUI.isOption = false;
 						optionUI.isHome = false;
+
+						GameManager::Instance().ReleaseTargetManager();
 
 						HWND hWnd = GetActiveWindow();
 						PostMessage(hWnd, WM_CLOSE, 0, 0);

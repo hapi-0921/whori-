@@ -159,7 +159,7 @@ void NameManagger::Render(const RenderContext& rc, ModelRenderer* renderer)
 			// •¶Žš•`‰æ
 			fName->Draw(rc, name.c_str(), baseX, baseY, scale);
 
-			int char_w = 5;
+			int char_w = 15;
 			if ((cursorBlink / 20) % 2 == 0)
 			{
 

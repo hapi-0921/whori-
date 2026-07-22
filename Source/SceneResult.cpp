@@ -118,7 +118,7 @@ void SceneResult::Update(float elapsedTime)
 				//‚à‚¤ˆê“x
 				else if (CursorX >= 667 && CursorX <=1157)
 				{
-					GameManager::Instance().CreateTargetManager();
+					//GameManager::Instance().CreateTargetManager();
 
 					SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
 				}
@@ -135,6 +135,8 @@ void SceneResult::Update(float elapsedTime)
 		
 
 	}
+
+
 
 	if (size > 10)
 	{

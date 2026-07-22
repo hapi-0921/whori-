@@ -177,7 +177,7 @@ void CameraController::Update(float elapsedTime)
 		if (tutorial.tutoType == 3)
 		{
 			tutorial.tuto3drag += angle.x;
-			if (tutorial.tuto3drag > 60.0f)	tutorial.tuto3 = true;
+			if (tutorial.tuto3drag > 20.0f)	tutorial.tuto3 = true;
 		}
 	}
 	else
@@ -310,8 +310,8 @@ void CameraController::Update(float elapsedTime)
 	}
 
 	//ÉJÉÅÉâÇÃêßå¿
-	float maxRange = 5000;
-	if (safeRange >= maxRange)
+	float maxRange = 3500;
+	if (safeRange > maxRange)
 	{
 		safeRange = maxRange;
 	}
@@ -351,7 +351,7 @@ void CameraController::DrawDebugGUI()
 			ImGui::InputFloat3("eye", &cameraPos.x);
 			////ÉYÅ[ÉÄ
 			ImGui::InputFloat("range", &range);
-			//ImGui::InputFloat("safeRange", &safeRange);
+			ImGui::InputFloat("safeRange", &safeRange);
 			//ImGui::InputFloat("delta", &delta);
 			//ImGui::InputFloat("deltaRnage", &deltaRnage);
 			//ImGui::Checkbox("hitRay", &hitRay);

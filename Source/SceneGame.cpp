@@ -260,9 +260,13 @@ void SceneGame::DrawGUI()
 	//Stage& stage = Stage::Instance();
 	//stage.DrawDebugGUI();
 
-	ScoreManager& scoreManager = ScoreManager::Instance();
-	scoreManager.DrawDebugGUI();
-	//cameraController->DrawDebugGUI();
+	
+	
+	//ScoreManager& scoreManager = ScoreManager::Instance();
+	//scoreManager.DrawDebugGUI();
+	cameraController->DrawDebugGUI();
+
+
 	//targetManager->DrawDebugGUI();
 	//uiController->DrawDebugGUI();
 }
