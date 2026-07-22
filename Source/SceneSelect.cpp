@@ -455,10 +455,14 @@ void SceneSelect::Render()
 // GUI描画
 void SceneSelect::DrawGUI()
 {
-	OptionUI& optionUI = OptionUI::Instance();
-	optionUI.DrawDebugGUI();
+	//OptionUI& optionUI = OptionUI::Instance();
+	//optionUI.DrawDebugGUI();
 
-	Tutorial& tutorial = Tutorial::Instance();
-	tutorial.DrawDebugGUI();
-	
+	//Tutorial& tutorial = Tutorial::Instance();
+	//tutorial.DrawDebugGUI();
+
+	ScoreManager& scoreManager = ScoreManager::Instance();
+	scoreManager.DrawDebugGUI();
+
+
 }
