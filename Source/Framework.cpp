@@ -6,6 +6,8 @@
 #include "System/Input.h"
 #include "System/Graphics.h"
 #include "System/ImGuiRenderer.h"
+#include "System/Audio.h"
+
 #include "SceneGame.h"
 #include "SceneSelect.h"
 #include "SceneLoading.h"
@@ -21,6 +23,9 @@ static SceneGame sceneGame;
 Framework::Framework(HWND hWnd)
 	: hWnd(hWnd)
 {
+	Audio::Instance().Initialize();
+
+
 	hDC = GetDC(hWnd);
 
 	// インプット初期化
@@ -49,6 +54,8 @@ Framework::~Framework()
 	ImGuiRenderer::Finalize();
 
 	ReleaseDC(hWnd, hDC);
+
+	Audio::Instance().Finalize();
 }
 
 // 更新処理

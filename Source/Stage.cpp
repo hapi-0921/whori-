@@ -80,6 +80,7 @@ void Stage::Update(float elapsedTime)
 	DirectX::XMFLOAT3 front = mainCamera.GetFront();
 	DirectX::XMFLOAT3 target = camera->GetCameraTarget();
 
+
 	//奥行き判定用壁
 	float length_d = 2000;//farの半分に合わせる
 	centerWall[DEPTH].position.x = mainCamera.GetEye().x+(front.x * length_d);
@@ -118,10 +119,10 @@ void Stage::Render(const RenderContext& rc, ModelRenderer* renderer,StageTransfo
 
 
 	//ズーム用判定壁
-		//renderer->Render(rc, centerWall[CENTER].transform, mdlCenterWall, ShaderId::Lambert);
+	//renderer->Render(rc, centerWall[CENTER].transform, mdlCenterWall, ShaderId::Lambert);
 		
-		//奥行き判定用壁
-		//renderer->Render(rc, centerWall[DEPTH].transform, mdlCenterWall, ShaderId::Lambert);
+	//奥行き判定用壁
+	//renderer->Render(rc, centerWall[DEPTH].transform, mdlCenterWall, ShaderId::Lambert);
 		 
 
 	
@@ -136,7 +137,7 @@ void Stage::DrawDebugGUI()
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
 	if (ImGui::Begin("stage", nullptr, ImGuiWindowFlags_None)) {
-		//折り畳みメ
+		//折り畳み
 		//if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) 
 		{
 			//for (int i = 0; i < 6; i++)

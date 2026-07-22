@@ -134,6 +134,8 @@ TargetManager::~TargetManager()
     }
 
     targets.clear();
+    //targets.clear();
+    //targets.clear();
 }
 
 
