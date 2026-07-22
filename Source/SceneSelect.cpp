@@ -236,6 +236,7 @@ void SceneSelect::Update(float elapsedTime)
 				// ステージ2が選択されている状態
 				if (stageState == stageType::stage2)
 				{
+
 					//stageState = stageType::stage1;
 					arrowColorLeft = 0.5f;
 					stage.stageType = Stage::StageType::SIMA;

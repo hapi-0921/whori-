@@ -15,4 +15,5 @@ public:
 		return save;
 	}
 	int ranking[4] = { 0,0,0,0 };
+	int simaranking[4] = { 0,0,0,0 };
 };
