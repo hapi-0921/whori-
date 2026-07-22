@@ -356,7 +356,7 @@ void SceneResult::Render()
 							if ((resultTimer / 40) % 2 == 0)
 							{
 								sprnew->Render(rc,
-									1300, record[i].posy, 0,
+									1450, record[i].posy, 0,
 									157, 52, 0, 0,
 									225, 75, 0, 1, 1, 1, 1);
 
