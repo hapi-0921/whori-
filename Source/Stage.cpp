@@ -9,10 +9,10 @@ Stage::Stage()
 {
 
 	mdlBack = new Model("Data/Model/back/back.mdl");
-	back.scale.x = 3.0f;
-	back.scale.y = 3.0f;
-	back.scale.z = 3.0f;
-	back.position.y = -1000.0f;
+	back.scale.x = 6.0f;
+	back.scale.y = 6.0f;
+	back.scale.z = 6.0f;
+	back.position.y = -1500.0f;
 	freeUpdateTransform(back.scale, back.angle, back.position, back.transform);
 
 	mdlCenterWall = new Model("Data/Model/wall/wall.mdl");
